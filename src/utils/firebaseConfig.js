@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import "firebase/compat/firestore";
+// Required for side-effects
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,7 +22,10 @@ export const uiConfig = {
     // Popup signin flow rather than redirect flow.
     signInFlow: "popup",
     // We will display Google as auth providers.
-    signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+    signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    ],
     signInSuccessUrl: "/main",
     callbacks: {
         // log: firebase.auth().onAuthStateChanged((user) => console.log(user)),
@@ -29,4 +34,6 @@ export const uiConfig = {
     },
 };
 
-firebase.initializeApp(firebaseConfig);
+let app = firebase.initializeApp(firebaseConfig);
+
+export let db = firebase.firestore();

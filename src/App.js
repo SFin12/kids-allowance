@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
@@ -9,7 +9,6 @@ import firebase from "firebase/compat/app";
 function App() {
     return (
         <div className="App">
-            <h1>Kids Allowance App</h1>
             <div className="container">
                 <Routes>
                     <Route path="/" element={<SignInScreen />}></Route>
