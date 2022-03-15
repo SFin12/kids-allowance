@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import firebase from "firebase/compat/app";
 import Navbar from "../../components/Nav/Navbar";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../utils/firebaseConfig";
+import { createUser, getChoirs } from "../../utils/firestore";
+import AddChoirs from "../../components/Choirs/AddChoirs";
 
 export default function MainPage(props) {
     const [user, setUser] = useState({});
-    const [data, setData] = useState({});
+    const [data, setData] = useState([]);
 
     const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ export default function MainPage(props) {
                     image: user.photoURL,
                     id: user.uid,
                 });
+                createUser(user.displayName, user.email, user.uid);
             }
         });
     }, []);
@@ -32,17 +34,9 @@ export default function MainPage(props) {
             .then(() => navigate("/"));
     }
 
-    function getData() {
-        const database = db
-            .collection("choirs")
-            .get()
-            .then((snapshot) => {
-                setData(snapshot.docs);
-                snapshot.docs.forEach((doc) => {
-                    const choir = doc.data();
-                    console.log(choir.title);
-                });
-            });
+    async function getData() {
+        const choirs = await getChoirs();
+        setData(choirs);
     }
 
     return (
@@ -50,7 +44,15 @@ export default function MainPage(props) {
             <Navbar logout={handleLogout} />
             <h2>{user.name}</h2>
             <button onClick={getData}>Get Data</button>
-            <p>hello</p>
+            <AddChoirs />
+            {data.map((choir) => {
+                return (
+                    <div>
+                        <p>{choir.title}</p>
+                        <p>{choir.value}</p>
+                    </div>
+                );
+            })}
             <img src={user.image} alt="user pic" />
         </div>
     );
