@@ -8,6 +8,7 @@ function SignInScreen() {
         <div>
             <h1>Kids Allowance App</h1>
             <p>Please sign-in:</p>
+            {/* firebaseUi for react to style login components */}
             <StyledFirebaseAuth
                 uiConfig={uiConfig}
                 firebaseAuth={firebase.auth()}

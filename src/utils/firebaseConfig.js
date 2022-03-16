@@ -27,13 +27,7 @@ export const uiConfig = {
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     ],
     signInSuccessUrl: "/main",
-    callbacks: {
-        // log: firebase.auth().onAuthStateChanged((user) => console.log(user)),
-        // Avoid redirects after sign-in.
-        // signInSuccessWithAuthResult: () => false,
-    },
 };
 
-let app = firebase.initializeApp(firebaseConfig);
-
+firebase.initializeApp(firebaseConfig);
 export let db = firebase.firestore();

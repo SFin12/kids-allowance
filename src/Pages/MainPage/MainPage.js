@@ -21,12 +21,14 @@ export default function MainPage(props) {
                     image: user.photoURL,
                     id: user.uid,
                 });
+                // creates user in firestore db
                 createUser(user.displayName, user.email, user.uid);
             }
         });
     }, []);
 
     function handleLogout() {
+        // Reset user, sign out, redirect back to sign-in page
         setUser({});
         firebase
             .auth()
@@ -45,14 +47,12 @@ export default function MainPage(props) {
             <h2>{user.name}</h2>
             <button onClick={getData}>Get Data</button>
             <AddChoirs />
-            {data.map((choir) => {
-                return (
-                    <div>
-                        <p>{choir.title}</p>
-                        <p>{choir.value}</p>
-                    </div>
-                );
-            })}
+
+            <div>
+                <p>{data.name}</p>
+                <p>{data.email}</p>
+            </div>
+
             <img src={user.image} alt="user pic" />
         </div>
     );
