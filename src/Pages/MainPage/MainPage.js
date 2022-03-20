@@ -5,14 +5,19 @@ import { useNavigate } from "react-router-dom";
 import { getChoirs } from "../../utils/firestore";
 import AddChoirs from "../../components/Choirs/AddChoirs";
 
-export default function MainPage({ user }) {
+export default function MainPage(props) {
+    const [userInfo, setUserInfo] = useState({});
     const [data, setData] = useState({});
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(data);
-    }, [data]);
+        const user = firebase.auth().currentUser;
+        if (user) {
+            setUserInfo(user);
+            console.log(user);
+        }
+    });
 
     // useEffect(() => {
     //     // Get user info after user is logged in.
@@ -46,7 +51,7 @@ export default function MainPage({ user }) {
     return (
         <div className="container">
             <Navbar logout={handleLogout} />
-            <h2>{user}</h2>
+            <h2>{userInfo.displayName}</h2>
             <button onClick={getData}>Get Data</button>
             <AddChoirs />
 
@@ -59,7 +64,7 @@ export default function MainPage({ user }) {
                 ))}
             </div>
 
-            <img src={user} alt="user pic" />
+            <img src={userInfo.photoURL} alt="user pic" />
         </div>
     );
 }

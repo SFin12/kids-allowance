@@ -22,12 +22,7 @@ function App() {
             <div className="container">
                 <Routes>
                     <Route path="/" element={<SignInScreen />}></Route>
-                    <Route
-                        path="/main"
-                        element={
-                            <MainPage user={firebase.auth().currentUser} />
-                        }
-                    ></Route>
+                    <Route path="/main" element={<MainPage />}></Route>
                 </Routes>
             </div>
         </div>
