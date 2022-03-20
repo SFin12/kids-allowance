@@ -8,27 +8,45 @@ export function getCurrentUserInfo() {
 export const getChoirs = async () => {
     const userId = getCurrentUserInfo().uid;
     const userRef = await db.collection("users");
+    const snapshot = await userRef.doc(`${userId}`).get();
+    return snapshot.data().choirs;
+};
+
+export const getUserInfo = async () => {
+    const userId = getCurrentUserInfo().uid;
+    const userRef = await db.collection("users");
     const snapshot = userRef.doc(`${userId}`).get();
-    console.log((await snapshot).data()["name"]);
+    const userData = await snapshot.data();
+    return userData;
 };
 
 export const createChoir = async (title, value) => {
     const userId = getCurrentUserInfo().uid;
-    console.log("current user: ", userId);
     const userDataRef = db.collection("users").doc(`${userId}`);
     userDataRef.update({
-        choirs: firebase.firestore.FieldValue.arrayUnion({
-            [title]: value,
-        }),
+        [`choirs.${title}`]: value,
     });
 };
 
-export const createUser = (name, email, id) => {
+export const deleteChoir = (title) => {
+    const userId = getCurrentUserInfo().uid;
+    const userDataRef = db.collection("users").doc(`${userId}`);
+    userDataRef.update({
+        [`choirs.${title}`]: firebase.firestore.FieldValue.delete(),
+    });
+};
+
+export const createUser = () => {
+    const user = getUserInfo();
     db.collection("users")
-        .doc(id)
-        .set({
-            name,
-            email,
-        })
-        .then(() => console.log(db.collection));
+        .doc(user.uid)
+        .set(
+            {
+                id: user.uid,
+                name: user.name,
+                email: user.email,
+            },
+            { merge: true }
+        )
+        .then(() => console.log("created user in db"));
 };
