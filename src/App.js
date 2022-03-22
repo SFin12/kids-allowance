@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import SignInScreen from "./components/Sign-in";
@@ -15,8 +15,6 @@ import {
 } from "./features/user/userSlice";
 
 function App() {
-    const [signedIn, setSignedIn] = useState(false);
-
     return (
         <div className="App">
             <div className="container">

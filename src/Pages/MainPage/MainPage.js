@@ -4,42 +4,56 @@ import Navbar from "../../components/Nav/Navbar";
 import { useNavigate } from "react-router-dom";
 import { getChoirs } from "../../utils/firestore";
 import AddChoirs from "../../components/Choirs/AddChoirs";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    setUserLogout,
+    selectUserEmail,
+    selectUserId,
+    selectUserImage,
+    selectUserName,
+    setActiveUser,
+} from "../../features/user/userSlice";
 
 export default function MainPage(props) {
     const [userInfo, setUserInfo] = useState({});
     const [data, setData] = useState({});
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const user = firebase.auth().currentUser;
-        if (user) {
-            setUserInfo(user);
-            console.log(user);
-        }
-    });
+    const userName = useSelector(selectUserName);
+    const userEmail = useSelector(selectUserEmail);
+    const userImage = useSelector(selectUserImage);
+    const userId = useSelector(selectUserId);
 
-    // useEffect(() => {
-    //     // Get user info after user is logged in.
-    //     if (user) {
-    //         console.log(user);
-    //         setUserInfo({
-    //             name: user.displayName,
-    //             email: user.email,
-    //             image: user.photoURL,
-    //             id: user.uid,
-    //         });
-    //         // creates user in firestore db
-    //     }
-    // }, []);
+    useEffect(() => {
+        const unregisterAuthObserver = firebase
+            .auth()
+            .onAuthStateChanged((user) => {
+                console.log(user);
+                if (user) {
+                    dispatch(
+                        setActiveUser({
+                            name: user.displayName,
+                            email: user.email,
+                            image: user.photoURL,
+                            id: user.uid,
+                        })
+                    );
+                }
+            });
+        return () => unregisterAuthObserver();
+    }, []);
 
     function handleLogout() {
         // Reset user, sign out, redirect back to sign-in page
-
         firebase
             .auth()
             .signOut()
-            .then(() => navigate("/"));
+            .then(() => {
+                dispatch(setUserLogout());
+                navigate("/");
+            })
+            .catch((err) => alert(err.message));
     }
 
     async function getData() {
@@ -51,7 +65,8 @@ export default function MainPage(props) {
     return (
         <div className="container">
             <Navbar logout={handleLogout} />
-            <h2>{userInfo.displayName}</h2>
+            <h2>{userName}</h2>
+            <h2>Test</h2>
             <button onClick={getData}>Get Data</button>
             <AddChoirs />
 
@@ -64,7 +79,7 @@ export default function MainPage(props) {
                 ))}
             </div>
 
-            <img src={userInfo.photoURL} alt="user pic" />
+            <img src={userImage} alt="user pic" />
         </div>
     );
 }

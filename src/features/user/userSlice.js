@@ -16,22 +16,22 @@ export const userSlice = createSlice({
             state.name = action.payload.name;
             state.email = action.payload.email;
             state.id = action.payload.id;
-            state.img = action.payload.img;
+            state.image = action.payload.image;
         },
         setUserLogout: (state) => {
             state.name = null;
             state.email = null;
             state.id = null;
-            state.img = null;
+            state.image = null;
         },
     },
 });
 
 export const { setActiveUser, setUserLogout } = userSlice.actions;
 
-export const selectUserName = (state) => state.name;
-export const selectUserEmail = (state) => state.email;
-export const selectUserId = (state) => state.id;
-export const selectUserImage = (state) => state.img;
+export const selectUserName = (state) => state.user.name;
+export const selectUserEmail = (state) => state.user.email;
+export const selectUserId = (state) => state.user.id;
+export const selectUserImage = (state) => state.user.image;
 
 export default userSlice.reducer;
