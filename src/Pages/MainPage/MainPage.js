@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import Navbar from "../../components/Nav/Navbar";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +14,11 @@ import {
     selectUserName,
     setActiveUser,
 } from "../../features/user/userSlice";
+import SettingsPage from "../SettingsPage/SettingsPage";
+import ChoirsPage from "../ChoirsPage/ChoirsPage";
 
 export default function MainPage(props) {
-    const [userInfo, setUserInfo] = useState({});
+    const [lastName, setLastName] = useState("");
     const [data, setData] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -29,8 +32,9 @@ export default function MainPage(props) {
         const unregisterAuthObserver = firebase
             .auth()
             .onAuthStateChanged((user) => {
-                console.log(user);
                 if (user) {
+                    const splitNames = user.displayName.split(" ");
+                    setLastName(splitNames[splitNames.length - 1]);
                     dispatch(
                         setActiveUser({
                             name: user.displayName,
@@ -64,12 +68,12 @@ export default function MainPage(props) {
 
     return (
         <div className="container">
-            <Navbar logout={handleLogout} />
+            <Navbar logout={handleLogout} lastName={lastName} />
             <h2>{userName}</h2>
-            <h2>Test</h2>
-            <button onClick={getData}>Get Data</button>
-            <AddChoirs />
-
+            <Routes>
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/choirs" element={<ChoirsPage />} />
+            </Routes>
             <div>
                 {Object.keys(data).map((choir, i) => (
                     <div key={i + "choir"}>

@@ -1,9 +1,9 @@
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { uiConfig } from "../utils/firebaseConfig";
+import { uiConfig } from "../../utils/firebaseConfig";
 
-function SignInScreen() {
+function SignInPage() {
     return (
         <div>
             <h1>Kids Allowance App</h1>
@@ -18,4 +18,4 @@ function SignInScreen() {
     );
 }
 
-export default SignInScreen;
+export default SignInPage;

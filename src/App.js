@@ -1,26 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import SignInScreen from "./components/Sign-in";
+import "firebase/compat/auth";
 import MainPage from "./Pages/MainPage/MainPage";
-import firebase from "firebase/compat/app";
-import { useDispatch, useSelector } from "react-redux";
-import {
-    setActiveUser,
-    setUserLogout,
-    selectUserName,
-    selectUserEmail,
-    selectUserId,
-    selectUserImage,
-} from "./features/user/userSlice";
+import SignInPage from "./Pages/SignInPage/SignInPage";
 
 function App() {
     return (
         <div className="App">
             <div className="container">
                 <Routes>
-                    <Route path="/" element={<SignInScreen />}></Route>
-                    <Route path="/main" element={<MainPage />}></Route>
+                    <Route path="/" element={<SignInPage />}></Route>
+                    <Route path="/main/*" element={<MainPage />}></Route>
                 </Routes>
             </div>
         </div>
