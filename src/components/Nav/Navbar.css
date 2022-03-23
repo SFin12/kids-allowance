@@ -19,3 +19,6 @@
 .nav-links a {
     text-decoration: none;
 }
+.nav-links a:focus {
+    color: red;
+}

@@ -8,11 +8,15 @@ export default function Navbar({ logout, lastName }) {
         <nav className="navbar">
             <div className="nav-logo">{lastName + " Family"}</div>
             <div className="nav-links">
-                <a href="#" onClick={logout}>
+                <a href="/" onClick={logout}>
                     Logout
                 </a>
-                <a href="/choirs">Choirs</a>
-                <a href="/settings">Settings</a>
+                <a href="/main/choirs" className="">
+                    Choirs
+                </a>
+                <a href="/main/settings" className="">
+                    Settings
+                </a>
             </div>
         </nav>
     );
