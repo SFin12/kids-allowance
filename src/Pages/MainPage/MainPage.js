@@ -3,8 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import Navbar from "../../components/Nav/Navbar";
 import { useNavigate } from "react-router-dom";
-import { getChoirs } from "../../utils/firestore";
-import AddChoirs from "../../components/Choirs/AddChoirs";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setUserLogout,
@@ -15,7 +13,7 @@ import {
     setActiveUser,
 } from "../../features/user/userSlice";
 import SettingsPage from "../SettingsPage/SettingsPage";
-import ChoirsPage from "../ChoirsPage/ChoirsPage";
+import ChoresPage from "../ChoresPage/ChoresPage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -46,6 +44,7 @@ export default function MainPage(props) {
                 }
             });
         return () => unregisterAuthObserver();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     function handleLogout() {
@@ -60,30 +59,14 @@ export default function MainPage(props) {
             .catch((err) => alert(err.message));
     }
 
-    async function getData() {
-        const choirs = await getChoirs();
-        console.log(choirs);
-        setData(choirs);
-    }
-
     return (
         <div className="container">
             <Navbar logout={handleLogout} lastName={lastName} />
-            <h2>{userName}</h2>
+
             <Routes>
                 <Route path="/settings" element={<SettingsPage />} />
-                <Route path="/choirs" element={<ChoirsPage />} />
+                <Route path="/chores" element={<ChoresPage />} />
             </Routes>
-            <div>
-                {Object.keys(data).map((choir, i) => (
-                    <div key={i + "choir"}>
-                        <h4>{choir}</h4>
-                        <p>{data[choir]}</p>
-                    </div>
-                ))}
-            </div>
-
-            <img src={userImage} alt="user pic" />
         </div>
     );
 }

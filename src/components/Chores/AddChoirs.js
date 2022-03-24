@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { FormGroup, FormControl, FormLabel, Button } from "react-bootstrap";
-import { createChoir, deleteChoir } from "../../utils/firestore";
+import { createchore, deletechore } from "../../utils/firestore";
 
-export default function AddChoirs() {
+export default function Addchores() {
     const [title, setTitle] = useState("");
     const [value, setValue] = useState("");
 
     async function handleSubmit(e) {
         e.preventDefault();
         if (title && value) {
-            createChoir(title, value);
+            createchore(title, value);
         }
         setTitle("");
         setValue("");
@@ -17,7 +17,7 @@ export default function AddChoirs() {
 
     function handleDelete() {
         if (title) {
-            deleteChoir(title);
+            deletechore(title);
         }
     }
 

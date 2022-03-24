@@ -5,11 +5,11 @@ export function getCurrentUserInfo() {
     return firebase.auth().currentUser;
 }
 
-export const getChoirs = async () => {
+export const getChores = async () => {
     const userId = getCurrentUserInfo().uid;
     const userRef = await db.collection("users");
     const snapshot = await userRef.doc(`${userId}`).get();
-    return snapshot.data().choirs;
+    return snapshot.data().chores;
 };
 
 export const getUserInfo = async () => {
@@ -20,19 +20,19 @@ export const getUserInfo = async () => {
     return userData;
 };
 
-export const createChoir = async (title, value) => {
+export const createchore = async (title, value) => {
     const userId = getCurrentUserInfo().uid;
     const userDataRef = db.collection("users").doc(`${userId}`);
     userDataRef.update({
-        [`choirs.${title}`]: value,
+        [`chores.${title}`]: value,
     });
 };
 
-export const deleteChoir = (title) => {
+export const deletechore = (title) => {
     const userId = getCurrentUserInfo().uid;
     const userDataRef = db.collection("users").doc(`${userId}`);
     userDataRef.update({
-        [`choirs.${title}`]: firebase.firestore.FieldValue.delete(),
+        [`chores.${title}`]: firebase.firestore.FieldValue.delete(),
     });
 };
 
