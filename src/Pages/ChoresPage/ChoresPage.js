@@ -10,13 +10,16 @@ export default function ChoresPage() {
         vacuume: 5,
         Bathrooms: 10,
         test: 7,
+        voom: 5,
+        mop: 10,
+        wash: 7,
     };
 
     return (
         <div>
             <h2>Chores</h2>
             <Container className="justify-content-start">
-                <Row md={2} xs={1} lg={3} xl={4}>
+                <Row xs={1} md={2} lg={3} xxl={4}>
                     {Object.keys(sampleChores).map((key, i) => (
                         <Col
                             key={i + key}
