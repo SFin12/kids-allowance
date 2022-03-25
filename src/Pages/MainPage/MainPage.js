@@ -60,7 +60,7 @@ export default function MainPage(props) {
     }
 
     return (
-        <div className="container">
+        <div className="">
             <Navbar logout={handleLogout} lastName={lastName} />
 
             <Routes>

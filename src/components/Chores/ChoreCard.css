@@ -18,6 +18,7 @@
     font-weight: 500;
     color: cadetblue;
     font-family: fantasy;
+    margin-bottom: 15px;
 }
 
 .chore-card:active {

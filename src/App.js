@@ -8,7 +8,7 @@ import SignInPage from "./Pages/SignInPage/SignInPage";
 function App() {
     return (
         <div className="App">
-            <div className="container">
+            <div className="container m-0 p-0">
                 <Routes>
                     <Route path="/" element={<SignInPage />}></Route>
                     <Route path="/main/*" element={<MainPage />}></Route>
