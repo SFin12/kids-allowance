@@ -1,3 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap");
+/* font-family: 'Gochi Hand', cursive; */
+@import url("https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Shrikhand&display=swap");
+/* font-family: 'Shrikhand', cursive; */
+
+:root {
+    --chore-font: "Gochi Hand", cursive;
+}
+
+h1,
+h2 {
+    font-family: "Shrikhand", cursive;
+}
+
 .App {
     display: flex;
     justify-content: center;

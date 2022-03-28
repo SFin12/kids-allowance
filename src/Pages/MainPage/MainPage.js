@@ -21,11 +21,6 @@ export default function MainPage(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const userName = useSelector(selectUserName);
-    const userEmail = useSelector(selectUserEmail);
-    const userImage = useSelector(selectUserImage);
-    const userId = useSelector(selectUserId);
-
     useEffect(() => {
         const unregisterAuthObserver = firebase
             .auth()

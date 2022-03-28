@@ -17,7 +17,7 @@
     font-size: 2.2rem;
     font-weight: 500;
     color: cadetblue;
-    font-family: fantasy;
+    font-family: var(--chore-font);
     margin-bottom: 15px;
 }
 

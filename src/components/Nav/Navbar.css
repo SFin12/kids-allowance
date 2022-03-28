@@ -11,10 +11,11 @@
     max-width: 100%;
     text-decoration: none;
     font-size: 1.2rem;
-    font-weight: 500;
+    -webkit-font-feature-settings: ;
+    font-weight: 200;
     background-color: aquamarine;
     padding-left: 20px;
-    font-family: fantasy;
+    font-family: "Shrikhand";
 }
 
 .nav-logo {
