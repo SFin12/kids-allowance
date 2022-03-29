@@ -59,9 +59,10 @@ export const createFamily = async (namesArr) => {
     });
 };
 
-export const getFamily = async () => {
-    const userId = getCurrentUserInfo().uid;
+export const getFamily = async (userId) => {
+    // const userId = await getCurrentUserInfo().uid;
     const userRef = await db.collection("users");
+    console.log(userId);
     const snapshot = await userRef.doc(`${userId}`).get();
     return snapshot.data().family;
 };

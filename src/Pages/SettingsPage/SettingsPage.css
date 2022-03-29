@@ -1,0 +1,14 @@
+.family-members {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px;
+}
+
+.family-member-button {
+    border: none;
+    border-radius: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: aquamarine;
+    height: 30px;
+}

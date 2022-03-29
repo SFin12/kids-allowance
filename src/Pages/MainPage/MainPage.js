@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import firebase from "firebase/compat/app";
-import Navbar from "../../components/Nav/Navbar";
+import Navigation from "../../components/Nav/Navigation";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,15 +17,17 @@ import ChoresPage from "../ChoresPage/ChoresPage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
-    const [data, setData] = useState({});
+
+    const [isSignedIn, setIsSignedIn] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         const unregisterAuthObserver = firebase
             .auth()
-            .onAuthStateChanged((user) => {
+            .onAuthStateChanged(async (user) => {
                 if (user) {
+                    setIsSignedIn(true);
                     const splitNames = user.displayName.split(" ");
                     setLastName(splitNames[splitNames.length - 1]);
                     dispatch(
@@ -36,6 +38,8 @@ export default function MainPage(props) {
                             id: user.uid,
                         })
                     );
+                } else {
+                    setIsSignedIn(false);
                 }
             });
         return () => unregisterAuthObserver();
@@ -56,7 +60,13 @@ export default function MainPage(props) {
 
     return (
         <div className="">
-            <Navbar logout={handleLogout} lastName={lastName} />
+            {isSignedIn ? (
+                <Navigation
+                    logout={handleLogout}
+                    lastName={lastName}
+                    // uid={uid}
+                />
+            ) : null}
 
             <Routes>
                 <Route path="/settings" element={<SettingsPage />} />
