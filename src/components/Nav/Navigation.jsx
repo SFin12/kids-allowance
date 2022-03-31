@@ -17,15 +17,6 @@ export default function Navigation({ logout, lastName }) {
                 <Nav className="nav-links">
                     <Nav.Link
                         as={Link}
-                        to="/"
-                        href="/"
-                        onClick={logout}
-                        className=""
-                    >
-                        Logout
-                    </Nav.Link>
-                    <Nav.Link
-                        as={Link}
                         to="/main/chores"
                         href="/main/chores"
                         className=""
@@ -34,11 +25,28 @@ export default function Navigation({ logout, lastName }) {
                     </Nav.Link>
                     <Nav.Link
                         as={Link}
+                        to="/main/allowance"
+                        href="/main/allowance"
+                        className=""
+                    >
+                        Allowance
+                    </Nav.Link>
+                    <Nav.Link
+                        as={Link}
                         to="/main/settings"
                         href="/main/settings"
                         className=""
                     >
                         Settings
+                    </Nav.Link>
+                    <Nav.Link
+                        as={Link}
+                        to="/"
+                        href="/"
+                        onClick={logout}
+                        className=""
+                    >
+                        Logout
                     </Nav.Link>
                 </Nav>
             </Navbar.Collapse>

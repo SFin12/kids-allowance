@@ -104,3 +104,61 @@ export const deleteFamily = (name) => {
         family: firebase.firestore.FieldValue.arrayRemove(name),
     });
 };
+
+export const createAllowance = async (userId, member) => {
+    let uid = userId;
+    if (!uid) {
+        try {
+            uid = await getCurrentUserInfo().uid;
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    const userRef = await db.collection("users").doc(uid);
+    const earnings = await userRef.collection("earnings");
+    earnings.doc("earnings").set(
+        {
+            [member]: 0,
+        },
+        { merge: true }
+    );
+};
+
+export const getAllowance = async () => {
+    let uid = "";
+    if (!uid) {
+        try {
+            uid = await getCurrentUserInfo().uid;
+        } catch (err) {}
+    }
+    const userRef = await db.collection("users");
+    const snapshot = await userRef
+        .doc(`${uid}`)
+        .collection("earnings")
+        .doc("earnings")
+        .get();
+    const earnings = await snapshot.data();
+    return earnings;
+};
+
+export const createGoal = async (userId, member, goalName, goalValue) => {
+    let uid = userId;
+    if (!uid) {
+        try {
+            uid = await getCurrentUserInfo().uid;
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+    const userRef = await db.collection("users").doc(uid);
+    const earnings = await userRef.collection("goals");
+    earnings.doc("goals").set(
+        {
+            [member]: {
+                [goalName]: goalValue,
+            },
+        },
+        { merge: true }
+    );
+};

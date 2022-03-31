@@ -12,8 +12,9 @@ import {
 import SettingsPage from "../SettingsPage/SettingsPage";
 import ChoresPage from "../ChoresPage/ChoresPage";
 import "./MainPage.css";
-import { getFamily, getUserInfo } from "../../utils/firestore";
+import { getUserInfo } from "../../utils/firestore";
 import { setChores } from "../../features/chores/choresSlice";
+import AllowancePage from "../AllowancePage/AllowancePage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -83,6 +84,7 @@ export default function MainPage(props) {
             <Routes>
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/chores" element={<ChoresPage />} />
+                <Route path="/allowance" element={<AllowancePage />} />
             </Routes>
         </div>
     );
