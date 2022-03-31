@@ -5,14 +5,14 @@
 
 .chore-card {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 200px;
     min-width: 300px;
     width: 20%;
     height: 20%;
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+
     text-align: center;
     font-size: 2.2rem;
     font-weight: 500;
@@ -24,4 +24,52 @@
 .chore-card:active {
     box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
     transform: translateY(3px);
+}
+
+.main-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    transform-style: preserve-3d;
+    transition: all 0.8s ease-out;
+}
+
+.card-front {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+    backface-visibility: hidden;
+}
+
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    backface-visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+    transform: rotateY(180deg) rotate(2deg);
+}
+
+.flip-card {
+    transform: rotateY(180deg);
+}
+
+.completed {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    text-decoration-color: red;
 }

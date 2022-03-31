@@ -17,4 +17,5 @@ h2 {
     justify-content: center;
     text-align: center;
     font: size 1.2em;
+    min-height: 100vh;
 }

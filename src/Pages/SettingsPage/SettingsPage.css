@@ -12,3 +12,7 @@
     background-color: aquamarine;
     height: 30px;
 }
+
+.family-input {
+    min-width: 75%;
+}

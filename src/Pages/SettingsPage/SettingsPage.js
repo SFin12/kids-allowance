@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { selectUserId } from "../../features/user/userSlice";
+import { selectUserId, setFamilyMembers } from "../../features/user/userSlice";
 import {
     Button,
     Form,
@@ -8,19 +8,22 @@ import {
     FormLabel,
 } from "react-bootstrap";
 import { createFamily, deleteFamily, getFamily } from "../../utils/firestore";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./SettingsPage.css";
+import AddChores from "../../components/Chores/AddChoirs";
 
 export default function SettingsPage(props) {
     const [family, setFamily] = useState("");
     const [displayFamily, setDisplayFamily] = useState([]);
     const [update, setUpdate] = useState(false);
     const uid = useSelector(selectUserId);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const famData = async () => {
-            const data = await getFamily(uid);
-            setDisplayFamily(data);
+            const famArr = await getFamily(uid);
+            setDisplayFamily(famArr);
+            dispatch(setFamilyMembers({ familyMembers: famArr }));
         };
 
         famData();
@@ -34,7 +37,9 @@ export default function SettingsPage(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
+        //splits names into an array
         const famArr = family.split(",");
+        famArr.forEach((member) => member.trim());
         createFamily(famArr);
         setUpdate(!update);
         setFamily("");
@@ -59,7 +64,7 @@ export default function SettingsPage(props) {
                     <FormGroup className="d-flex">
                         <FormControl
                             type="text"
-                            className="w-25"
+                            className="family-input"
                             onChange={handleChange}
                             name="family"
                             value={family}
@@ -84,6 +89,7 @@ export default function SettingsPage(props) {
                     </div>
                 ))}
             </section>
+            <AddChores />
         </>
     );
 }

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { FormGroup, FormControl, FormLabel, Button } from "react-bootstrap";
-import { createchore, deletechore } from "../../utils/firestore";
+import { createChore, deleteChore } from "../../utils/firestore";
 
-export default function Addchores() {
+export default function AddChores() {
     const [title, setTitle] = useState("");
     const [value, setValue] = useState("");
 
     async function handleSubmit(e) {
         e.preventDefault();
         if (title && value) {
-            createchore(title, value);
+            createChore(title, value);
         }
         setTitle("");
         setValue("");
@@ -17,7 +17,7 @@ export default function Addchores() {
 
     function handleDelete() {
         if (title) {
-            deletechore(title);
+            deleteChore(title);
         }
     }
 

@@ -2,30 +2,32 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import ChoreCard from "../../components/Chores/ChoreCard";
+import Footer from "../../components/Footer/Footer";
+import { selectChores } from "../../features/chores/choresSlice";
 
 export default function ChoresPage() {
-    const sampleChores = {
-        poop: 10,
-        dishes: 5,
-        vacuume: 5,
-        Bathrooms: 10,
-        test: 7,
-    };
+    const chores = useSelector(selectChores);
+    console.log(chores);
 
     return (
         <div>
             <Container className="justify-content-start mt-5">
                 <Row xs={1} md={2} lg={3} xxl={4}>
-                    {Object.keys(sampleChores).map((key, i) => (
+                    {Object.keys(chores).map((key, i) => (
                         <Col
                             key={i + key}
                             className="d-flex justify-content-center"
                         >
-                            <ChoreCard chore={key} value={sampleChores[key]} />
+                            <ChoreCard
+                                chore={key}
+                                value={chores[key].value}
+                                completedBy={chores[key].completedBy}
+                            />
                         </Col>
                     ))}
                 </Row>
             </Container>
+            <Footer />
         </div>
     );
 }

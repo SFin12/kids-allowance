@@ -5,6 +5,8 @@ const initialState = {
     email: null,
     image: null,
     id: null,
+    familyMembers: null,
+    activeFamilyMember: null,
 };
 
 export const userSlice = createSlice({
@@ -24,14 +26,29 @@ export const userSlice = createSlice({
             state.id = null;
             state.image = null;
         },
+        setFamilyMembers: (state, action) => {
+            state.familyMembers = action.payload.familyMembers;
+        },
+
+        setActiveFamilyMember: (state, action) => {
+            state.activeFamilyMember = action.payload.activeFamilyMember;
+        },
     },
 });
 
-export const { setActiveUser, setUserLogout } = userSlice.actions;
+export const {
+    setActiveUser,
+    setUserLogout,
+    setFamilyMembers,
+    setActiveFamilyMember,
+} = userSlice.actions;
 
 export const selectUserName = (state) => state.user.name;
 export const selectUserEmail = (state) => state.user.email;
 export const selectUserId = (state) => state.user.id;
 export const selectUserImage = (state) => state.user.image;
+export const selectFamilyMembers = (state) => state.user.familyMembers;
+export const selectActiveFamilyMember = (state) =>
+    state.user.activeFamilyMember;
 
 export default userSlice.reducer;

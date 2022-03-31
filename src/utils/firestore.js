@@ -20,11 +20,19 @@ export const createUser = () => {
         .then(() => console.log("created user in db"));
 };
 
-export const getUserInfo = async () => {
-    const userId = getCurrentUserInfo().uid;
+export const getUserInfo = async (userId) => {
+    let uid = userId;
+    if (!uid) {
+        try {
+            uid = await getCurrentUserInfo().uid;
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
     const userRef = await db.collection("users");
-    const snapshot = userRef.doc(`${userId}`).get();
+    const snapshot = await userRef.doc(`${uid}`).get();
     const userData = await snapshot.data();
+
     return userData;
 };
 
@@ -32,7 +40,23 @@ export const createChore = async (title, value) => {
     const userId = getCurrentUserInfo().uid;
     const userDataRef = db.collection("users").doc(`${userId}`);
     userDataRef.update({
-        [`chores.${title}`]: value,
+        [`chores.${title}`]: {
+            value,
+            completedBy: "",
+            dateCompleted: "",
+        },
+    });
+};
+
+export const updateChore = async (title, value, completedBy, dateCompleted) => {
+    const userId = getCurrentUserInfo().uid;
+    const userDataRef = db.collection("users").doc(`${userId}`);
+    userDataRef.update({
+        [`chores.${title}`]: {
+            value,
+            completedBy,
+            dateCompleted,
+        },
     });
 };
 
@@ -60,10 +84,16 @@ export const createFamily = async (namesArr) => {
 };
 
 export const getFamily = async (userId) => {
-    // const userId = await getCurrentUserInfo().uid;
+    let uid = userId;
+    if (!uid) {
+        try {
+            uid = await getCurrentUserInfo().uid;
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
     const userRef = await db.collection("users");
-    console.log(userId);
-    const snapshot = await userRef.doc(`${userId}`).get();
+    const snapshot = await userRef.doc(`${uid}`).get();
     return snapshot.data().family;
 };
 
