@@ -105,21 +105,16 @@ export const deleteFamily = (name) => {
     });
 };
 
-export const createAllowance = async (userId, member) => {
-    let uid = userId;
-    if (!uid) {
-        try {
-            uid = await getCurrentUserInfo().uid;
-        } catch (err) {
-            console.log(err.message);
-        }
-    }
-
-    const userRef = await db.collection("users").doc(uid);
+export const updateAllowance = async (
+    member,
+    value = 0,
+    userId = getCurrentUserInfo().uid
+) => {
+    const userRef = await db.collection("users").doc(userId);
     const earnings = await userRef.collection("earnings");
     earnings.doc("earnings").set(
         {
-            [member]: 0,
+            [member]: value,
         },
         { merge: true }
     );
@@ -142,16 +137,30 @@ export const getAllowance = async () => {
     return earnings;
 };
 
-export const createGoal = async (userId, member, goalName, goalValue) => {
-    let uid = userId;
+export const deleteAllowance = async (member) => {
+    let uid = "";
     if (!uid) {
         try {
             uid = await getCurrentUserInfo().uid;
-        } catch (err) {
-            console.log(err.message);
-        }
+        } catch (err) {}
     }
-    const userRef = await db.collection("users").doc(uid);
+    const userRef = await db.collection("users");
+    const snapshot = await userRef
+        .doc(`${uid}`)
+        .collection("earnings")
+        .doc("earnings");
+    snapshot.update({
+        [member]: firebase.firestore.FieldValue.delete(),
+    });
+};
+
+export const createGoal = async (
+    member,
+    goalName,
+    goalValue,
+    userId = getCurrentUserInfo().uid
+) => {
+    const userRef = await db.collection("users").doc(userId);
     const earnings = await userRef.collection("goals");
     earnings.doc("goals").set(
         {
@@ -161,4 +170,16 @@ export const createGoal = async (userId, member, goalName, goalValue) => {
         },
         { merge: true }
     );
+};
+
+export const deleteGoal = async (
+    member,
+    goal,
+    userId = getCurrentUserInfo().uid
+) => {
+    const userRef = await db.collection("users").doc(userId);
+    const earnings = await userRef.collection("goals");
+    earnings.doc("goals").update({
+        [`${member}.${goal}`]: firebase.firestore.FieldValue.delete(),
+    });
 };
