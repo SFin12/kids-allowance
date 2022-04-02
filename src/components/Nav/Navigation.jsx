@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Navigation.css";
 
@@ -12,7 +12,9 @@ export default function Navigation({ logout, lastName }) {
             className="custom-navbar"
         >
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <span className="nav-logo">{lastName} Family</span>
+            <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+                <span className="nav-logo">{lastName} Family</span>
+            </Link>
             <Navbar.Collapse id="responsive-navbar-nav justify-content-end">
                 <Nav className="nav-links">
                     <Nav.Link

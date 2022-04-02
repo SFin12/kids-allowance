@@ -15,6 +15,7 @@ import "./MainPage.css";
 import { getUserInfo } from "../../utils/firestore";
 import { setChores } from "../../features/chores/choresSlice";
 import AllowancePage from "../AllowancePage/AllowancePage";
+import Footer from "../../components/Footer/Footer";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -46,7 +47,7 @@ export default function MainPage(props) {
                     // returns family members for current user from firestore db and updates Redux.
                     const family = async () => {
                         const dbData = await getUserInfo(user.uid);
-                        console.log(dbData.chores);
+
                         dispatch(
                             setFamilyMembers({
                                 familyMembers: dbData.family,
@@ -86,6 +87,7 @@ export default function MainPage(props) {
                 <Route path="/chores" element={<ChoresPage />} />
                 <Route path="/allowance" element={<AllowancePage />} />
             </Routes>
+            <Footer />
         </div>
     );
 }

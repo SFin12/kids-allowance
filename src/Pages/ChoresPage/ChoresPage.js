@@ -2,12 +2,10 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import ChoreCard from "../../components/Chores/ChoreCard";
-import Footer from "../../components/Footer/Footer";
 import { selectChores } from "../../features/chores/choresSlice";
 
 export default function ChoresPage() {
     const chores = useSelector(selectChores);
-    console.log(chores);
 
     return (
         <div>
@@ -27,7 +25,6 @@ export default function ChoresPage() {
                     ))}
                 </Row>
             </Container>
-            <Footer />
         </div>
     );
 }

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateChore } from "../../features/chores/choresSlice";
-import { updateChore as updateDbChore } from "../../utils/firestore";
+import {
+    updateAllowance,
+    updateChore as updateDbChore,
+} from "../../utils/firestore";
 import { selectActiveFamilyMember } from "../../features/user/userSlice";
 import "./ChoreCard.css";
 
@@ -39,6 +42,7 @@ export default function ChoreCard({ chore, value, completedBy }) {
             );
             // updated firestore to show completed
             updateDbChore(chore, value, activeFamilyMember, date);
+            updateAllowance(activeFamilyMember, value);
         } else {
             dispatch(
                 updateChore({

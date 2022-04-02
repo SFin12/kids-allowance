@@ -110,11 +110,17 @@ export const updateAllowance = async (
     value = 0,
     userId = getCurrentUserInfo().uid
 ) => {
+    let totalValue = Number(value);
+    const allowanceExists = await getAllowance();
+    if (allowanceExists[member]) {
+        console.log("allowance exists:", allowanceExists[member]);
+        totalValue += Number(allowanceExists[member]);
+    }
     const userRef = await db.collection("users").doc(userId);
     const earnings = await userRef.collection("earnings");
     earnings.doc("earnings").set(
         {
-            [member]: value,
+            [member]: totalValue,
         },
         { merge: true }
     );

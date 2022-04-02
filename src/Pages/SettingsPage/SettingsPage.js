@@ -7,7 +7,12 @@ import {
     FormGroup,
     FormLabel,
 } from "react-bootstrap";
-import { createFamily, deleteFamily, getFamily } from "../../utils/firestore";
+import {
+    createFamily,
+    deleteFamily,
+    getFamily,
+    updateAllowance,
+} from "../../utils/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import "./SettingsPage.css";
 import AddChores from "../../components/Chores/AddChoirs";
@@ -24,6 +29,9 @@ export default function SettingsPage(props) {
             const famArr = await getFamily(uid);
             setDisplayFamily(famArr);
             dispatch(setFamilyMembers({ familyMembers: famArr }));
+            famArr.forEach((member) => {
+                updateAllowance(member);
+            });
         };
 
         famData();
