@@ -16,6 +16,7 @@ import { getUserInfo } from "../../utils/firestore";
 import { setChores } from "../../features/chores/choresSlice";
 import AllowancePage from "../AllowancePage/AllowancePage";
 import Footer from "../../components/Footer/Footer";
+import AddGoalPage from "../AllowancePage/AddGoalPage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -82,12 +83,15 @@ export default function MainPage(props) {
                 <Navigation logout={handleLogout} lastName={lastName} />
             ) : null}
             <div className="spacer"></div>
-            <Routes>
-                <Route path="/settings" element={<SettingsPage />} />
-                <Route path="/chores" element={<ChoresPage />} />
-                <Route path="/allowance" element={<AllowancePage />} />
-            </Routes>
-            <Footer />
+            <div className="d-flex justify-content-center">
+                <Routes>
+                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/chores" element={<ChoresPage />} />
+                    <Route path="/allowance" element={<AllowancePage />} />
+                    <Route path="/addGoal" element={<AddGoalPage />} />
+                </Routes>
+                <Footer />
+            </div>
         </div>
     );
 }

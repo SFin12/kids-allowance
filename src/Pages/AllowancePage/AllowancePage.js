@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
+import { SiTarget } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import AllowanceContainer from "../../components/Allowance/AllowanceContainer";
 
 import {
     selectAllowance,
@@ -16,15 +19,6 @@ export default function AllowancePage() {
     const goals = useSelector(selectGoals);
     const allowance = useSelector(selectAllowance);
 
-    function calculateGoalPercentage() {
-        if (!allowance[activeFamilyMember]) {
-            return 0;
-        }
-        const percentage = (allowance[activeFamilyMember] / 10) * 100;
-        console.log(percentage);
-        return percentage;
-    }
-
     useEffect(() => {
         // get allowances from db and set it to redux for faster interaction between members
         const getAllowances = async () => {
@@ -35,14 +29,34 @@ export default function AllowancePage() {
         getAllowances();
     }, []);
 
+    function calculateGoalPercentage() {
+        if (!allowance[activeFamilyMember]) {
+            return 0;
+        }
+        // gives the percentage of goal used fo fill allowance graph
+        const percentage = (allowance[activeFamilyMember] / 10) * 100;
+        return percentage;
+    }
+    function targetClickHandler() {}
+
+    // conditoinal target button added if an active member is clicked. Used to add / edit goal
+    const AddGoalIcon = (
+        <Link className="target-icon" to={"/main/addGoal"}>
+            <SiTarget
+                style={{ height: "2rem", width: "2rem", color: "teal" }}
+            />
+        </Link>
+    );
+
     return (
-        <div className="allowance-container">
-            <div
+        <div>
+            <AllowanceContainer
                 className="allowance-bar"
+                allowance={allowance}
+                activeFamilyMember={activeFamilyMember}
                 style={{ height: `${calculateGoalPercentage()}%` }}
-            >
-                ${allowance[activeFamilyMember]}
-            </div>
+            />
+            {activeFamilyMember ? AddGoalIcon : null}
         </div>
     );
 }

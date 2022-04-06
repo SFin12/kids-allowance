@@ -1,0 +1,23 @@
+.allowance-container {
+    display: flex;
+    flex-direction: column;
+    margin: 25px auto;
+    height: 80vh;
+    width: 50%;
+    max-width: 100px;
+    min-width: 100px;
+    border: 3px solid teal;
+    border-radius: 20px;
+    justify-content: flex-end;
+}
+
+.allowance-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: aquamarine;
+    position: relative;
+    width: 100%;
+    border-radius: 0 0 15px 15px;
+}
