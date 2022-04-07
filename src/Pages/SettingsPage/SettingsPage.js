@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { selectUserId, setFamilyMembers } from "../../features/user/userSlice";
 import {
+    Accordion,
     Button,
     Form,
     FormControl,
@@ -16,6 +17,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import "./SettingsPage.css";
 import AddChores from "../../components/Chores/AddChoirs";
+import FormInput from "../../components/Forms/FormInput";
 
 export default function SettingsPage(props) {
     const [family, setFamily] = useState("");
@@ -33,7 +35,7 @@ export default function SettingsPage(props) {
                 updateAllowance(member);
             });
         };
-
+        console.log("rendering settings");
         famData();
     }, [update]);
 
@@ -62,42 +64,57 @@ export default function SettingsPage(props) {
     }
 
     return (
-        <>
-            <h2 className="mt-3">Settings</h2>
-            <Form onSubmit={handleSubmit} className="mx-3">
-                <FormGroup className="d-block text-start">
-                    <FormLabel>
-                        Add Family Members (seperate names with commas)
-                    </FormLabel>
-                    <FormGroup className="d-flex">
-                        <FormControl
-                            type="text"
-                            className="family-input"
-                            onChange={handleChange}
-                            name="family"
-                            value={family}
-                            required
-                        />
-                        <Button variant="primary" type="submit">
-                            submit
-                        </Button>
-                    </FormGroup>
-                </FormGroup>
-            </Form>
-            <section className="d-flex family-members">
-                {displayFamily.map((name, i) => (
-                    <div key={i + name}>
-                        <button
-                            className="m-1 family-member-button"
-                            onClick={handleDelete}
-                            name={name}
-                        >
-                            x {name}
-                        </button>
-                    </div>
-                ))}
-            </section>
-            <AddChores />
-        </>
+        <div className="d-block w-100">
+            <Accordion defaultActiveKey="0">
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header>Edit Family</Accordion.Header>
+                    <Accordion.Body
+                        style={{ backgroundColor: "rgb(255,255,255)" }}
+                    >
+                        <Form onSubmit={handleSubmit} className="mx-3">
+                            <FormGroup className="d-block text-start">
+                                <FormLabel className="label">
+                                    Add Family Member
+                                </FormLabel>
+                                <FormGroup className="d-flex">
+                                    <FormControl
+                                        type="text"
+                                        className="family-input"
+                                        onChange={handleChange}
+                                        name="family"
+                                        value={family}
+                                        required
+                                    />
+                                    <Button variant="primary" type="submit">
+                                        submit
+                                    </Button>
+                                </FormGroup>
+                            </FormGroup>
+                        </Form>
+                        <section className="d-flex family-members">
+                            {displayFamily.map((name, i) => (
+                                <div key={i + name}>
+                                    <button
+                                        className="m-1 family-member-button"
+                                        onClick={handleDelete}
+                                        name={name}
+                                    >
+                                        x {name}
+                                    </button>
+                                </div>
+                            ))}
+                        </section>
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="1">
+                    <Accordion.Header>Edit Chores</Accordion.Header>
+                    <Accordion.Body
+                        style={{ backgroundColor: "rgb(255,255,255)" }}
+                    >
+                        <AddChores />
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+        </div>
     );
 }

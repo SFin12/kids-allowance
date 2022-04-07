@@ -83,7 +83,7 @@ export default function MainPage(props) {
                 <Navigation logout={handleLogout} lastName={lastName} />
             ) : null}
             <div className="spacer"></div>
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center w-100">
                 <Routes>
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/chores" element={<ChoresPage />} />
