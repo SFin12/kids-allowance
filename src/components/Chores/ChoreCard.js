@@ -17,6 +17,7 @@ export default function ChoreCard({ chore, value, completedBy }) {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
 
     useEffect(() => {
+        // if db shows completed (parent fetches from db), flip to completed side
         if (completedBy) {
             setFlip(true);
         }
@@ -31,7 +32,7 @@ export default function ChoreCard({ chore, value, completedBy }) {
 
     function handleClick(e) {
         if (!flip) {
-            // update Redux to show completed
+            // update Redux to show completed w/out waiting for db
             dispatch(
                 updateChore({
                     chore,
@@ -44,6 +45,7 @@ export default function ChoreCard({ chore, value, completedBy }) {
             updateDbChore(chore, value, activeFamilyMember, date);
             updateAllowance(activeFamilyMember, value);
         } else {
+            // update redux store to show not completed w/out waiting for db
             dispatch(
                 updateChore({
                     chore,
@@ -52,13 +54,14 @@ export default function ChoreCard({ chore, value, completedBy }) {
                     dateCompleted: "",
                 })
             );
-            // updated firestore to show completed
+            // updated firestore to show not completed
             updateDbChore(chore, value, "", "");
         }
         setFlip(!flip);
     }
 
     return (
+        //flip card on mouse up
         <div className="chore-card" onMouseUp={handleClick} id={chore}>
             <div className={flip ? "main-card flip-card" : "main-card"}>
                 <div className="card-front">

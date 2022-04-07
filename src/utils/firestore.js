@@ -160,7 +160,7 @@ export const deleteAllowance = async (member) => {
     });
 };
 
-export const createGoal = async (
+export const updateGoal = async (
     member,
     goalName,
     goalValue,
@@ -171,11 +171,24 @@ export const createGoal = async (
     earnings.doc("goals").set(
         {
             [member]: {
-                [goalName]: goalValue,
+                goal: goalName,
+                value: goalValue,
             },
         },
         { merge: true }
     );
+};
+
+export const getGoals = async () => {
+    const uid = await getCurrentUserInfo().uid;
+    const userRef = await db.collection("users");
+    const snapshot = await userRef
+        .doc(`${uid}`)
+        .collection("goals")
+        .doc("goals")
+        .get();
+    const goals = await snapshot.data();
+    return goals;
 };
 
 export const deleteGoal = async (

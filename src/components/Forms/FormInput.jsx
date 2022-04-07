@@ -7,21 +7,23 @@ import {
     FormLabel,
 } from "react-bootstrap";
 
-export default function FormInput({
-    submitButtonTitle,
-    titles = ["Title"],
-    handleSubmit,
-}) {
-    const [goalTitle, setGoalTitle] = useState("");
-    const [goalCost, setGoalCost] = useState("");
-
+export default function FormInput({ titles = ["Title"], handleSubmit }) {
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} id="form">
             <FormGroup>
                 {titles.map((title, i) => (
                     <div key={i + title} style={{ marginBottom: 20 }}>
                         <FormLabel>{title}</FormLabel>
-                        <FormControl name={title}></FormControl>
+                        <FormControl
+                            name={title}
+                            type={
+                                title === "Cost" || title === "Value"
+                                    ? "number"
+                                    : "text"
+                            }
+                            defaultValue=""
+                            required
+                        ></FormControl>
                     </div>
                 ))}
                 <Button type="submit">Save</Button>

@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { SiTarget } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import AllowanceContainer from "../../components/Allowance/AllowanceContainer";
 
 import {
     selectAllowance,
     selectGoals,
     setAllowance,
+    setGoal,
 } from "../../features/allowance/allowanceSlice";
 import { selectActiveFamilyMember } from "../../features/user/userSlice";
-import { getAllowance } from "../../utils/firestore";
+import { getAllowance, getGoals } from "../../utils/firestore";
 import "./AllowancePage.css";
 
 export default function AllowancePage() {
@@ -18,26 +19,41 @@ export default function AllowancePage() {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
     const goals = useSelector(selectGoals);
     const allowance = useSelector(selectAllowance);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // get allowances from db and set it to redux for faster interaction between members
+        if (!goals[activeFamilyMember]) {
+            navigate("/main/addGoal");
+        }
+
+        // get allowances and goals from db and set it to redux for faster interaction between members
         const getAllowances = async () => {
             const earnings = await getAllowance();
-            // redux reducer fuction
+            const goals = await getGoals();
+            console.log(goals);
+            // redux reducer fuction to update redux store
             dispatch(setAllowance(earnings));
+            dispatch(setGoal(goals));
         };
         getAllowances();
-    }, []);
+    }, [activeFamilyMember]);
 
     function calculateGoalPercentage() {
         if (!allowance[activeFamilyMember]) {
             return 0;
         }
+        if (!goals[activeFamilyMember]) {
+            console.log("no value");
+
+            return 0;
+        }
         // gives the percentage of goal used fo fill allowance graph
-        const percentage = (allowance[activeFamilyMember] / 10) * 100;
+        const percentage =
+            (allowance[activeFamilyMember] / goals[activeFamilyMember].value) *
+            100;
+        console.log(percentage);
         return percentage;
     }
-    function targetClickHandler() {}
 
     // conditoinal target button added if an active member is clicked. Used to add / edit goal
     const AddGoalIcon = (
@@ -50,9 +66,15 @@ export default function AllowancePage() {
 
     return (
         <div>
+            <h3 className="mt-3">
+                {goals[activeFamilyMember]
+                    ? goals[activeFamilyMember].goal
+                    : null}
+            </h3>
             <AllowanceContainer
                 className="allowance-bar"
                 allowance={allowance}
+                goal={goals}
                 activeFamilyMember={activeFamilyMember}
                 style={{ height: `${calculateGoalPercentage()}%` }}
             />
