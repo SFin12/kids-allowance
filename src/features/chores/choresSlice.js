@@ -8,10 +8,9 @@ export const choresSlice = createSlice({
 
     reducers: {
         setChores: (state, action) => {
-            Object.keys(action.payload).forEach((key) => {
-                state[key] = action.payload[key];
-            });
+            return action.payload;
         },
+        // shoes flipped or non-flipped card. If flipped back to non-complete, completedBy and datCompleted are set to "".
         updateChore: (state, action) => {
             state[action.payload.chore] = {
                 value: action.payload.value,

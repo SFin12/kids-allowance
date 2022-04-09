@@ -30,7 +30,7 @@ export default function AllowancePage() {
         const getAllowances = async () => {
             const earnings = await getAllowance();
             const goals = await getGoals();
-            console.log(goals);
+
             // redux reducer fuction to update redux store
             dispatch(setAllowance(earnings));
             dispatch(setGoal(goals));
@@ -51,7 +51,7 @@ export default function AllowancePage() {
         const percentage =
             (allowance[activeFamilyMember] / goals[activeFamilyMember].value) *
             100;
-        console.log(percentage);
+
         return percentage;
     }
 

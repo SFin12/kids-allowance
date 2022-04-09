@@ -6,6 +6,8 @@ import {
     FormLabel,
     Button,
 } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { setChores } from "../../features/chores/choresSlice";
 import { createChore, deleteChore, getChores } from "../../utils/firestore";
 
 export default function AddChores() {
@@ -13,10 +15,13 @@ export default function AddChores() {
     const [value, setValue] = useState("");
     const [displayChores, setDisplayChores] = useState([]);
     const [update, setUpdate] = useState(false);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         getChores().then((chores) => {
             setDisplayChores(Object.keys(chores));
+            console.log("chores", chores);
+            dispatch(setChores(chores));
         });
     }, [update]);
 
@@ -24,7 +29,9 @@ export default function AddChores() {
         e.preventDefault();
         if (title && value) {
             createChore(title, value);
+            setUpdate(!update);
         }
+        // reset input values
         setTitle("");
         setValue("");
     }
@@ -32,10 +39,9 @@ export default function AddChores() {
     function handleDelete(e) {
         e.preventDefault();
         const name = e.currentTarget.name;
-        console.log(name);
+
         if (name) {
-            deleteChore(name);
-            setUpdate(!update);
+            deleteChore(name).then(() => setUpdate(!update));
         }
     }
 
@@ -62,6 +68,7 @@ export default function AddChores() {
                             name="text"
                             onChange={handleChange}
                             value={title}
+                            maxLength={15}
                         />
                     </FormGroup>
                     <FormGroup

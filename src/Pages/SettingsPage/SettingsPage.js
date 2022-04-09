@@ -35,7 +35,7 @@ export default function SettingsPage(props) {
                 updateAllowance(member);
             });
         };
-        console.log("rendering settings");
+
         famData();
     }, [update]);
 
@@ -58,7 +58,7 @@ export default function SettingsPage(props) {
     function handleDelete(e) {
         e.preventDefault();
         const name = e.currentTarget.name;
-        console.log(name);
+
         deleteFamily(name);
         setUpdate(!update);
     }

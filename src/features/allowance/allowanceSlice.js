@@ -11,7 +11,6 @@ export const allowanceSlice = createSlice({
 
     reducers: {
         setAllowance: (state, action) => {
-            console.log("payload", action.payload);
             state.earnings = { ...state.earnings, ...action.payload };
         },
         setGoal: (state, action) => {

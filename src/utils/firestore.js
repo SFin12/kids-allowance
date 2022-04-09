@@ -67,7 +67,7 @@ export const getChores = async () => {
     return snapshot.data().chores;
 };
 
-export const deleteChore = (title) => {
+export const deleteChore = async (title) => {
     const userId = getCurrentUserInfo().uid;
     const userDataRef = db.collection("users").doc(`${userId}`);
     userDataRef.update({

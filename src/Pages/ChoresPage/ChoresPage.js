@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import ChoreCard from "../../components/Chores/ChoreCard";
 import { selectChores } from "../../features/chores/choresSlice";
+import { getChores } from "../../utils/firestore";
 
 export default function ChoresPage() {
     const chores = useSelector(selectChores);
+
+    useEffect(() => {
+        console.log(chores);
+    }, [chores]);
 
     return (
         <div>
