@@ -34,7 +34,7 @@ export default function AddGoalPage() {
     }
 
     return (
-        <div className="d-flex justify-content-center w-100 flex-column align-items-center">
+        <div className="d-flex justify-content-center w-100 h-100 flex-column align-items-center">
             <h4 className="title">
                 {activeFamilyMember
                     ? `Set a goal for ${activeFamilyMember}`

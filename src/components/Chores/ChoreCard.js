@@ -24,7 +24,7 @@ export default function ChoreCard({ chore, value, completedBy }) {
     }, []);
 
     function convertToCents() {
-        if (numVal < 1) {
+        if (numVal < 1 && numVal !== 0) {
             const centValue = value + "0";
             return centValue.slice(0, 3);
         }
@@ -67,7 +67,9 @@ export default function ChoreCard({ chore, value, completedBy }) {
                 <div className="card-front">
                     <div>{chore}</div>
                     <div>
-                        {numVal >= 1 ? `$${value}` : `${convertToCents()}¢`}
+                        {numVal === 0 || numVal >= 1
+                            ? `$${value}`
+                            : `${convertToCents()}¢`}
                     </div>
                 </div>
                 <div className="card-back">

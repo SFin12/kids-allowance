@@ -65,8 +65,8 @@ export default function SettingsPage(props) {
 
     return (
         <div className="d-block w-100">
-            <Accordion defaultActiveKey="0">
-                <Accordion.Item eventKey="0">
+            <Accordion>
+                <Accordion.Item eventKey="0" className="mt-2">
                     <Accordion.Header>Edit Family</Accordion.Header>
                     <Accordion.Body
                         style={{ backgroundColor: "rgb(255,255,255)" }}
@@ -86,7 +86,7 @@ export default function SettingsPage(props) {
                                         required
                                     />
                                     <Button variant="primary" type="submit">
-                                        submit
+                                        Save
                                     </Button>
                                 </FormGroup>
                             </FormGroup>

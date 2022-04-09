@@ -84,8 +84,8 @@ export default function AddChores() {
                             onChange={handleChange}
                         />
                     </FormGroup>
-                    <Button variant="secondary" onClick={handleSubmit}>
-                        Submit
+                    <Button variant="primary" onClick={handleSubmit}>
+                        Save
                     </Button>
                 </FormGroup>
             </Form>
