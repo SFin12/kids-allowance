@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import Navigation from "../../components/Nav/Navigation";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,9 @@ export default function MainPage(props) {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const location = useLocation();
+    console.log(location.pathname);
+    // setup initial redux state from firebase
     useEffect(() => {
         // firebase listener that changes when user signs in or out
         const unregisterAuthObserver = firebase
@@ -90,7 +92,7 @@ export default function MainPage(props) {
                     <Route path="/allowance" element={<AllowancePage />} />
                     <Route path="/addGoal" element={<AddGoalPage />} />
                 </Routes>
-                <Footer />
+                {location.pathname !== "/main/settings" ? <Footer /> : null}
             </div>
         </div>
     );

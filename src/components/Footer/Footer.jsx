@@ -19,33 +19,37 @@ export default function Footer() {
     }
     return (
         <div className="footer">
-            {familyMembers
-                ? familyMembers.map((member, i) => {
-                      const bgModifier = i * 25;
-                      let r = 127 - bgModifier;
-                      let g = 255 - bgModifier;
-                      let b = 212 - bgModifier;
-                      if (member === activeMember) {
-                          r = 255;
-                          g = 255;
-                          b = 0;
-                      }
-                      return (
-                          <div
-                              key={i + member}
-                              className="member"
-                              id={member}
-                              name={member}
-                              style={{
-                                  background: `rgb(${r}, ${g}, ${b})`,
-                              }}
-                              onClick={handleActiveFamilyMember}
-                          >
-                              {member}
-                          </div>
-                      );
-                  })
-                : "Add Family Members"}
+            {familyMembers ? (
+                familyMembers.map((member, i) => {
+                    const bgModifier = i * 25;
+                    let r = 127 - bgModifier;
+                    let g = 255 - bgModifier;
+                    let b = 212 - bgModifier;
+                    if (member === activeMember) {
+                        r = 255;
+                        g = 255;
+                        b = 0;
+                    }
+                    return (
+                        <div
+                            key={i + member}
+                            className="member"
+                            id={member}
+                            name={member}
+                            style={{
+                                background: `rgb(${r}, ${g}, ${b})`,
+                            }}
+                            onClick={handleActiveFamilyMember}
+                        >
+                            {member}
+                        </div>
+                    );
+                })
+            ) : (
+                <h5 className="d-flex w-100 justify-content-center align-items-center">
+                    Go to Settings to add Family Members
+                </h5>
+            )}
         </div>
     );
 }
