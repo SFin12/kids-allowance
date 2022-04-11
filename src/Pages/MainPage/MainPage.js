@@ -12,7 +12,13 @@ import {
 import SettingsPage from "../SettingsPage/SettingsPage";
 import ChoresPage from "../ChoresPage/ChoresPage";
 import "./MainPage.css";
-import { getUserInfo } from "../../utils/firestore";
+import {
+    createChore,
+    createFamily,
+    createUser,
+    getUserInfo,
+    updateAllowance,
+} from "../../utils/firestore";
 import { setChores } from "../../features/chores/choresSlice";
 import AllowancePage from "../AllowancePage/AllowancePage";
 import Footer from "../../components/Footer/Footer";
@@ -38,7 +44,6 @@ export default function MainPage(props) {
                     const splitNames = user.displayName.split(" ");
                     setLastName(splitNames[splitNames.length - 1]);
                     // updates redux state with uder info
-
                     dispatch(
                         setActiveUser({
                             name: user.displayName,
@@ -50,13 +55,21 @@ export default function MainPage(props) {
                     // returns family members for current user from firestore db and updates Redux.
                     const family = async () => {
                         const dbData = await getUserInfo(user.uid);
+                        if (dbData) {
+                            console.log("dbData true: ", dbData);
+                            dispatch(
+                                setFamilyMembers({
+                                    familyMembers: dbData.family,
+                                })
+                            );
 
-                        dispatch(
-                            setFamilyMembers({
-                                familyMembers: dbData.family,
-                            })
-                        );
-                        dispatch(setChores(dbData.chores));
+                            dispatch(setChores());
+                        } else {
+                            // If getUserInfo is undefined, add new user to database.
+                            createUser(user);
+                            createFamily([]);
+                            createChore();
+                        }
                     };
                     family();
                 } else {

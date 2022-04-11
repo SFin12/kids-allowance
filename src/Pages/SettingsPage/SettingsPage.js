@@ -29,11 +29,15 @@ export default function SettingsPage(props) {
     useEffect(() => {
         const famData = async () => {
             const famArr = await getFamily(uid);
-            setDisplayFamily(famArr);
-            dispatch(setFamilyMembers({ familyMembers: famArr }));
-            famArr.forEach((member) => {
-                updateAllowance(member);
-            });
+            if (famArr) {
+                // shows family members under input with option to delete
+                setDisplayFamily(famArr);
+                // set redux family members
+                dispatch(setFamilyMembers({ familyMembers: famArr }));
+                famArr.forEach((member) => {
+                    updateAllowance(member);
+                });
+            }
         };
 
         famData();
@@ -49,8 +53,8 @@ export default function SettingsPage(props) {
         e.preventDefault();
         //splits names into an array
         const famArr = family.split(",");
-        famArr.forEach((member) => member.trim());
-        createFamily(famArr);
+        const cleanfamArr = famArr.map((member) => member.trim());
+        createFamily(cleanfamArr);
         setUpdate(!update);
         setFamily("");
     }

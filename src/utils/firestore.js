@@ -5,14 +5,13 @@ export function getCurrentUserInfo() {
     return firebase.auth().currentUser;
 }
 
-export const createUser = () => {
-    const user = getUserInfo();
+export const createUser = (user) => {
     db.collection("users")
         .doc(user.uid)
         .set(
             {
                 id: user.uid,
-                name: user.name,
+                name: user.displayName,
                 email: user.email,
             },
             { merge: true }
@@ -112,9 +111,12 @@ export const updateAllowance = async (
 ) => {
     let totalValue = Number(value);
     const allowanceExists = await getAllowance();
-    if (allowanceExists[member]) {
-        console.log("allowance exists:", allowanceExists[member]);
-        totalValue += Number(allowanceExists[member]);
+    // if an allowance exists and family member exists w/ value greater than zero, add to total.
+    if (typeof allowanceExists !== "undefined") {
+        if (typeof allowanceExists[member] !== "undefined") {
+            console.log(allowanceExists[member]);
+            totalValue += Number(allowanceExists[member]); // old allowance
+        }
     }
     const userRef = await db.collection("users").doc(userId);
     const earnings = await userRef.collection("earnings");

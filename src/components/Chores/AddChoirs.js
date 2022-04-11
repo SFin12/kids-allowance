@@ -18,11 +18,13 @@ export default function AddChores() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        getChores().then((chores) => {
-            setDisplayChores(Object.keys(chores));
-            console.log("chores", chores);
-            dispatch(setChores(chores));
-        });
+        getChores()
+            .then((chores) => {
+                setDisplayChores(Object.keys(chores));
+                console.log("chores", chores);
+                dispatch(setChores(chores));
+            })
+            .catch((err) => console.error(err));
     }, [update]);
 
     async function handleSubmit(e) {
