@@ -25,7 +25,7 @@ export default function MainPage(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location.pathname);
+
     // setup initial redux state from firebase
     useEffect(() => {
         // firebase listener that changes when user signs in or out
@@ -61,6 +61,7 @@ export default function MainPage(props) {
                     family();
                 } else {
                     setIsSignedIn(false);
+                    alert("You are not logged in.");
                 }
             });
         return () => unregisterAuthObserver();
