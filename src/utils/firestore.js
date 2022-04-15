@@ -88,7 +88,7 @@ export const getFamily = async (userId) => {
         try {
             uid = await getCurrentUserInfo().uid;
         } catch (err) {
-            console.log(err.message);
+            return console.error(err.message + " in getCurrentUserInfo()");
         }
     }
     const userRef = await db.collection("users");

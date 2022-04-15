@@ -12,17 +12,12 @@ import {
 import SettingsPage from "../SettingsPage/SettingsPage";
 import ChoresPage from "../ChoresPage/ChoresPage";
 import "./MainPage.css";
-import {
-    createChore,
-    createFamily,
-    createUser,
-    getUserInfo,
-    updateAllowance,
-} from "../../utils/firestore";
+import { createFamily, createUser, getUserInfo } from "../../utils/firestore";
 import { setChores } from "../../features/chores/choresSlice";
 import AllowancePage from "../AllowancePage/AllowancePage";
 import Footer from "../../components/Footer/Footer";
 import AddGoalPage from "../AllowancePage/AddGoalPage";
+import TitlePage from "../TitlePage/TitlePage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -57,18 +52,18 @@ export default function MainPage(props) {
                         const dbData = await getUserInfo(user.uid);
                         if (dbData) {
                             console.log("dbData true: ", dbData);
+                            // set redux family info from db
                             dispatch(
                                 setFamilyMembers({
                                     familyMembers: dbData.family,
                                 })
                             );
-
+                            // set redux chores from db
                             dispatch(setChores());
                         } else {
                             // If getUserInfo is undefined, add new user to database.
                             createUser(user);
                             createFamily([]);
-                            createChore();
                         }
                     };
                     family();
@@ -94,13 +89,14 @@ export default function MainPage(props) {
     }
 
     return (
-        <div className="">
+        <div className="main">
             {isSignedIn ? (
                 <Navigation logout={handleLogout} lastName={lastName} />
             ) : null}
             <div className="spacer"></div>
             <div className="d-flex justify-content-center w-100">
                 <Routes>
+                    <Route path="/" element={<TitlePage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/chores" element={<ChoresPage />} />
                     <Route path="/allowance" element={<AllowancePage />} />

@@ -1,0 +1,12 @@
+.sign-in-background {
+    background-color: var(--main-color);
+}
+
+.sign-in {
+    height: 50%;
+    max-height: 280px;
+    max-width: 250px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
+}
