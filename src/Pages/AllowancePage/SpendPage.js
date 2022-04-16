@@ -6,7 +6,11 @@ import {
     selectActiveFamilyMember,
     selectUserId,
 } from "../../features/user/userSlice";
-import { updateGoal } from "../../utils/firestore";
+import {
+    getAllowance,
+    updateAllowance,
+    updateGoal,
+} from "../../utils/firestore";
 
 export default function SpendPage() {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
@@ -22,6 +26,8 @@ export default function SpendPage() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        const spent = e.target.value * -1;
+        updateAllowance(spent);
     }
 
     return (

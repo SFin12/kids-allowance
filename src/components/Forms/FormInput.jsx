@@ -47,6 +47,7 @@ export default function FormInput({ titles = ["Title"], handleSubmit }) {
                                 }
                                 defaultValue=""
                                 required
+                                maxLength={20}
                             ></FormControl>
                         </div>
                     </div>
