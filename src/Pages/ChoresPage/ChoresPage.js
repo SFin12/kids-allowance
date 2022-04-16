@@ -9,7 +9,7 @@ export default function ChoresPage() {
     const chores = useSelector(selectChores);
 
     useEffect(() => {
-        console.log(chores);
+        console.log("chores: ", chores);
     }, [chores]);
 
     return (

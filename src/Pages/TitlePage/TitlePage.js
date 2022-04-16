@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectChores } from "../../features/chores/choresSlice";
 import {
     selectFamilyMembers,
     selectUserId,
@@ -9,18 +10,20 @@ import { getFamily } from "../../utils/firestore";
 import "./TitlePage.css";
 
 export default function TitlePage() {
-    const [isFamCreated, setIsFamCreated] = useState(false);
-    const [isChoresCreated, setIsChoresCreated] = useState(false);
+    const [dataExists, setDataExists] = useState(false);
+
     const family = useSelector(selectFamilyMembers);
+    const chores = useSelector(selectChores);
 
     useEffect(() => {
-        if (family) {
-            family.length > 0 && setIsFamCreated(true);
+        if (family && chores) {
+            // if family and chores exist, say data exists to change what is returned
+            family.length > 0 && chores.length > 0 && setDataExists(true);
         }
-    }, [family]);
+    }, [family, chores]);
     return (
         <div className="title-page-container container">
-            {isFamCreated ? (
+            {dataExists ? (
                 <Link to="/main/chores" className="logo-link">
                     <div className="logo">
                         <h1>Chorzy</h1>

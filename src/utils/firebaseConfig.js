@@ -25,7 +25,7 @@ export const uiConfig = {
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     ],
-    signInSuccessUrl: "/main",
+    // signInSuccessUrl: "/loading",
 };
 
 firebase.initializeApp(firebaseConfig);
