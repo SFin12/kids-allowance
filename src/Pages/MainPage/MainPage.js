@@ -12,7 +12,12 @@ import {
 import SettingsPage from "../SettingsPage/SettingsPage";
 import ChoresPage from "../ChoresPage/ChoresPage";
 import "./MainPage.css";
-import { createFamily, createUser, getUserInfo } from "../../utils/firestore";
+import {
+    createChore,
+    createFamily,
+    createUser,
+    getUserInfo,
+} from "../../utils/firestore";
 import { setChores } from "../../features/chores/choresSlice";
 import AllowancePage from "../AllowancePage/AllowancePage";
 import Footer from "../../components/Footer/Footer";
@@ -21,8 +26,6 @@ import TitlePage from "../TitlePage/TitlePage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
-
-    const [isSignedIn, setIsSignedIn] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -34,7 +37,6 @@ export default function MainPage(props) {
             .auth()
             .onAuthStateChanged(async (user) => {
                 if (user) {
-                    setIsSignedIn(true);
                     // Gets the users last name from display name
                     const splitNames = user.displayName.split(" ");
                     setLastName(splitNames[splitNames.length - 1]);
@@ -59,7 +61,7 @@ export default function MainPage(props) {
                                 })
                             );
                             // set redux chores from db
-                            dispatch(setChores());
+                            dispatch(setChores(dbData.chores));
                         } else {
                             // If getUserInfo is undefined, add new user to database.
                             createUser(user);
@@ -68,7 +70,6 @@ export default function MainPage(props) {
                     };
                     family();
                 } else {
-                    setIsSignedIn(false);
                     alert("You are not logged in.");
                 }
             });
@@ -90,9 +91,8 @@ export default function MainPage(props) {
 
     return (
         <div className="main">
-            {isSignedIn ? (
-                <Navigation logout={handleLogout} lastName={lastName} />
-            ) : null}
+            <Navigation logout={handleLogout} lastName={lastName} />
+
             <div className="spacer"></div>
             <div className="d-flex justify-content-center w-100">
                 <Routes>
