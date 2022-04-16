@@ -24,6 +24,7 @@ import Footer from "../../components/Footer/Footer";
 import AddGoalPage from "../AllowancePage/AddGoalPage";
 import TitlePage from "../TitlePage/TitlePage";
 import EditAllowancePage from "../AllowancePage/EditAllowancePage";
+import SpendPage from "../AllowancePage/SpendPage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -104,6 +105,8 @@ export default function MainPage(props) {
                         path="/editAllowance"
                         element={<EditAllowancePage />}
                     />
+
+                    <Route path="/spend" element={<SpendPage />} />
                     <Route path="/addGoal" element={<AddGoalPage />} />
                 </Routes>
 

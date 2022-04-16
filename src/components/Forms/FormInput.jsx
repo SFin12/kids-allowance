@@ -14,16 +14,41 @@ export default function FormInput({ titles = ["Title"], handleSubmit }) {
                 {titles.map((title, i) => (
                     <div key={i + title} style={{ marginBottom: 20 }}>
                         <FormLabel>{title}</FormLabel>
-                        <FormControl
-                            name={title}
-                            type={
-                                title === "Cost" || title === "Value"
-                                    ? "number"
-                                    : "text"
-                            }
-                            defaultValue=""
-                            required
-                        ></FormControl>
+                        <div className="d-flex align-items-center">
+                            {title === "Cost" ||
+                            title === "Value" ||
+                            title === "Amount" ? (
+                                <span
+                                    style={{
+                                        fontSize: "1.2rem",
+                                        paddingRight: 3.91,
+                                    }}
+                                >
+                                    $
+                                </span>
+                            ) : (
+                                <span
+                                    style={{
+                                        fontSize: "1.2rem",
+                                        paddingRight: 3.91,
+                                    }}
+                                >
+                                    &nbsp;&nbsp;
+                                </span>
+                            )}
+                            <FormControl
+                                name={title}
+                                type={
+                                    title === "Cost" ||
+                                    title === "Value" ||
+                                    title === "Amount"
+                                        ? "number"
+                                        : "text"
+                                }
+                                defaultValue=""
+                                required
+                            ></FormControl>
+                        </div>
                     </div>
                 ))}
                 <Button type="submit">Save</Button>
