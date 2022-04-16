@@ -14,7 +14,7 @@ export default function ChoresPage() {
 
     return (
         <div className="w-100">
-            <Container className="d-flex justify-content-center my-5 pb-2 ">
+            <Container className="d-flex justify-content-center pt-3">
                 <Row xs={1} md={2} lg={3} xl={3} xxl={4} className={"w-100"}>
                     {Object.keys(chores).map((key, i) => (
                         <Col

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
 import { SiTarget } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
@@ -56,9 +57,9 @@ export default function AllowancePage() {
     }
 
     // conditoinal target button added if an active member is clicked. Used to add / edit goal
-    const AddGoalIcon = (
-        <Link className="target-icon" to={"/main/addGoal"}>
-            <SiTarget
+    const EditIcon = (
+        <Link className="target-icon" to={"/main/editAllowance"}>
+            <AiOutlineEdit
                 style={{ height: "2rem", width: "2rem", color: "teal" }}
             />
         </Link>
@@ -78,7 +79,7 @@ export default function AllowancePage() {
                 activeFamilyMember={activeFamilyMember}
                 style={{ height: `${calculateGoalPercentage()}%` }}
             />
-            {activeFamilyMember ? AddGoalIcon : null}
+            {activeFamilyMember ? EditIcon : null}
         </div>
     );
 }

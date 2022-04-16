@@ -6,3 +6,11 @@
     width: min-content;
     height: min-content;
 }
+.edit-icon {
+    display: inline;
+    position: absolute;
+    bottom: 175px;
+    right: 40px;
+    width: min-content;
+    height: min-content;
+}

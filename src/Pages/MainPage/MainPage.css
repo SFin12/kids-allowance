@@ -1,10 +1,15 @@
 .main {
     background-color: white;
     height: 100%;
+    padding: 60px 0;
 }
 
 .spacer {
-    height: 50px;
+    min-height: 60px;
+}
+.spacer-bottom {
+    bottom: 0;
+    min-height: 60px;
 }
 
 .label {

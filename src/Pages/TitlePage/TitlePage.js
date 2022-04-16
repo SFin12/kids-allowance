@@ -18,7 +18,8 @@ export default function TitlePage() {
     useEffect(() => {
         if (family && chores) {
             // if family and chores exist, say data exists to change what is returned
-            family.length > 0 && chores.length > 0 && setDataExists(true);
+
+            family.length > 0 && setDataExists(true);
         }
     }, [family, chores]);
     return (

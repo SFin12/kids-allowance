@@ -64,27 +64,44 @@ export default function AddChores() {
                         controlId="exampleForm.ControlInput1"
                     >
                         <FormLabel>Title</FormLabel>
-                        <FormControl
-                            type="text"
-                            placeholder="Dishes"
-                            name="text"
-                            onChange={handleChange}
-                            value={title}
-                            maxLength={15}
-                        />
+                        {/* div to match dollar sign spacing below*/}
+                        <div className="d-flex">
+                            <span style={{ paddingRight: 15.5 }}></span>
+                            <FormControl
+                                type="text"
+                                placeholder="Example: Wash Dishes"
+                                name="text"
+                                onChange={handleChange}
+                                value={title}
+                                maxLength={20}
+                            />
+                        </div>
                     </FormGroup>
                     <FormGroup
                         className="mb-3"
                         controlId="exampleFormControlTextarea1"
                     >
                         <FormLabel>Value</FormLabel>
-                        <FormControl
-                            type="number"
-                            placeholder="value"
-                            name="value"
-                            value={value}
-                            onChange={handleChange}
-                        />
+                        {/* div to allow dollar sign in front of input */}
+                        <div className="d-flex align-items-center">
+                            <span
+                                style={{
+                                    fontSize: "1.rem",
+                                    paddingRight: 3.91,
+                                }}
+                            >
+                                $
+                            </span>
+                            <FormControl
+                                type="number"
+                                max={10000}
+                                maxLength={5}
+                                placeholder=".50"
+                                name="value"
+                                value={value}
+                                onChange={handleChange}
+                            />
+                        </div>
                     </FormGroup>
                     <Button variant="primary" onClick={handleSubmit}>
                         Save

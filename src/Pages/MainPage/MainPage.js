@@ -23,6 +23,7 @@ import AllowancePage from "../AllowancePage/AllowancePage";
 import Footer from "../../components/Footer/Footer";
 import AddGoalPage from "../AllowancePage/AddGoalPage";
 import TitlePage from "../TitlePage/TitlePage";
+import EditAllowancePage from "../AllowancePage/EditAllowancePage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -93,15 +94,19 @@ export default function MainPage(props) {
         <div className="main">
             <Navigation logout={handleLogout} lastName={lastName} />
 
-            <div className="spacer"></div>
-            <div className="d-flex justify-content-center w-100">
+            <div className="d-flex justify-content-center w-100 h-100">
                 <Routes>
                     <Route path="/" element={<TitlePage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/chores" element={<ChoresPage />} />
                     <Route path="/allowance" element={<AllowancePage />} />
+                    <Route
+                        path="/editAllowance"
+                        element={<EditAllowancePage />}
+                    />
                     <Route path="/addGoal" element={<AddGoalPage />} />
                 </Routes>
+
                 {location.pathname !== "/main/settings" ? <Footer /> : null}
             </div>
         </div>

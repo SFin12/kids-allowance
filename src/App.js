@@ -24,7 +24,7 @@ function App() {
 
     return (
         <div className="App">
-            <div className="m-0 p-0  container-fluid">
+            <div className="m-0 p-0  container-fluid ">
                 <Routes>
                     <Route path="/" element={<SignInPage />}></Route>
                     <Route path="/main/*" element={<MainPage />}></Route>

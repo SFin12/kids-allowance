@@ -70,6 +70,7 @@ export default function SettingsPage(props) {
     return (
         <div className="d-block w-100">
             <Accordion>
+                {/* Add family members input section */}
                 <Accordion.Item eventKey="0" className="mt-2">
                     <Accordion.Header>Edit Family</Accordion.Header>
                     <Accordion.Body
@@ -86,6 +87,7 @@ export default function SettingsPage(props) {
                                         className="family-input"
                                         onChange={handleChange}
                                         name="family"
+                                        placeholder="Example: John, Jane"
                                         value={family}
                                         required
                                     />
@@ -112,6 +114,7 @@ export default function SettingsPage(props) {
                 </Accordion.Item>
                 <Accordion.Item eventKey="1">
                     <Accordion.Header>Edit Chores</Accordion.Header>
+                    {/* Add chores section */}
                     <Accordion.Body
                         style={{ backgroundColor: "rgb(255,255,255)" }}
                     >
