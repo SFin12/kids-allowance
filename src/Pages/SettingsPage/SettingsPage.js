@@ -71,7 +71,7 @@ export default function SettingsPage(props) {
         <div className="d-block w-100">
             <Accordion>
                 {/* Add family members input section */}
-                <Accordion.Item eventKey="0" className="mt-2">
+                <Accordion.Item eventKey="0" className="">
                     <Accordion.Header>Edit Family</Accordion.Header>
                     <Accordion.Body
                         style={{ backgroundColor: "rgb(255,255,255)" }}

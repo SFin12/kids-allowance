@@ -26,8 +26,12 @@ export default function SpendPage() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        const spent = e.target.value * -1;
-        updateAllowance(spent);
+
+        const spent = e.target.elements.Amount.value * -1;
+        console.log(spent);
+        updateAllowance(activeFamilyMember, spent, userId).then(() => {
+            navigate("/main/allowance");
+        });
     }
 
     return (

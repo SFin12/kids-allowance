@@ -111,6 +111,7 @@ export const updateAllowance = async (
 ) => {
     let totalValue = Number(value);
     const allowanceExists = await getAllowance();
+    console.log("allowance value:", value);
     // if an allowance exists and family member exists w/ value greater than zero, add to total.
     if (typeof allowanceExists !== "undefined") {
         if (typeof allowanceExists[member] !== "undefined") {
