@@ -44,40 +44,35 @@ export default function EditAllowancePage(props) {
         <div className="edit-allowance-container">
             <div className="d-flex flex-column flex-grow-1 h-100">
                 <button
-                    className="flex-grow-1 align-middle"
-                    style={{ backgroundColor: "gray", border: "none" }}
+                    className="flex-grow-1 align-middle edit-allowance-button"
                     onClick={handleClick}
                     name="spend-money"
                 >
                     Spend Money
                 </button>
                 <button
-                    className="flex-grow-1"
-                    style={{ backgroundColor: "white", border: "none" }}
+                    className="flex-grow-1 edit-allowance-button"
                     name="change-goal"
                     onClick={handleClick}
                 >
                     Change Goal
                 </button>
                 <button
-                    className="flex-grow-1"
-                    style={{ backgroundColor: "gray", border: "none" }}
+                    className="flex-grow-1 edit-allowance-button"
                     name="set-bonus"
                     onClick={handleClick}
                 >
                     Set Bonus
                 </button>
                 <button
-                    className="flex-grow-1"
-                    style={{ backgroundColor: "white", border: "none" }}
+                    className="flex-grow-1 edit-allowance-button"
                     name="edit-allowance"
                     onClick={handleClick}
                 >
                     Edit Money
                 </button>
                 <button
-                    className="flex-grow-1"
-                    style={{ backgroundColor: "gray", border: "none" }}
+                    className="flex-grow-1 edit-allowance-button"
                     name="reset-allowance"
                     onClick={handleClick}
                 >

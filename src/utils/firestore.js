@@ -109,6 +109,9 @@ export const updateAllowance = async (
     value = 0,
     userId = getCurrentUserInfo().uid
 ) => {
+    if (member === isNaN || member === null || typeof member === "number") {
+        return console.error("Must provide string value for first argument");
+    }
     let totalValue = Number(value);
     const allowanceExists = await getAllowance();
     console.log("allowance value:", value);

@@ -18,6 +18,7 @@ export default function AddGoalPage() {
         if (activeFamilyMember === null) {
             navigate("/main");
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFamilyMember]);
 

@@ -3,3 +3,11 @@
     max-width: 1400px;
     min-height: 100%;
 }
+
+.edit-allowance-button {
+    background-color: rgb(87, 215, 172);
+    border: none;
+    border-bottom: 2px solid white;
+    font-size: 2rem;
+    color: white;
+}
