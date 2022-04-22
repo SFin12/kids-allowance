@@ -49,12 +49,15 @@ export default function EditAllowancePage(props) {
                         Set Bonus
                     </button>
                 </Link>
-                <Link to={"/main/editAllowance"} className="d-flex flex-grow-1">
+                <Link
+                    to={"/main/adjustAllowance"}
+                    className="d-flex flex-grow-1"
+                >
                     <button
                         className="flex-grow-1 edit-allowance-button"
-                        name="edit-allowance"
+                        name="adjust-allowance"
                     >
-                        Edit Money
+                        Adjust Total
                     </button>
                 </Link>
                 <Link

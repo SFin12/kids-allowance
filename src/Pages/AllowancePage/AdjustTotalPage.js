@@ -6,9 +6,9 @@ import {
     selectActiveFamilyMember,
     selectUserId,
 } from "../../features/user/userSlice";
-import { updateAllowance } from "../../utils/firestore";
+import { createAllowance, updateAllowance } from "../../utils/firestore";
 
-export default function SpendPage() {
+export default function AdjustTotalPage() {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
     const userId = useSelector(selectUserId);
     const navigate = useNavigate();
@@ -23,9 +23,9 @@ export default function SpendPage() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        const spent = e.target.elements.Amount.value * -1;
-        console.log(spent);
-        updateAllowance(activeFamilyMember, spent, userId).then(() => {
+        const newTotal = Number(e.target.elements.Amount.value);
+        console.log(newTotal);
+        createAllowance(activeFamilyMember, newTotal, userId).then(() => {
             navigate("/main/allowance");
         });
     }
@@ -37,7 +37,7 @@ export default function SpendPage() {
         >
             <h4 className="title">
                 {activeFamilyMember
-                    ? `How much did ${activeFamilyMember} spend?`
+                    ? `New total for ${activeFamilyMember}'s allowance?`
                     : null}
             </h4>
 

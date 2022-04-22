@@ -14,3 +14,14 @@
     width: min-content;
     height: min-content;
 }
+
+.title {
+    padding: 10px;
+}
+
+.reset-button {
+    background-color: aquamarine !important;
+    border: aquamarine !important;
+    color: black !important;
+    margin: 15px 0px 15px 0px;
+}

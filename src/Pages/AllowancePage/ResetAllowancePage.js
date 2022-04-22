@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
+import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import FormInput from "../../components/Forms/FormInput";
 import {
     selectActiveFamilyMember,
     selectUserId,
 } from "../../features/user/userSlice";
-import { updateAllowance } from "../../utils/firestore";
+import { createAllowance } from "../../utils/firestore";
 
-export default function SpendPage() {
+export default function ResetAllowancePage() {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
     const userId = useSelector(selectUserId);
     const navigate = useNavigate();
@@ -23,9 +23,9 @@ export default function SpendPage() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        const spent = e.target.elements.Amount.value * -1;
-        console.log(spent);
-        updateAllowance(activeFamilyMember, spent, userId).then(() => {
+        const newTotal = Number(e.target.elements.Amount.value);
+        console.log(newTotal);
+        createAllowance(activeFamilyMember, newTotal, userId).then(() => {
             navigate("/main/allowance");
         });
     }
@@ -37,12 +37,15 @@ export default function SpendPage() {
         >
             <h4 className="title">
                 {activeFamilyMember
-                    ? `How much did ${activeFamilyMember} spend?`
+                    ? `Are you sure you want to reset ${activeFamilyMember}'s allowance?`
                     : null}
             </h4>
 
-            <div className="w-75">
-                <FormInput titles={["Amount"]} handleSubmit={handleSubmit} />
+            <div className="w-75 d-flex flex-column justify-content-around">
+                <Button className="reset-button">Yes</Button>
+                <Button variant="secondary" className="">
+                    Cancel
+                </Button>
             </div>
         </div>
     );

@@ -104,6 +104,25 @@ export const deleteFamily = (name) => {
     });
 };
 
+export const createAllowance = async (
+    member,
+    value = 0,
+    userId = getCurrentUserInfo().uid
+) => {
+    if (member === isNaN || member === null || typeof member === "number") {
+        return console.error("Must provide string value for first argument");
+    }
+    let totalValue = Number(value);
+    const userRef = await db.collection("users").doc(userId);
+    const earnings = await userRef.collection("earnings");
+    earnings.doc("earnings").set(
+        {
+            [member]: totalValue,
+        },
+        { merge: true }
+    );
+};
+
 export const updateAllowance = async (
     member,
     value = 0,

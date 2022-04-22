@@ -22,12 +22,6 @@ export default function AllowancePage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!activeFamilyMember) {
-            navigate("/main/chooseFamilyMember");
-        } else if (!goals[activeFamilyMember]) {
-            navigate("/main/addGoal");
-        }
-
         // get allowances and goals from db and set it to redux for faster interaction between members
         const getAllowances = async () => {
             const earnings = await getAllowance();
@@ -38,6 +32,9 @@ export default function AllowancePage() {
             dispatch(setGoal(goals));
         };
         getAllowances();
+        if (activeFamilyMember && !goals[activeFamilyMember]) {
+            return navigate("/main/addGoal");
+        }
     }, [activeFamilyMember]);
 
     function calculateGoalPercentage() {
@@ -67,20 +64,30 @@ export default function AllowancePage() {
     );
 
     return (
-        <div>
-            <h3 className="mt-3">
-                {goals[activeFamilyMember]
-                    ? goals[activeFamilyMember].goal
-                    : null}
-            </h3>
-            <AllowanceContainer
-                className="allowance-bar"
-                allowance={allowance}
-                goal={goals}
-                activeFamilyMember={activeFamilyMember}
-                style={{ height: `${calculateGoalPercentage()}%` }}
-            />
-            {activeFamilyMember ? EditIcon : null}
-        </div>
+        <>
+            {!activeFamilyMember ? (
+                <div className="d-flex flex-column justify-content-center">
+                    <h3>Choose an active family member</h3>
+                </div>
+            ) : (
+                <div>
+                    <h3 className="mt-3">
+                        {goals[activeFamilyMember]
+                            ? goals[activeFamilyMember].goal +
+                              " $" +
+                              goals[activeFamilyMember].value
+                            : null}
+                    </h3>
+                    <AllowanceContainer
+                        className="allowance-bar"
+                        allowance={allowance}
+                        goal={goals}
+                        activeFamilyMember={activeFamilyMember}
+                        style={{ height: `${calculateGoalPercentage()}%` }}
+                    />
+                    {activeFamilyMember ? EditIcon : null}
+                </div>
+            )}
+        </>
     );
 }
