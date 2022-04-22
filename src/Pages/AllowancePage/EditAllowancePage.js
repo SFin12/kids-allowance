@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import FormInput from "../../components/Forms/FormInput";
-import { setGoal } from "../../features/allowance/allowanceSlice";
-import {
-    selectActiveFamilyMember,
-    selectUserId,
-} from "../../features/user/userSlice";
-import { updateGoal } from "../../utils/firestore";
+
+import { selectActiveFamilyMember } from "../../features/user/userSlice";
+
 import "./EditAllowancePage.css";
 
 export default function EditAllowancePage(props) {

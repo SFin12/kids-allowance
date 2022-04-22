@@ -20,12 +20,8 @@ export default function ResetAllowancePage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFamilyMember]);
 
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        const newTotal = Number(e.target.elements.Amount.value);
-        console.log(newTotal);
-        createAllowance(activeFamilyMember, newTotal, userId).then(() => {
+    function handleReset() {
+        createAllowance(activeFamilyMember, 0, userId).then(() => {
             navigate("/main/allowance");
         });
     }
@@ -42,8 +38,14 @@ export default function ResetAllowancePage() {
             </h4>
 
             <div className="w-75 d-flex flex-column justify-content-around">
-                <Button className="reset-button">Yes</Button>
-                <Button variant="secondary" className="">
+                <Button className="reset-button" onClick={handleReset}>
+                    Yes
+                </Button>
+                <Button
+                    variant="secondary"
+                    className=""
+                    onClick={() => navigate(-1)}
+                >
                     Cancel
                 </Button>
             </div>
