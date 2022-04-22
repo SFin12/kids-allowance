@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
-import { SiTarget } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AllowanceContainer from "../../components/Allowance/AllowanceContainer";
 
 import {
@@ -25,8 +24,7 @@ export default function AllowancePage() {
     useEffect(() => {
         if (!activeFamilyMember) {
             navigate("/main/chooseFamilyMember");
-        }
-        if (!goals[activeFamilyMember]) {
+        } else if (!goals[activeFamilyMember]) {
             navigate("/main/addGoal");
         }
 
