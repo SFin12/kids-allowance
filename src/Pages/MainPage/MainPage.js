@@ -25,6 +25,7 @@ import AddGoalPage from "../AllowancePage/AddGoalPage";
 import TitlePage from "../TitlePage/TitlePage";
 import EditAllowancePage from "../AllowancePage/EditAllowancePage";
 import SpendPage from "../AllowancePage/SpendPage";
+import ChooseFamilyMemberPage from "../AllowancePage/ChooseFamilyMemberPage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -101,6 +102,10 @@ export default function MainPage(props) {
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/chores" element={<ChoresPage />} />
                     <Route path="/allowance" element={<AllowancePage />} />
+                    <Route
+                        path="/chooseFamilyMember"
+                        element={<ChooseFamilyMemberPage />}
+                    />
                     <Route
                         path="/editAllowance"
                         element={<EditAllowancePage />}

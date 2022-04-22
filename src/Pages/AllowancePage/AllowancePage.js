@@ -23,6 +23,9 @@ export default function AllowancePage() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!activeFamilyMember) {
+            navigate("/main/chooseFamilyMember");
+        }
         if (!goals[activeFamilyMember]) {
             navigate("/main/addGoal");
         }

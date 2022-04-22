@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../../components/Forms/FormInput";
 import { setGoal } from "../../features/allowance/allowanceSlice";
 import {
@@ -21,63 +21,53 @@ export default function EditAllowancePage(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFamilyMember]);
 
-    function handleClick(e) {
-        const name = e.target.name;
-        switch (name) {
-            case "spend-money":
-                return navigate("/main/spend");
-            case "change-goal":
-                return navigate("/main/addGoal");
-            case "set-bonus":
-                return navigate("/main/setBonus");
-            case "edit-allowance":
-                return navigate("/main/editAllowance");
-            case "reset-allowance":
-                // Add logic to target active users allowance and set it to 0.
-                break;
-            default:
-                console.log("an error occured");
-        }
-    }
-
     return (
         <div className="edit-allowance-container">
             <div className="d-flex flex-column flex-grow-1 h-100">
-                <button
-                    className="flex-grow-1 align-middle edit-allowance-button"
-                    onClick={handleClick}
-                    name="spend-money"
+                <Link to={"/main/spend"} className="d-flex flex-grow-1">
+                    <button
+                        className="flex-grow-1 align-middle edit-allowance-button"
+                        name="spend-money"
+                    >
+                        Spend Money
+                    </button>
+                </Link>
+
+                <Link to={"/main/addGoal"} className="d-flex flex-grow-1">
+                    <button
+                        className="flex-grow-1 edit-allowance-button"
+                        name="change-goal"
+                    >
+                        Change Goal
+                    </button>
+                </Link>
+                <Link to={"/main/setBonus"} className="d-flex flex-grow-1">
+                    <button
+                        className="flex-grow-1 edit-allowance-button"
+                        name="set-bonus"
+                    >
+                        Set Bonus
+                    </button>
+                </Link>
+                <Link to={"/main/editAllowance"} className="d-flex flex-grow-1">
+                    <button
+                        className="flex-grow-1 edit-allowance-button"
+                        name="edit-allowance"
+                    >
+                        Edit Money
+                    </button>
+                </Link>
+                <Link
+                    to={"/main/resetAllowance"}
+                    className="d-flex flex-grow-1"
                 >
-                    Spend Money
-                </button>
-                <button
-                    className="flex-grow-1 edit-allowance-button"
-                    name="change-goal"
-                    onClick={handleClick}
-                >
-                    Change Goal
-                </button>
-                <button
-                    className="flex-grow-1 edit-allowance-button"
-                    name="set-bonus"
-                    onClick={handleClick}
-                >
-                    Set Bonus
-                </button>
-                <button
-                    className="flex-grow-1 edit-allowance-button"
-                    name="edit-allowance"
-                    onClick={handleClick}
-                >
-                    Edit Money
-                </button>
-                <button
-                    className="flex-grow-1 edit-allowance-button"
-                    name="reset-allowance"
-                    onClick={handleClick}
-                >
-                    Reset Allowance
-                </button>
+                    <button
+                        className="flex-grow-1 edit-allowance-button"
+                        name="reset-allowance"
+                    >
+                        Reset Allowance
+                    </button>
+                </Link>
             </div>
         </div>
     );
