@@ -7,11 +7,11 @@ import {
 } from "../../utils/firestore";
 import { selectActiveFamilyMember } from "../../features/user/userSlice";
 import "./ChoreCard.css";
+import { convertDecimalsToDollarsAndCents } from "../../utils/helper";
 
 export default function ChoreCard({ chore, value, completedBy }) {
     const [flip, setFlip] = useState(false);
     const dispatch = useDispatch();
-    // Convert value to number
     const numVal = Number(value);
     const date = new Date().toDateString().slice(0, -5);
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
@@ -22,13 +22,6 @@ export default function ChoreCard({ chore, value, completedBy }) {
             setFlip(true);
         }
     }, []);
-
-    function convertToCents() {
-        if (numVal < 1 && numVal !== 0) {
-            const centValue = value + "0";
-            return centValue.slice(0, 3);
-        }
-    }
 
     function handleClick(e) {
         if (!flip) {
@@ -67,9 +60,10 @@ export default function ChoreCard({ chore, value, completedBy }) {
                 <div className="card-front">
                     <div>{chore}</div>
                     <div>
-                        {numVal === 0 || numVal >= 1
+                        {/* Check if numVal is a whole number or decimal */}
+                        {numVal % 1 === 0
                             ? `$${value}`
-                            : `${convertToCents()}¢`}
+                            : `${convertDecimalsToDollarsAndCents(numVal)}`}
                     </div>
                 </div>
                 <div className="card-back">
