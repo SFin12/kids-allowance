@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../../components/Forms/FormInput";
@@ -6,16 +6,22 @@ import {
     selectActiveFamilyMember,
     selectUserId,
 } from "../../features/user/userSlice";
-import { createAllowance, updateAllowance } from "../../utils/firestore";
+import { createAllowance } from "../../utils/firestore";
 
-export default function AdjustTotalPage() {
+export default function SetBonusPage() {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
+    const [currentFamilyMember] = useState(activeFamilyMember);
     const userId = useSelector(selectUserId);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (activeFamilyMember === null) {
             navigate("/main");
+        }
+
+        // if active member is switched, go back to main allowance page
+        if (currentFamilyMember !== activeFamilyMember) {
+            navigate("/main/allowance");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFamilyMember]);
@@ -36,14 +42,20 @@ export default function AdjustTotalPage() {
             style={{ height: "70vh" }}
         >
             <h4 className="title">
-                {activeFamilyMember
-                    ? `New total for ${activeFamilyMember}'s allowance?`
+                Coming Soon
+                {false // Replace false with activeFamilyMember when ready to fnish
+                    ? `Set a target amount and bonus if ${activeFamilyMember} reaches the target ?`
                     : null}
             </h4>
+            <p className="w-75">
+                You will soon be able to set a target amount and reward bonus
+                money for exercising patience when saving. For example, every
+                $10 saved earns a $1 bonus.
+            </p>
 
-            <div className="w-75">
+            {/* <div className="w-75">
                 <FormInput titles={["Amount"]} handleSubmit={handleSubmit} />
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import FormInput from "../../components/Forms/FormInput";
 import { setGoal } from "../../features/allowance/allowanceSlice";
 import {
@@ -11,14 +11,22 @@ import { updateGoal } from "../../utils/firestore";
 
 export default function AddGoalPage() {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
+    const [currentFamilyMember] = useState(activeFamilyMember);
     const userId = useSelector(selectUserId);
     const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     setCurrentFamilyMember(activeFamilyMember);
+    // }, []);
 
     useEffect(() => {
         if (activeFamilyMember === null) {
             navigate("/main");
         }
-
+        // if active member is switched, go back to main allowance page
+        if (currentFamilyMember !== activeFamilyMember) {
+            navigate("/main/allowance");
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFamilyMember]);
 

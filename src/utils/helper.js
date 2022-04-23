@@ -17,9 +17,9 @@ export function convertDecimalsToDollarsAndCents(numVal) {
         // convert to cents format
         if ((numVal % 1).toString().length === 3) {
             const centValue = numVal + "0¢";
-            return centValue.slice(1);
+            return centValue.slice(2);
         } else {
-            return (numVal + "¢").slice(1);
+            return (numVal + "¢").slice(2);
         }
         // keep dollar sign but make sure two decimals are present Ex: 1.50¢
     } else if ((numVal % 1).toString().length === 3) {

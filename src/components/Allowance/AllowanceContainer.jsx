@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { convertDecimalsToDollarsAndCents, isFloat } from "../../utils/helper";
 import "./AllowanceContainer.css";
 
 export default function AllowanceContainer({
     allowance,
     activeFamilyMember,
     percentageOfGoal,
-    style,
 }) {
     const isGreaterThanZero = percentageOfGoal > 3 ? true : false;
+    const familyMembersAllowance = allowance[activeFamilyMember];
 
     return (
         <div className="allowance-container">
@@ -18,7 +18,14 @@ export default function AllowanceContainer({
                     animation: "progress-bar 2s",
                 }}
             >
-                {isGreaterThanZero && `$${allowance[activeFamilyMember]}`}
+                {/* Check if the total is higher than 3% of goal before displaying dollar amount */}
+                {isGreaterThanZero
+                    ? isFloat(familyMembersAllowance)
+                        ? convertDecimalsToDollarsAndCents(
+                              familyMembersAllowance
+                          )
+                        : `$${allowance[activeFamilyMember]}`
+                    : null}
             </div>
         </div>
     );

@@ -22,6 +22,7 @@ import EditAllowancePage from "../AllowancePage/EditAllowancePage";
 import SpendPage from "../AllowancePage/SpendPage";
 import AdjustTotalPage from "../AllowancePage/AdjustTotalPage";
 import ResetAllowancePage from "../AllowancePage/ResetAllowancePage";
+import SetBonusPage from "../AllowancePage/SetBonusPage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -103,6 +104,9 @@ export default function MainPage(props) {
                         path="/editAllowance"
                         element={<EditAllowancePage />}
                     />
+                    <Route path="/spend" element={<SpendPage />} />
+                    <Route path="/addGoal" element={<AddGoalPage />} />
+                    <Route path="/setBonus" element={<SetBonusPage />} />
                     <Route
                         path="/adjustAllowance"
                         element={<AdjustTotalPage />}
@@ -112,8 +116,6 @@ export default function MainPage(props) {
                         path="/resetAllowance"
                         element={<ResetAllowancePage />}
                     />
-                    <Route path="/spend" element={<SpendPage />} />
-                    <Route path="/addGoal" element={<AddGoalPage />} />
                 </Routes>
 
                 {location.pathname !== "/main/settings" ? <Footer /> : null}

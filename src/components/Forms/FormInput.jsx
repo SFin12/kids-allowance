@@ -45,6 +45,9 @@ export default function FormInput({ titles = ["Title"], handleSubmit }) {
                                         ? "number"
                                         : "text"
                                 }
+                                min={0}
+                                presicion={2}
+                                step={0.25}
                                 defaultValue=""
                                 required
                                 maxLength={20}

@@ -6,7 +6,7 @@ import {
     selectActiveFamilyMember,
     selectUserId,
 } from "../../features/user/userSlice";
-import { createAllowance, updateAllowance } from "../../utils/firestore";
+import { createAllowance } from "../../utils/firestore";
 
 export default function AdjustTotalPage() {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);

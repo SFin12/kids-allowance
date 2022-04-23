@@ -46,7 +46,6 @@ export default function AllowancePage() {
     }, [allowance]);
 
     function calculateGoalPercentage(allowance) {
-        console.log(allowance);
         if (!allowance[activeFamilyMember]) {
             console.log("no family member");
             return setPercentageOfGoal(0);
@@ -55,7 +54,7 @@ export default function AllowancePage() {
             console.log("no value");
             return setPercentageOfGoal(0);
         }
-        console.log("allowance", allowance[activeFamilyMember]);
+
         // gives the percentage of goal used fo fill allowance graph
         let percentage =
             (allowance[activeFamilyMember] / goals[activeFamilyMember].value) *

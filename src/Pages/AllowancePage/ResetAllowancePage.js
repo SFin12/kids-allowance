@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,12 +10,17 @@ import { createAllowance } from "../../utils/firestore";
 
 export default function ResetAllowancePage() {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
+    const [currentFamilyMember] = useState(activeFamilyMember);
     const userId = useSelector(selectUserId);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (activeFamilyMember === null) {
             navigate("/main");
+        }
+        // if active member is switched, go back to main allowance page
+        if (currentFamilyMember !== activeFamilyMember) {
+            navigate("/main/allowance");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFamilyMember]);
