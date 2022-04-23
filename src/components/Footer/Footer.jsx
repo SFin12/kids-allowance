@@ -8,7 +8,6 @@ import "./Footer.css";
 
 export default function Footer() {
     const [activeMember, setActiveMember] = useState("");
-
     const dispatch = useDispatch();
     const familyMembers = useSelector(selectFamilyMembers);
 
@@ -21,6 +20,7 @@ export default function Footer() {
         <div className="footer">
             {familyMembers ? (
                 familyMembers.map((member, i) => {
+                    // Change the color shade for each family  member button
                     const bgModifier = i * 25;
                     let r = 127 - bgModifier;
                     let g = 255 - bgModifier;

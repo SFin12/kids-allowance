@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ import { getAllowance, getGoals } from "../../utils/firestore";
 import "./AllowancePage.css";
 
 export default function AllowancePage() {
+    const [percentageOfGoal, setPercentageOfGoal] = useState(0);
     const dispatch = useDispatch();
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
     const goals = useSelector(selectGoals);
@@ -31,11 +32,19 @@ export default function AllowancePage() {
             dispatch(setAllowance(earnings));
             dispatch(setGoal(goals));
         };
-        getAllowances();
-        if (activeFamilyMember && !goals[activeFamilyMember]) {
-            return navigate("/main/addGoal");
-        }
+        getAllowances().then(() => {
+            if (activeFamilyMember && !goals[activeFamilyMember]) {
+                return navigate("/main/addGoal");
+            } else {
+                console.log("calculating");
+                calculateGoalPercentage();
+            }
+        });
     }, [activeFamilyMember]);
+
+    useEffect(() => {
+        calculateGoalPercentage();
+    }, [allowance]);
 
     function calculateGoalPercentage() {
         if (!allowance[activeFamilyMember]) {
@@ -47,11 +56,12 @@ export default function AllowancePage() {
             return 0;
         }
         // gives the percentage of goal used fo fill allowance graph
-        const percentage =
+        let percentage =
             (allowance[activeFamilyMember] / goals[activeFamilyMember].value) *
             100;
 
-        return percentage;
+        percentage < 0 && (percentage = 0);
+        setPercentageOfGoal(percentage);
     }
 
     // conditoinal target button added if an active member is clicked. Used to add / edit goal
@@ -65,6 +75,7 @@ export default function AllowancePage() {
 
     return (
         <>
+            {console.log("percent", percentageOfGoal)}
             {!activeFamilyMember ? (
                 <div className="d-flex flex-column justify-content-center">
                     <h3>Choose an active family member</h3>
@@ -83,7 +94,8 @@ export default function AllowancePage() {
                         allowance={allowance}
                         goal={goals}
                         activeFamilyMember={activeFamilyMember}
-                        style={{ height: `${calculateGoalPercentage()}%` }}
+                        percentageOfGoal={percentageOfGoal}
+                        style={{ height: `${percentageOfGoal}%` }}
                     />
                     {activeFamilyMember ? EditIcon : null}
                 </div>

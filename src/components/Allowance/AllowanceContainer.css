@@ -20,4 +20,26 @@
     position: relative;
     width: 100%;
     border-radius: 0 0 15px 15px;
+    height: 0%;
+    transition: all 2s;
+    -webkit-animation: progress-bar 2s;
+    -moz-animation: progress-bar 2s;
+    animation: progress-bar 2s;
+}
+
+@-webkit-keyframes progress-bar {
+    0% {
+        height: 0;
+    }
+}
+@-moz-keyframes progress-bar {
+    0% {
+        height: 0;
+    }
+}
+
+@keyframes progress-bar {
+    0% {
+        height: 0;
+    }
 }

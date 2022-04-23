@@ -12,12 +12,7 @@ import {
 import SettingsPage from "../SettingsPage/SettingsPage";
 import ChoresPage from "../ChoresPage/ChoresPage";
 import "./MainPage.css";
-import {
-    createChore,
-    createFamily,
-    createUser,
-    getUserInfo,
-} from "../../utils/firestore";
+import { createFamily, createUser, getUserInfo } from "../../utils/firestore";
 import { setChores } from "../../features/chores/choresSlice";
 import AllowancePage from "../AllowancePage/AllowancePage";
 import Footer from "../../components/Footer/Footer";
@@ -30,6 +25,7 @@ import ResetAllowancePage from "../AllowancePage/ResetAllowancePage";
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();

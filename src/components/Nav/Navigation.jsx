@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import "./Navigation.css";
 import { GiBroom } from "react-icons/gi";
 import { FiSettings } from "react-icons/fi";
-import { MdOutlineAttachMoney } from "react-icons/md";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { AiOutlineLogout } from "react-icons/ai";
 
