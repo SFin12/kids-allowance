@@ -8,13 +8,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
-    min-width: 300px;
+    min-height: 167px;
+    min-width: 250px;
     width: 20%;
     height: 20%;
 
     text-align: center;
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 500;
     color: cadetblue;
     font-family: var(--chore-font);
@@ -72,4 +72,13 @@
     text-decoration: line-through;
     text-decoration-thickness: 2px;
     text-decoration-color: red;
+}
+
+/* Increase size of font and card for ipads or larger screens */
+@media (min-width: 756px) {
+    .chore-card {
+        font-size: 2.2rem;
+        min-height: 200px;
+        min-width: 300px;
+    }
 }

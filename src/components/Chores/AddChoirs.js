@@ -73,7 +73,7 @@ export default function AddChores() {
                                 name="text"
                                 onChange={handleChange}
                                 value={title}
-                                maxLength={20}
+                                maxLength={18}
                             />
                         </div>
                     </FormGroup>

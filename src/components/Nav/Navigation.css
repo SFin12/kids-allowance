@@ -12,6 +12,7 @@
     background-color: aquamarine;
     padding-left: 20px;
     font-family: "Shrikhand";
+    z-index: 200;
 }
 
 /* .show {

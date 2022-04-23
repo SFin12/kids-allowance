@@ -81,7 +81,7 @@ export default function AllowancePage() {
                     <h3>Choose an active family member</h3>
                 </div>
             ) : (
-                <div>
+                <div className="d-flex flex-column justify-content-center">
                     <h3 className="mt-3">
                         {goals[activeFamilyMember]
                             ? goals[activeFamilyMember].goal +
