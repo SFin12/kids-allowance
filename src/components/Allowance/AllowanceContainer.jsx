@@ -7,7 +7,7 @@ export default function AllowanceContainer({
     percentageOfGoal,
     style,
 }) {
-    const [percent, setPercent] = useState(0);
+    const isGreaterThanZero = percentageOfGoal > 3 ? true : false;
 
     return (
         <div className="allowance-container">
@@ -18,7 +18,7 @@ export default function AllowanceContainer({
                     animation: "progress-bar 2s",
                 }}
             >
-                ${allowance[activeFamilyMember]}
+                {isGreaterThanZero && `$${allowance[activeFamilyMember]}`}
             </div>
         </div>
     );

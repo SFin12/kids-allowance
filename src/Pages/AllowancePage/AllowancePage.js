@@ -35,26 +35,27 @@ export default function AllowancePage() {
         getAllowances().then(() => {
             if (activeFamilyMember && !goals[activeFamilyMember]) {
                 return navigate("/main/addGoal");
-            } else {
-                console.log("calculating");
-                calculateGoalPercentage();
             }
         });
     }, [activeFamilyMember]);
 
     useEffect(() => {
-        calculateGoalPercentage();
+        if (allowance) {
+            calculateGoalPercentage(allowance);
+        }
     }, [allowance]);
 
-    function calculateGoalPercentage() {
+    function calculateGoalPercentage(allowance) {
+        console.log(allowance);
         if (!allowance[activeFamilyMember]) {
-            return 0;
+            console.log("no family member");
+            return setPercentageOfGoal(0);
         }
         if (!goals[activeFamilyMember]) {
             console.log("no value");
-
-            return 0;
+            return setPercentageOfGoal(0);
         }
+        console.log("allowance", allowance[activeFamilyMember]);
         // gives the percentage of goal used fo fill allowance graph
         let percentage =
             (allowance[activeFamilyMember] / goals[activeFamilyMember].value) *
@@ -75,7 +76,6 @@ export default function AllowancePage() {
 
     return (
         <>
-            {console.log("percent", percentageOfGoal)}
             {!activeFamilyMember ? (
                 <div className="d-flex flex-column justify-content-center">
                     <h3>Choose an active family member</h3>
