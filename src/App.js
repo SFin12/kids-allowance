@@ -4,7 +4,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import "firebase/compat/auth";
 import MainPage from "./Pages/MainPage/MainPage";
 import SignInPage from "./Pages/SignInPage/SignInPage";
-import LoadingPage from "./Pages/LoadingPage/LoadingPage";
+
 import firebase from "firebase/compat/app";
 
 function App() {
@@ -28,7 +28,6 @@ function App() {
                 <Routes>
                     <Route path="/" element={<SignInPage />}></Route>
                     <Route path="/main/*" element={<MainPage />}></Route>
-                    <Route path="/loading" element={<LoadingPage />}></Route>
                 </Routes>
             </div>
         </div>

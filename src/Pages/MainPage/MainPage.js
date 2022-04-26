@@ -12,7 +12,12 @@ import {
 import SettingsPage from "../SettingsPage/SettingsPage";
 import ChoresPage from "../ChoresPage/ChoresPage";
 import "./MainPage.css";
-import { createFamily, createUser, getUserInfo } from "../../utils/firestore";
+import {
+    createFamily,
+    createUser,
+    getUserInfo,
+    queryChores,
+} from "../../utils/firestore";
 import { setChores } from "../../features/chores/choresSlice";
 import AllowancePage from "../AllowancePage/AllowancePage";
 import Footer from "../../components/Footer/Footer";
@@ -30,7 +35,7 @@ export default function MainPage(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-
+    queryChores().then((chores) => console.log(chores));
     // setup initial redux state from firebase
     useEffect(() => {
         // firebase listener that changes when user signs in or out

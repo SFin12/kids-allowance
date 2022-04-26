@@ -3,6 +3,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import AllowanceContainer from "../../components/Allowance/AllowanceContainer";
+import LoadingSpinner from "../../components/Loading/LoadingSpinner";
 
 import {
     selectAllowance,
@@ -16,6 +17,7 @@ import "./AllowancePage.css";
 
 export default function AllowancePage() {
     const [percentageOfGoal, setPercentageOfGoal] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch();
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
     const goals = useSelector(selectGoals);
@@ -23,6 +25,7 @@ export default function AllowancePage() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        let unmounted = true;
         // get allowances and goals from db and set it to redux for faster interaction between members
         const getAllowances = async () => {
             const earnings = await getAllowance();
@@ -31,12 +34,19 @@ export default function AllowancePage() {
             // redux reducer fuction to update redux store
             dispatch(setAllowance(earnings));
             dispatch(setGoal(goals));
+            return goals;
         };
-        getAllowances().then(() => {
-            if (activeFamilyMember && !goals[activeFamilyMember]) {
-                return navigate("/main/addGoal");
+        getAllowances().then((goals) => {
+            if (!unmounted) {
+                setIsLoading(false);
+                if (activeFamilyMember && !goals[activeFamilyMember]) {
+                    return navigate("/main/addGoal");
+                }
             }
         });
+        return () => {
+            unmounted = false;
+        };
     }, [activeFamilyMember]);
 
     useEffect(() => {
@@ -75,29 +85,39 @@ export default function AllowancePage() {
 
     return (
         <>
-            {!activeFamilyMember ? (
-                <div className="d-flex flex-column justify-content-center">
-                    <h3>Choose an active family member</h3>
+            {/* Show spinner while waiting on data from firebase */}
+            {isLoading ? (
+                <div className="d-flex flex-column justify-content-center align-items-center">
+                    <LoadingSpinner />
                 </div>
             ) : (
-                <div className="d-flex flex-column justify-content-center">
-                    <h3 className="mt-3">
-                        {goals[activeFamilyMember]
-                            ? goals[activeFamilyMember].goal +
-                              " $" +
-                              goals[activeFamilyMember].value
-                            : null}
-                    </h3>
-                    <AllowanceContainer
-                        className="allowance-bar"
-                        allowance={allowance}
-                        goal={goals}
-                        activeFamilyMember={activeFamilyMember}
-                        percentageOfGoal={percentageOfGoal}
-                        style={{ height: `${percentageOfGoal}%` }}
-                    />
-                    {activeFamilyMember ? EditIcon : null}
-                </div>
+                <>
+                    {/* Main page once data has been loaded */}
+                    {!activeFamilyMember ? (
+                        <div className="d-flex flex-column justify-content-center">
+                            <h3>Choose an active family member</h3>
+                        </div>
+                    ) : (
+                        <div className="d-flex flex-column justify-content-center">
+                            <h3 className="mt-3">
+                                {goals[activeFamilyMember]
+                                    ? goals[activeFamilyMember].goal +
+                                      " $" +
+                                      goals[activeFamilyMember].value
+                                    : null}
+                            </h3>
+                            <AllowanceContainer
+                                className="allowance-bar"
+                                allowance={allowance}
+                                goal={goals}
+                                activeFamilyMember={activeFamilyMember}
+                                percentageOfGoal={percentageOfGoal}
+                                style={{ height: `${percentageOfGoal}%` }}
+                            />
+                            {activeFamilyMember ? EditIcon : null}
+                        </div>
+                    )}
+                </>
             )}
         </>
     );

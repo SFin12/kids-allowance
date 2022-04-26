@@ -103,7 +103,11 @@ export default function AddChores() {
                             />
                         </div>
                     </FormGroup>
-                    <Button variant="primary" onClick={handleSubmit}>
+                    <Button
+                        variant="primary"
+                        onClick={handleSubmit}
+                        className="mb-3"
+                    >
                         Save
                     </Button>
                 </FormGroup>
