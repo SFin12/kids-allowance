@@ -8,7 +8,7 @@ import { getChores } from "../../utils/firestore";
 export default function ChoresPage() {
     const [sortedChores, setSortedChores] = useState([]);
     const chores = useSelector(selectChores);
-    console.log(chores);
+
     useEffect(() => {
         // Creates sorted array of keys to look up chore info and display alphabetically
         setSortedChores(

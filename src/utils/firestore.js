@@ -226,15 +226,15 @@ export const deleteGoal = async (
         [`${member}.${goal}`]: firebase.firestore.FieldValue.delete(),
     });
 };
-
-export const queryChores = async (member = "Ronan") => {
+// not currently used
+export const queryChores = async (member) => {
     const choresCompletedMember = [];
     const userId = getCurrentUserInfo().uid;
     const userRef = await db.collection("users");
     const snapshot = await userRef.doc(`${userId}`).get();
     const chores = await snapshot.data().chores;
     const filteredChores = Object.keys(chores);
-    const choreProperties = filteredChores.forEach((chore) => {
+    filteredChores.forEach((chore) => {
         if (chores[chore].completedBy === member) {
             choresCompletedMember.push({ [chore]: chores[chore] });
         }

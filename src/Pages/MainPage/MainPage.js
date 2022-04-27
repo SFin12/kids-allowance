@@ -35,7 +35,6 @@ export default function MainPage(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    queryChores().then((chores) => console.log(chores));
     // setup initial redux state from firebase
     useEffect(() => {
         // firebase listener that changes when user signs in or out
@@ -59,7 +58,6 @@ export default function MainPage(props) {
                     const family = async () => {
                         const dbData = await getUserInfo(user.uid);
                         if (dbData) {
-                            console.log("dbData true: ", dbData);
                             // set redux family info from db
                             dispatch(
                                 setFamilyMembers({

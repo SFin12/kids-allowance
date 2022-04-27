@@ -21,7 +21,7 @@ export default function AddChores() {
         getChores()
             .then((chores) => {
                 setDisplayChores(Object.keys(chores));
-                console.log("chores", chores);
+
                 dispatch(setChores(chores));
             })
             .catch((err) => console.error(err));

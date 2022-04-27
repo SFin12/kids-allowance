@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../../components/Forms/FormInput";
+import { selectAllowance } from "../../features/allowance/allowanceSlice";
 import {
     selectActiveFamilyMember,
     selectUserId,
@@ -13,6 +14,7 @@ export default function AdjustTotalPage() {
     const [currentFamilyMember] = useState(activeFamilyMember);
     const userId = useSelector(selectUserId);
     const navigate = useNavigate();
+    const currentAllowance = useSelector(selectAllowance);
 
     useEffect(() => {
         if (activeFamilyMember === null) {
@@ -29,7 +31,7 @@ export default function AdjustTotalPage() {
         e.preventDefault();
 
         const newTotal = Number(e.target.elements.Amount.value);
-        console.log(newTotal);
+
         createAllowance(activeFamilyMember, newTotal, userId).then(() => {
             navigate("/main/allowance");
         });
@@ -47,7 +49,11 @@ export default function AdjustTotalPage() {
             </h4>
 
             <div className="w-75">
-                <FormInput titles={["Amount"]} handleSubmit={handleSubmit} />
+                <FormInput
+                    titles={["Amount"]}
+                    placeholder={currentAllowance[activeFamilyMember]}
+                    handleSubmit={handleSubmit}
+                />
             </div>
         </div>
     );

@@ -25,7 +25,8 @@ export default function AllowancePage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        let unmounted = true;
+        let unmounted = false;
+
         // get allowances and goals from db and set it to redux for faster interaction between members
         const getAllowances = async () => {
             const earnings = await getAllowance();
@@ -57,11 +58,9 @@ export default function AllowancePage() {
 
     function calculateGoalPercentage(allowance) {
         if (!allowance[activeFamilyMember]) {
-            console.log("no family member");
             return setPercentageOfGoal(0);
         }
         if (!goals[activeFamilyMember]) {
-            console.log("no value");
             return setPercentageOfGoal(0);
         }
 

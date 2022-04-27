@@ -7,7 +7,11 @@ import {
     FormLabel,
 } from "react-bootstrap";
 
-export default function FormInput({ titles = ["Title"], handleSubmit }) {
+export default function FormInput({
+    titles = ["Title"],
+    handleSubmit,
+    placeholder,
+}) {
     return (
         <Form onSubmit={handleSubmit} id="form">
             <FormGroup>
@@ -49,6 +53,7 @@ export default function FormInput({ titles = ["Title"], handleSubmit }) {
                                 presicion={2}
                                 step={0.25}
                                 defaultValue=""
+                                placeholder={placeholder}
                                 required
                                 maxLength={20}
                             ></FormControl>
