@@ -29,7 +29,7 @@ export default function SpendPage() {
         e.preventDefault();
 
         const spent = e.target.elements.Amount.value * -1;
-        console.log(spent);
+
         updateAllowance(activeFamilyMember, spent, userId).then(() => {
             navigate("/main/allowance");
         });

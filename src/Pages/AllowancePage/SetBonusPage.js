@@ -30,7 +30,7 @@ export default function SetBonusPage() {
         e.preventDefault();
 
         const newTotal = Number(e.target.elements.Amount.value);
-        console.log(newTotal);
+
         createAllowance(activeFamilyMember, newTotal, userId).then(() => {
             navigate("/main/allowance");
         });

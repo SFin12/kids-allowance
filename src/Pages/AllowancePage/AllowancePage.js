@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import AllowanceContainer from "../../components/Allowance/AllowanceContainer";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
-
 import {
     selectAllowance,
     selectGoals,
@@ -31,7 +30,6 @@ export default function AllowancePage() {
         const getAllowances = async () => {
             const earnings = await getAllowance();
             const goals = await getGoals();
-
             // redux reducer fuction to update redux store
             dispatch(setAllowance(earnings));
             dispatch(setGoal(goals));
@@ -48,13 +46,14 @@ export default function AllowancePage() {
         return () => {
             unmounted = false;
         };
-    }, [activeFamilyMember]);
+    }, []);
 
     useEffect(() => {
         if (allowance) {
             calculateGoalPercentage(allowance);
         }
-    }, [allowance]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [allowance, goals, activeFamilyMember]);
 
     function calculateGoalPercentage(allowance) {
         if (!allowance[activeFamilyMember]) {
@@ -73,7 +72,7 @@ export default function AllowancePage() {
         setPercentageOfGoal(percentage);
     }
 
-    // conditoinal target button added if an active member is clicked. Used to add / edit goal
+    // conditoinal edit icon button added if an active member is clicked. Used to add / edit goal
     const EditIcon = (
         <Link className="target-icon" to={"/main/editAllowance"}>
             <AiOutlineEdit
