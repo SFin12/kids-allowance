@@ -27,13 +27,13 @@ export default function TitlePage() {
             {dataExists ? (
                 <Link to="/main/chores" className="logo-link">
                     <div className="logo">
-                        <h1>Chorzy</h1>
+                        <div>Chorzy</div>
                     </div>
                 </Link>
             ) : (
                 <Link to="/main/settings" className="logo-link">
                     <div className="logo">
-                        <h1>Chorzy</h1>
+                        <div>Chorzy</div>
                     </div>
                 </Link>
             )}
