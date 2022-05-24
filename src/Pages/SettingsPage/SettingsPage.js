@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { selectUserId, setFamilyMembers } from "../../features/user/userSlice";
 import {
@@ -17,7 +18,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import "./SettingsPage.css";
 import AddChores from "../../components/Chores/AddChoirs";
-import FormInput from "../../components/Forms/FormInput";
 
 export default function SettingsPage(props) {
     const [family, setFamily] = useState("");

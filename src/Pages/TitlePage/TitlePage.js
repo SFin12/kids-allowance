@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectChores } from "../../features/chores/choresSlice";
-import {
-    selectFamilyMembers,
-    selectUserId,
-} from "../../features/user/userSlice";
-import { getFamily } from "../../utils/firestore";
+import { selectFamilyMembers } from "../../features/user/userSlice";
 import "./TitlePage.css";
 
 export default function TitlePage() {

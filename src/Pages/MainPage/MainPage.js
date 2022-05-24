@@ -12,12 +12,7 @@ import {
 import SettingsPage from "../SettingsPage/SettingsPage";
 import ChoresPage from "../ChoresPage/ChoresPage";
 import "./MainPage.css";
-import {
-    createFamily,
-    createUser,
-    getUserInfo,
-    queryChores,
-} from "../../utils/firestore";
+import { createFamily, createUser, getUserInfo } from "../../utils/firestore";
 import { setChores } from "../../features/chores/choresSlice";
 import AllowancePage from "../AllowancePage/AllowancePage";
 import Footer from "../../components/Footer/Footer";

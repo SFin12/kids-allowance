@@ -16,15 +16,43 @@
     align-items: center;
     justify-content: center;
     color: black;
-    background-color: aquamarine;
+
     position: relative;
     width: 100%;
     border-radius: 0 0 15px 15px;
+
     height: 0%;
     transition: all 2s;
     -webkit-animation: progress-bar 2s;
     -moz-animation: progress-bar 2s;
     animation: progress-bar 2s;
+}
+
+.theme-color {
+    background-color: aquamarine;
+}
+
+.coral-color {
+    background-color: rgb(255, 150, 118);
+}
+
+.red-color {
+    background-color: red;
+    color: white;
+}
+.black-color {
+    background-color: black;
+    color: white;
+}
+.pink-color {
+    background-color: rgb(255, 135, 225);
+}
+.blue-color {
+    background-color: rgb(47, 92, 255);
+    color: white;
+}
+.yellow-color {
+    background-color: yellow;
 }
 
 /* Fills the allowance bar slowly */
