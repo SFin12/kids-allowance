@@ -113,6 +113,7 @@ export const createAllowance = async (
         return console.error("Must provide string value for first argument");
     }
     let totalValue = Number(value);
+
     const userRef = await db.collection("users").doc(userId);
     const earnings = await userRef.collection("earnings");
     earnings.doc("earnings").set(
