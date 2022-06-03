@@ -27,6 +27,36 @@
     color: black;
 }
 
+.birthdayLink {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
+a:link {
+    color: white;
+    text-decoration: none;
+}
+
+a:visited {
+    color: white;
+}
+
+.birthdayMessage {
+    display: block;
+    position: absolute;
+    font-family: var(--chore-font);
+    font-size: 1.8rem;
+    line-height: 1.2;
+    top: 60px;
+    width: 100%;
+    color: white!;
+    -webkit-text-fill-color: white;
+    padding: 10px;
+    background-color: rgb(255, 92, 222);
+    z-index: 0;
+}
+
 @media (min-width: 756px) {
     .logo {
         font-size: 3rem;
