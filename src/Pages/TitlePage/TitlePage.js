@@ -24,7 +24,7 @@ export default function TitlePage() {
         month === 6 &&
         day === 2 &&
         email === "rachelfinegan@gmail.com" &&
-        time >= 17;
+        time >= 10;
 
     useEffect(() => {
         if (family && chores) {
