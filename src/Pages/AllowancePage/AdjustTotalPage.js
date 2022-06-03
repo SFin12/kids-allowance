@@ -51,7 +51,9 @@ export default function AdjustTotalPage() {
             <div className="w-75">
                 <FormInput
                     titles={["Amount"]}
-                    placeholder={currentAllowance[activeFamilyMember]}
+                    placeholder={
+                        currentAllowance[activeFamilyMember].currentTotal
+                    }
                     handleSubmit={handleSubmit}
                 />
             </div>
