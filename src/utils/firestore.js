@@ -112,16 +112,20 @@ export const createAllowance = async (
     if (member === isNaN || member === null || typeof member === "number") {
         return console.error("Must provide string value for first argument");
     }
-    let totalValue = Number(value);
+    let currentTotal = Number(value);
 
     const userRef = await db.collection("users").doc(userId);
     const earnings = await userRef.collection("earnings");
     earnings.doc("earnings").set(
         {
-            [member]: { lifetimeEarnings: totalValue, current: totalValue },
+            [member]: {
+                currentTotal: currentTotal,
+                lifetimeTotal: currentTotal,
+            },
         },
         { merge: true }
     );
+    console.log("created allowance");
 };
 
 export const updateAllowance = async (
@@ -132,33 +136,37 @@ export const updateAllowance = async (
     if (member === isNaN || member === null || typeof member === "number") {
         return console.error("Must provide string value for first argument");
     }
-    let totalValue = Number(value);
-    let newLifetimeEarnings = totalValue;
-    const allowanceExists = await getAllowance();
+    let newTotal = Number(value);
+    let lifetimeTotal = newTotal;
+    const allowanceExists = await getAllowances();
 
     // if an allowance exists and family member exists w/ value greater than zero, add to total.
-    if (typeof allowanceExists !== "undefined") {
-        if (typeof allowanceExists[member] !== "undefined") {
-            newLifetimeEarnings += Number(
-                allowanceExists[member].lifetimeEarnings
-            );
-            totalValue += Number(allowanceExists[member].current); // old allowance
+    if (allowanceExists) {
+        if (allowanceExists[member]?.currentTotal) {
+            let currentTotal = Number(allowanceExists[member].currentTotal);
+            lifetimeTotal =
+                newTotal <= 0
+                    ? Number(allowanceExists[member].lifetimeTotal)
+                    : Number(allowanceExists[member].lifetimeTotal) + newTotal;
+            newTotal += currentTotal; // old allowance
         }
+    } else {
+        return alert("Allowance doesen't exist yet.");
     }
     const userRef = await db.collection("users").doc(userId);
     const earnings = await userRef.collection("earnings");
     earnings.doc("earnings").set(
         {
             [member]: {
-                lifetimeEarnings: newLifetimeEarnings,
-                current: totalValue,
+                currentTotal: newTotal,
+                lifetimeTotal: lifetimeTotal,
             },
         },
         { merge: true }
     );
 };
 
-export const getAllowance = async () => {
+export const getAllowances = async () => {
     let uid = "";
     if (!uid) {
         try {

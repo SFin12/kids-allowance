@@ -12,7 +12,8 @@ import {
     setGoal,
 } from "../../features/allowance/allowanceSlice";
 import { selectActiveFamilyMember } from "../../features/user/userSlice";
-import { getAllowance, getGoals } from "../../utils/firestore";
+import { getAllowances, getGoals } from "../../utils/firestore";
+import { convertDecimalsToDollarsAndCents } from "../../utils/helper";
 import "./AllowancePage.css";
 
 export default function AllowancePage() {
@@ -28,15 +29,15 @@ export default function AllowancePage() {
         let unmounted = false;
 
         // get allowances and goals from db and set it to redux for faster interaction between members
-        const getAllowances = async () => {
-            const earnings = await getAllowance();
+        const getAllAllowances = async () => {
+            const earnings = await getAllowances();
             const goals = await getGoals();
             // redux reducer fuction to update redux store
             dispatch(setAllowance(earnings));
             dispatch(setGoal(goals));
             return goals;
         };
-        getAllowances().then((goals) => {
+        getAllAllowances().then((goals) => {
             if (!unmounted) {
                 setIsLoading(false);
                 if (activeFamilyMember && !goals[activeFamilyMember]) {
@@ -66,7 +67,8 @@ export default function AllowancePage() {
 
         // gives the percentage of goal used fo fill allowance graph
         let percentage =
-            (allowance[activeFamilyMember] / goals[activeFamilyMember].value) *
+            (allowance[activeFamilyMember].currentTotal /
+                goals[activeFamilyMember].value) *
             100;
 
         percentage < 0 && (percentage = 0);
@@ -98,6 +100,11 @@ export default function AllowancePage() {
                         </div>
                     ) : (
                         <div className="d-flex flex-column justify-content-center">
+                            <div className="lifetime-stats">
+                                {convertDecimalsToDollarsAndCents(
+                                    allowance[activeFamilyMember].lifetimeTotal
+                                )}
+                            </div>
                             <h3 className="mt-3">
                                 {goals[activeFamilyMember]
                                     ? goals[activeFamilyMember].goal +
@@ -105,6 +112,7 @@ export default function AllowancePage() {
                                       goals[activeFamilyMember].value
                                     : null}
                             </h3>
+
                             <AllowanceContainer
                                 className="allowance-bar"
                                 allowance={allowance}
