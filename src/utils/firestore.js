@@ -125,6 +125,7 @@ export const createAllowance = async (
         },
         { merge: true }
     );
+    console.log("created allowance");
 };
 
 export const updateAllowance = async (
@@ -136,12 +137,12 @@ export const updateAllowance = async (
         return console.error("Must provide string value for first argument");
     }
     let newTotal = Number(value);
-    let lifetimeTotal;
+    let lifetimeTotal = newTotal;
     const allowanceExists = await getAllowances();
 
     // if an allowance exists and family member exists w/ value greater than zero, add to total.
-    if (typeof allowanceExists !== "undefined") {
-        if (typeof allowanceExists[member].currentTotal !== "undefined") {
+    if (allowanceExists) {
+        if (allowanceExists[member]?.currentTotal) {
             let currentTotal = Number(allowanceExists[member].currentTotal);
             lifetimeTotal =
                 newTotal <= 0
