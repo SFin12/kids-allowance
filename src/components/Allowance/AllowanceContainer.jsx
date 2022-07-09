@@ -10,7 +10,7 @@ export default function AllowanceContainer({
     const [barColor, setBarColor] = useState("theme-color");
 
     const isGreaterThanZero = percentageOfGoal > 3 ? true : false;
-    const familyMembersAllowance = allowance[activeFamilyMember];
+    const familyMembersAllowance = allowance[activeFamilyMember].current;
     const borderRadius = percentageOfGoal > 98 ? 15 : 0;
 
     function handleBarClick(e) {
@@ -59,7 +59,7 @@ export default function AllowanceContainer({
                         ? convertDecimalsToDollarsAndCents(
                               familyMembersAllowance
                           )
-                        : `$${allowance[activeFamilyMember]}`
+                        : `$${familyMembersAllowance}`
                     : null}
             </div>
         </div>

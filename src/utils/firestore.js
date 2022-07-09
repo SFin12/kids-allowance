@@ -118,7 +118,7 @@ export const createAllowance = async (
     const earnings = await userRef.collection("earnings");
     earnings.doc("earnings").set(
         {
-            [member]: totalValue,
+            [member]: { lifetimeEarnings: totalValue, current: totalValue },
         },
         { merge: true }
     );
@@ -133,19 +133,26 @@ export const updateAllowance = async (
         return console.error("Must provide string value for first argument");
     }
     let totalValue = Number(value);
+    let newLifetimeEarnings = totalValue;
     const allowanceExists = await getAllowance();
 
     // if an allowance exists and family member exists w/ value greater than zero, add to total.
     if (typeof allowanceExists !== "undefined") {
         if (typeof allowanceExists[member] !== "undefined") {
-            totalValue += Number(allowanceExists[member]); // old allowance
+            newLifetimeEarnings += Number(
+                allowanceExists[member].lifetimeEarnings
+            );
+            totalValue += Number(allowanceExists[member].current); // old allowance
         }
     }
     const userRef = await db.collection("users").doc(userId);
     const earnings = await userRef.collection("earnings");
     earnings.doc("earnings").set(
         {
-            [member]: totalValue,
+            [member]: {
+                lifetimeEarnings: newLifetimeEarnings,
+                current: totalValue,
+            },
         },
         { merge: true }
     );
