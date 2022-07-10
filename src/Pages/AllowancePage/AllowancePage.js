@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
+import { act } from "react-dom/test-utils";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,12 +9,15 @@ import AllowanceContainer from "../../components/Allowance/AllowanceContainer";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
 import {
     selectAllowance,
+    selectChoresStats,
     selectGoals,
     setAllowance,
+    setChoresStats,
     setGoal,
 } from "../../features/allowance/allowanceSlice";
+
 import { selectActiveFamilyMember } from "../../features/user/userSlice";
-import { getAllowances, getGoals } from "../../utils/firestore";
+import { getAllowances, getChoreStats, getGoals } from "../../utils/firestore";
 import { convertDecimalsToDollarsAndCents } from "../../utils/helper";
 import "./AllowancePage.css";
 
@@ -23,6 +28,7 @@ export default function AllowancePage() {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
     const goals = useSelector(selectGoals);
     const allowance = useSelector(selectAllowance);
+    const choresStats = useSelector(selectChoresStats);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,25 +38,34 @@ export default function AllowancePage() {
         const getAllAllowances = async () => {
             const earnings = await getAllowances();
             const goals = await getGoals();
+            const choresStats = await getChoreStats();
             // redux reducer fuction to update redux store
+            console.log(choresStats);
             dispatch(setAllowance(earnings));
             dispatch(setGoal(goals));
+            console.log(choresStats);
+            dispatch(setChoresStats(choresStats));
             return goals;
         };
+
         getAllAllowances().then((goals) => {
             if (!unmounted) {
                 setIsLoading(false);
-                if (activeFamilyMember && !goals[activeFamilyMember]) {
+                if (activeFamilyMember && !goals[activeFamilyMember]?.goal) {
                     return navigate("/main/addGoal");
                 }
             }
         });
+
         return () => {
             unmounted = false;
         };
     }, []);
 
     useEffect(() => {
+        if (activeFamilyMember && !goals[activeFamilyMember]?.goal) {
+            return navigate("/main/addGoal");
+        }
         if (allowance) {
             calculateGoalPercentage(allowance);
         }
@@ -83,7 +98,6 @@ export default function AllowancePage() {
             />
         </Link>
     );
-
     return (
         <>
             {/* Show spinner while waiting on data from firebase */}
@@ -100,11 +114,56 @@ export default function AllowancePage() {
                         </div>
                     ) : (
                         <div className="d-flex flex-column justify-content-center">
-                            <div className="lifetime-stats">
-                                {convertDecimalsToDollarsAndCents(
-                                    allowance[activeFamilyMember].lifetimeTotal
-                                )}
-                            </div>
+                            {choresStats[activeFamilyMember]?.lastChore && (
+                                <>
+                                    <div className="lifetime-earnings">
+                                        <Card>
+                                            <Card.Header>
+                                                <Card.Title>
+                                                    Lifetime Earnings
+                                                </Card.Title>
+                                            </Card.Header>
+
+                                            <Card.Body>
+                                                <div>
+                                                    {" "}
+                                                    {convertDecimalsToDollarsAndCents(
+                                                        allowance[
+                                                            activeFamilyMember
+                                                        ].lifetimeTotal
+                                                    )}
+                                                </div>
+                                            </Card.Body>
+                                        </Card>
+                                    </div>
+                                    <div className="lifetime-chores">
+                                        <Card>
+                                            <Card.Header>
+                                                <Card.Title>
+                                                    Last Chore
+                                                </Card.Title>
+                                            </Card.Header>
+
+                                            <Card.Body>
+                                                <div>
+                                                    {
+                                                        choresStats[
+                                                            activeFamilyMember
+                                                        ].lastChore
+                                                    }
+                                                </div>
+                                                <div>
+                                                    {
+                                                        choresStats[
+                                                            activeFamilyMember
+                                                        ].lastChoreCompleted
+                                                    }
+                                                </div>
+                                            </Card.Body>
+                                        </Card>
+                                    </div>
+                                </>
+                            )}
                             <h3 className="mt-3">
                                 {goals[activeFamilyMember]
                                     ? goals[activeFamilyMember].goal +

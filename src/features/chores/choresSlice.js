@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+    choresStats: {},
+};
 
 export const choresSlice = createSlice({
     name: "chores",

@@ -10,10 +10,13 @@ import {
     FormLabel,
 } from "react-bootstrap";
 import {
+    createAllowance,
     createFamily,
     deleteFamily,
     getFamily,
     updateAllowance,
+    updateChoreStats,
+    updateGoal,
 } from "../../utils/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import "./SettingsPage.css";

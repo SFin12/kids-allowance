@@ -12,7 +12,7 @@ export default function ChoresPage() {
         // Creates sorted array of keys to look up chore info and display alphabetically
         setSortedChores(
             Object.keys(chores)
-                .map((chore, i) => chore)
+                .filter((chore, i) => chore !== "choresStats")
                 .sort()
         );
     }, [chores]);

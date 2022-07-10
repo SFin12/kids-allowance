@@ -49,7 +49,7 @@ export const createChore = async (title, value) => {
 
 export const updateChore = async (title, value, completedBy, dateCompleted) => {
     const userId = getCurrentUserInfo().uid;
-    const userDataRef = db.collection("users").doc(`${userId}`);
+    const userDataRef = await db.collection("users").doc(`${userId}`);
     userDataRef.update({
         [`chores.${title}`]: {
             value,
@@ -57,6 +57,50 @@ export const updateChore = async (title, value, completedBy, dateCompleted) => {
             dateCompleted,
         },
     });
+    if (completedBy && title && value && dateCompleted) {
+        updateChoreStats(completedBy, title, value, dateCompleted);
+    }
+};
+
+export const updateChoreStats = async (member, title, value, dateCompleted) => {
+    const userId = getCurrentUserInfo().uid;
+    const userDataRef = await db.collection("users").doc(`${userId}`);
+    const date = new Date();
+    const dateString = date.toString();
+    const choresStats = await userDataRef.collection("choresStats");
+    if (member && title && value && dateCompleted) {
+        //If a chore is completed (not resetting chore), add it to chores stats
+
+        choresStats.doc("choresStats").set(
+            {
+                [member]: {
+                    choresCompleted: firebase.firestore.FieldValue.increment(1),
+                    lastChore: title,
+                    lastChoreCompleted: dateCompleted,
+                    choresCompletedData:
+                        firebase.firestore.FieldValue.arrayUnion({
+                            title,
+                            date: dateString,
+                            value: value,
+                        }),
+                },
+            },
+            { merge: true }
+        );
+    } else {
+        choresStats.doc("choresStats").set(
+            {
+                [member]: {
+                    choresCompleted: 0,
+                    lastChore: "",
+                    lastChoreCompleted: "",
+                    choresCompletedData: [],
+                },
+            },
+            { merge: true }
+        );
+        console.log("created choresStats");
+    }
 };
 
 export const getChores = async () => {
@@ -72,6 +116,23 @@ export const deleteChore = async (title) => {
     userDataRef.update({
         [`chores.${title}`]: firebase.firestore.FieldValue.delete(),
     });
+};
+
+export const getChoreStats = async () => {
+    let uid = "";
+    if (!uid) {
+        try {
+            uid = await getCurrentUserInfo().uid;
+        } catch (err) {}
+    }
+    const userRef = await db.collection("users");
+    const snapshot = await userRef
+        .doc(`${uid}`)
+        .collection("choresStats")
+        .doc("choresStats")
+        .get();
+    const choresStats = await snapshot.data();
+    return choresStats;
 };
 
 export const createFamily = async (namesArr) => {
@@ -139,7 +200,7 @@ export const updateAllowance = async (
     let newTotal = Number(value);
     let lifetimeTotal = newTotal;
     const allowanceExists = await getAllowances();
-
+    console.log(allowanceExists);
     // if an allowance exists and family member exists w/ value greater than zero, add to total.
     if (allowanceExists) {
         if (allowanceExists[member]?.currentTotal) {
@@ -202,12 +263,12 @@ export const deleteAllowance = async (member) => {
 
 export const updateGoal = async (
     member,
-    goalName,
-    goalValue,
+    goalName = "",
+    goalValue = 0,
     userId = getCurrentUserInfo().uid
 ) => {
-    const userRef = await db.collection("users").doc(userId);
-    const earnings = await userRef.collection("goals");
+    const userRef = db.collection("users").doc(userId);
+    const earnings = userRef.collection("goals");
     earnings.doc("goals").set(
         {
             [member]: {
