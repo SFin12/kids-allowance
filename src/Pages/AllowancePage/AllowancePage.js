@@ -40,10 +40,10 @@ export default function AllowancePage() {
             const goals = await getGoals();
             const choresStats = await getChoreStats();
             // redux reducer fuction to update redux store
-            console.log(choresStats);
+
             dispatch(setAllowance(earnings));
             dispatch(setGoal(goals));
-            console.log(choresStats);
+
             dispatch(setChoresStats(choresStats));
             return goals;
         };
