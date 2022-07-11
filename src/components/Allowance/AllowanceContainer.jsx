@@ -50,7 +50,7 @@ export default function AllowanceContainer({
                     height: `${percentageOfGoal}%`,
                     borderTopLeftRadius: borderRadius,
                     borderTopRightRadius: borderRadius,
-                    animation: "progress-bar 2s",
+                    // animation: "progress-bar 2s",
                 }}
             >
                 {/* Check if the total is higher than 3% of goal before displaying dollar amount */}

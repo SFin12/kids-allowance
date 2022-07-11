@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../../components/Forms/FormInput";
 import { setGoal } from "../../features/allowance/allowanceSlice";
@@ -14,10 +14,7 @@ export default function AddGoalPage() {
     const [currentFamilyMember] = useState(activeFamilyMember);
     const userId = useSelector(selectUserId);
     const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     setCurrentFamilyMember(activeFamilyMember);
-    // }, []);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (activeFamilyMember === null) {
@@ -34,12 +31,14 @@ export default function AddGoalPage() {
         e.preventDefault();
         const goal = e.target.elements.Goal.value;
         const cost = e.target.elements.Cost.value;
+        dispatch(
+            setGoal({ [activeFamilyMember]: { goal: goal, value: cost } })
+        );
         // saves new goal to db
         updateGoal(activeFamilyMember, goal, cost, userId).then(() => {
             navigate("/main/allowance");
         });
         // updates redux store
-        setGoal({ [activeFamilyMember]: { goal: goal, value: cost } });
     }
 
     return (

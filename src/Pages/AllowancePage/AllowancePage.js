@@ -43,34 +43,35 @@ export default function AllowancePage() {
 
             dispatch(setAllowance(earnings));
             dispatch(setGoal(goals));
-
             dispatch(setChoresStats(choresStats));
+
             return goals;
         };
 
         getAllAllowances().then((goals) => {
             if (!unmounted) {
                 setIsLoading(false);
-                if (activeFamilyMember && !goals[activeFamilyMember]?.goal) {
+                if (activeFamilyMember && !goals[activeFamilyMember].goal) {
                     return navigate("/main/addGoal");
                 }
             }
         });
 
         return () => {
-            unmounted = false;
+            unmounted = true;
         };
     }, []);
 
     useEffect(() => {
-        if (activeFamilyMember && !goals[activeFamilyMember]?.goal) {
-            return navigate("/main/addGoal");
+        if (goals[activeFamilyMember]) {
+            if (activeFamilyMember && !goals[activeFamilyMember].goal) {
+                return navigate("/main/addGoal");
+            }
         }
-        if (allowance) {
-            calculateGoalPercentage(allowance);
-        }
+
+        calculateGoalPercentage(allowance);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [allowance, goals, activeFamilyMember]);
+    }, [allowance, activeFamilyMember, goals]);
 
     function calculateGoalPercentage(allowance) {
         if (!allowance[activeFamilyMember]) {
@@ -81,13 +82,15 @@ export default function AllowancePage() {
         }
 
         // gives the percentage of goal used fo fill allowance graph
-        let percentage =
+        let percentage = Math.floor(
             (allowance[activeFamilyMember].currentTotal /
                 goals[activeFamilyMember].value) *
-            100;
+                100
+        );
 
         percentage < 0 && (percentage = 0);
-        setPercentageOfGoal(percentage);
+
+        setPercentageOfGoal(Math.floor(percentage));
     }
 
     // conditoinal edit icon button added if an active member is clicked. Used to add / edit goal
@@ -98,6 +101,7 @@ export default function AllowancePage() {
             />
         </Link>
     );
+
     return (
         <>
             {/* Show spinner while waiting on data from firebase */}
