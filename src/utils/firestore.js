@@ -60,6 +60,7 @@ export const updateChore = async (title, value, completedBy, dateCompleted) => {
     if (completedBy && title && value && dateCompleted) {
         updateChoreStats(completedBy, title, value, dateCompleted);
     }
+    return userDataRef;
 };
 
 export const updateChoreStats = async (member, title, value, dateCompleted) => {
@@ -186,7 +187,7 @@ export const createAllowance = async (
         },
         { merge: true }
     );
-    console.log("created allowance");
+    console.log("updated allowance");
 };
 
 export const updateAllowance = async (
@@ -212,7 +213,7 @@ export const updateAllowance = async (
             newTotal += currentTotal; // old allowance
         }
     } else {
-        return alert("Allowance doesen't exist yet.");
+        console.log(`Allowance doesn't exist yet for ${member}.`);
     }
     const userRef = await db.collection("users").doc(userId);
     const earnings = await userRef.collection("earnings");
@@ -225,6 +226,7 @@ export const updateAllowance = async (
         },
         { merge: true }
     );
+    console.log(`Created allowance for ${member}.`);
 };
 
 export const getAllowances = async () => {

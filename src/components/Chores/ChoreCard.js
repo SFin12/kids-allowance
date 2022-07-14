@@ -73,7 +73,7 @@ export default function ChoreCard({ chore, value, completedBy }) {
                 </div>
                 <div className="card-back">
                     <div className="completed">{chore}</div>
-                    <div>{`${completedBy}:`}</div>
+                    <div>{`${completedBy ? completedBy : "Anonymous"}:`}</div>
                     <div>{date}</div>
                 </div>
             </div>

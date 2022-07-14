@@ -51,7 +51,12 @@ export default function AllowancePage() {
         getAllAllowances().then((goals) => {
             if (!unmounted) {
                 setIsLoading(false);
-                if (activeFamilyMember && !goals[activeFamilyMember].goal) {
+
+                if (
+                    (activeFamilyMember && !goals) ||
+                    !goals[activeFamilyMember] ||
+                    !goals[activeFamilyMember].goal
+                ) {
                     return navigate("/main/addGoal");
                 }
             }
@@ -63,8 +68,12 @@ export default function AllowancePage() {
     }, []);
 
     useEffect(() => {
-        if (goals[activeFamilyMember]) {
-            if (activeFamilyMember && !goals[activeFamilyMember].goal) {
+        if (!isLoading) {
+            if (goals[activeFamilyMember]) {
+                if (activeFamilyMember && !goals[activeFamilyMember].goal) {
+                    return navigate("/main/addGoal");
+                }
+            } else if (!goals[activeFamilyMember]) {
                 return navigate("/main/addGoal");
             }
         }

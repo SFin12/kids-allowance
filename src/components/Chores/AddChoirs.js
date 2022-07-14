@@ -12,8 +12,6 @@ import { setChores } from "../../features/chores/choresSlice";
 import { createChore, deleteChore, getChores } from "../../utils/firestore";
 
 export default function AddChores() {
-    const [title, setTitle] = useState("");
-    const [value, setValue] = useState("");
     const [displayChores, setDisplayChores] = useState([]);
     const [update, setUpdate] = useState(false);
     const dispatch = useDispatch();
@@ -30,13 +28,14 @@ export default function AddChores() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        if (title && value) {
-            createChore(title, value);
+        const formData = new FormData(e.target);
+        const { text: title, value } = Object.fromEntries(formData.entries());
+
+        createChore(title, value).then((results) => {
             setUpdate(!update);
-        }
-        // reset input values
-        setTitle("");
-        setValue("");
+        });
+
+        e.currentTarget.reset();
     }
 
     function handleDelete(e) {
@@ -48,21 +47,13 @@ export default function AddChores() {
         }
     }
 
-    function handleChange(e) {
-        if (e.target.name === "text") {
-            setTitle(e.target.value);
-        } else {
-            setValue(e.target.value);
-        }
-    }
-
     return (
         <>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <FormGroup
-                        className="mb-3"
-                        controlId="exampleForm.ControlInput1"
+                        className="mb-3 position-relative"
+                        controlId="titleInput"
                     >
                         <FormLabel>Title</FormLabel>
                         {/* div to match dollar sign spacing below*/}
@@ -72,15 +63,15 @@ export default function AddChores() {
                                 type="text"
                                 placeholder="Example: Wash Dishes"
                                 name="text"
-                                onChange={handleChange}
-                                value={title}
                                 maxLength={18}
+                                defaultValue=""
+                                required
                             />
                         </div>
                     </FormGroup>
                     <FormGroup
-                        className="mb-3"
-                        controlId="exampleFormControlTextarea1"
+                        className="mb-3 position-relative"
+                        controlId="valueArea"
                     >
                         <FormLabel>Value</FormLabel>
                         {/* div to allow dollar sign in front of input */}
@@ -99,16 +90,14 @@ export default function AddChores() {
                                 maxLength={5}
                                 placeholder=".50"
                                 name="value"
-                                value={value}
-                                onChange={handleChange}
+                                defaultValue=""
+                                min={0}
+                                step={0.25}
+                                required
                             />
                         </div>
                     </FormGroup>
-                    <Button
-                        variant="primary"
-                        onClick={handleSubmit}
-                        className="mb-3"
-                    >
+                    <Button variant="primary" type="submit" className="mb-3">
                         Save
                     </Button>
                 </FormGroup>
