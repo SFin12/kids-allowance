@@ -18,7 +18,7 @@ export default function Footer() {
     }
     return (
         <div className="footer">
-            {familyMembers.length > 0 ? (
+            {familyMembers && familyMembers.length > 0 ? (
                 familyMembers.map((member, i) => {
                     // Change the color shade for each family  member button
                     const bgModifier = i * 25;
