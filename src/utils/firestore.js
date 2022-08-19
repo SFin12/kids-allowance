@@ -13,6 +13,7 @@ export const createUser = (user) => {
                 id: user.uid,
                 name: user.displayName,
                 email: user.email,
+                logins: 0
             },
             { merge: true }
         )
@@ -34,6 +35,16 @@ export const getUserInfo = async (userId) => {
 
     return userData;
 };
+
+export const updateLogins = async () => {
+  console.log("updating logins")
+  const userId = getCurrentUserInfo().uid;
+  const userDataRef = await db.collection("users").doc(`${userId}`);
+  userDataRef.update({
+      logins: firebase.firestore.FieldValue.increment(1)
+  });
+};
+
 
 export const createChore = async (title, value) => {
     const userId = getCurrentUserInfo().uid;

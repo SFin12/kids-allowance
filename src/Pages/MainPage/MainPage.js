@@ -12,7 +12,7 @@ import {
 import SettingsPage from "../SettingsPage/SettingsPage";
 import ChoresPage from "../ChoresPage/ChoresPage";
 import "./MainPage.css";
-import { createFamily, createUser, getUserInfo } from "../../utils/firestore";
+import { createFamily, createUser, getUserInfo, updateLogins } from "../../utils/firestore";
 import { setChores } from "../../features/chores/choresSlice";
 import AllowancePage from "../AllowancePage/AllowancePage";
 import Footer from "../../components/Footer/Footer";
@@ -49,8 +49,9 @@ export default function MainPage(props) {
                             id: user.uid,
                         })
                     );
-                    // returns family members for current user from firestore db and updates Redux.
-                    const family = async () => {
+                    // sets family members, chores, and logins for current user from firestore db and updates Redux.
+                    const setInitialRedux = async () => {
+                        
                         const dbData = await getUserInfo(user.uid);
                         if (dbData) {
                             // set redux family info from db
@@ -61,13 +62,17 @@ export default function MainPage(props) {
                             );
                             // set redux chores from db
                             dispatch(setChores(dbData.chores));
+                            updateLogins();
                         } else {
                             // If getUserInfo is undefined, add new user to database.
                             createUser(user);
+                            updateLogins();
                             createFamily([]);
+
                         }
                     };
-                    family();
+                    setInitialRedux();
+                    
                 } else {
                     alert("You are not logged in.");
                 }
