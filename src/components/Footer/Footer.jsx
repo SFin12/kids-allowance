@@ -22,15 +22,23 @@ export default function Footer() {
                 familyMembers.map((member, i) => {
                     // Change the color shade for each family  member button
                     const bgModifier = i * 25;
+                    let color = "black"
                     let r = 127 - bgModifier;
                     let g = 255 - bgModifier;
                     let b = 212 - bgModifier;
+                    // If there are a lot of members the background gets dark... turn the text color white
+                    if (i > 4){
+                      color = "whitesmoke"
+                    }
                     if (member === activeMember) {
                         r = 255;
                         g = 255;
                         b = 0;
+
+                        color = "black";
                     }
                     return (
+                      
                         <div
                             key={i + member}
                             className="member"
@@ -38,11 +46,13 @@ export default function Footer() {
                             name={member}
                             style={{
                                 background: `rgb(${r}, ${g}, ${b})`,
+                                color: color
                             }}
                             onClick={handleActiveFamilyMember}
                         >
                             {member}
                         </div>
+                      
                     );
                 })
             ) : (

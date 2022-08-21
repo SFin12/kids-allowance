@@ -1,0 +1,20 @@
+.instructions {
+  padding: 10px;
+  display: block;
+}
+
+.instructions ol {
+  text-align: start;
+  font-size: large;
+  font-weight: 600;
+}
+
+.instructions li {
+  padding: 5px;
+}
+
+.chorzy-icon img {
+  width: 75px;
+  box-shadow: 1px 1px 5px 1px rgba(0,0,0,.2);
+  border-radius: 5px;
+}

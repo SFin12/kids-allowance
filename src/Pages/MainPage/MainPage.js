@@ -23,10 +23,14 @@ import SpendPage from "../AllowancePage/SpendPage";
 import AdjustTotalPage from "../AllowancePage/AdjustTotalPage";
 import ResetAllowancePage from "../AllowancePage/ResetAllowancePage";
 import SetBonusPage from "../AllowancePage/SetBonusPage";
+import InitialIntroPage from "../InitialSetupPage/InitialIntroPage"
+import InitialChoresPage from "../InitialSetupPage/InitialChoresPage"
+import InitialTypesPage from "../InitialSetupPage/InitialTypesPage"
+import InititialFamilyPage from "../InitialSetupPage/InitialFamilyPage"
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
-
+    const [isFirstLogin, setIsFirstLogin] = useState(true)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -63,11 +67,15 @@ export default function MainPage(props) {
                             // set redux chores from db
                             dispatch(setChores(dbData.chores));
                             updateLogins();
+                            setIsFirstLogin(false)
+                            navigate('/main/initialIntro')
                         } else {
                             // If getUserInfo is undefined, add new user to database.
                             createUser(user);
                             updateLogins();
                             createFamily([]);
+                            setIsFirstLogin(true)
+                            navigate('/initialIntro')
 
                         }
                     };
@@ -93,6 +101,7 @@ export default function MainPage(props) {
             .catch((err) => alert(err.message));
     }
 
+
     return (
         <div className="main">
             <Navigation logout={handleLogout} lastName={lastName} />
@@ -100,6 +109,10 @@ export default function MainPage(props) {
             <div className="d-flex justify-content-center w-100 h-100">
                 <Routes>
                     <Route path="/" element={<TitlePage />} />
+                    <Route path="/initialIntro" element={<InitialIntroPage />} />
+                    <Route path="/initialFamily" element={<InititialFamilyPage />} />
+                    <Route path="/initialChores" element={<InitialChoresPage />} />
+                    <Route path="/initialTypes" element={<InitialTypesPage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/chores" element={<ChoresPage />} />
                     <Route path="/allowance" element={<AllowancePage />} />

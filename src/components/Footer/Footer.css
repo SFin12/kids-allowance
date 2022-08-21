@@ -1,6 +1,7 @@
 .footer {
     display: flex;
     position: fixed;
+    flex-wrap: wrap;
     bottom: 0px;
     left: 0px;
     height: 60px;
@@ -9,9 +10,11 @@
     overflow-y: hidden;
 }
 
+
 .member {
     flex-grow: 1;
     display: flex;
+    min-width: 70px;
     align-items: center;
     justify-content: center;
     font-size: large;
