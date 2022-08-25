@@ -1,6 +1,15 @@
+.initial-container {
+  display: block;
+  text-align: start;
+  max-width: 700px;
+
+}
+
+
 .instructions {
   padding: 10px;
   display: block;
+
 }
 
 .instructions ol {
@@ -13,8 +22,35 @@
   padding: 5px;
 }
 
+#select {
+  max-width: 500px;
+  
+}
+
+
 .chorzy-icon img {
   width: 75px;
   box-shadow: 1px 1px 5px 1px rgba(0,0,0,.2);
   border-radius: 5px;
+}
+
+.arrow-down-container {
+  position: relative;
+  display: block;
+  bottom: 0px
+}
+
+.arrow-down-container img{
+  display: block;
+  margin: auto;
+  position:relative;
+
+  max-height: 30vh;
+  
+}
+
+.right-bottom-absolute {
+  position: absolute;
+  bottom: 100px;
+  right: 100px;
 }
