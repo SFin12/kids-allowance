@@ -1,8 +1,8 @@
 import { Accordion } from "react-bootstrap"
 
 import EditFamily from "../../components/Settings/EditFamily"
-import AddChores from "../../components/Chores/AddChoirs"
 import "./SettingsPage.css"
+import EditChores from "../../components/Settings/EditChoirs"
 
 export default function SettingsPage(props) {
   return (
@@ -20,7 +20,7 @@ export default function SettingsPage(props) {
           <Accordion.Header>Edit Chores</Accordion.Header>
           {/* Add chores section */}
           <Accordion.Body style={{ backgroundColor: "rgb(255,255,255)" }}>
-            <AddChores />
+            <EditChores />
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>

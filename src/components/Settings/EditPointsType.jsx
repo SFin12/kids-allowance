@@ -18,9 +18,9 @@ export default function EditPointsType() {
       {/* <FormLabel htmlFor="select-device">Choose a rewards system</FormLabel> */}
       <FormSelect aria-label="Select device" onChange={handleSelect} id="select">
         <option value={""}>Select a reward </option>
-        <option value={"stars"}>Stars </option>
-        <option value={"tickets"}>Tickets</option>
-        <option value={"points"}>Points</option>
+        <option value={"stars"}>Stars ⭐️</option>
+        <option value={"tickets"}>Tickets 🎟</option>
+        <option value={"money"}>Money 💵</option>
       </FormSelect>
     </div>
   )

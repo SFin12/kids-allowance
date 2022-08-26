@@ -7,14 +7,36 @@ import {
     FormLabel,
     Button,
 } from "react-bootstrap";
+import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux";
+import { selectPointsType } from "../../features/allowance/allowanceSlice"
 import { setChores } from "../../features/chores/choresSlice";
 import { createChore, deleteChore, getChores } from "../../utils/firestore";
 
-export default function AddChores() {
+export default function EditChores() {
     const [displayChores, setDisplayChores] = useState([]);
     const [update, setUpdate] = useState(false);
+    const [pType, setPtype] = useState()
+    const pointsType = useSelector(selectPointsType)
     const dispatch = useDispatch();
+
+    useEffect(() => {
+      if(pointsType){
+        let emoji;
+        if(pointsType === "stars"){
+          emoji = '⭐️'
+        } else if (pointsType === "tickets") {
+          emoji = '🎟'
+        } else if (pointsType === "money")
+          emoji = '﹩'
+        setPtype({ 
+          type: pointsType,
+          emoji: emoji
+        })
+      }
+    }, [pointsType])
+
+
 
     useEffect(() => {
         getChores()
@@ -55,13 +77,13 @@ export default function AddChores() {
                         className="mb-3 position-relative"
                         controlId="titleInput"
                     >
-                        <FormLabel>Title</FormLabel>
+                        <FormLabel>Title (you can add emojis 😁)</FormLabel>
                         {/* div to match dollar sign spacing below*/}
                         <div className="d-flex">
                             <span style={{ paddingRight: 15.5 }}></span>
                             <FormControl
                                 type="text"
-                                placeholder="Example: Wash Dishes"
+                                placeholder="Example: Wash Dishes 🍽"
                                 name="text"
                                 maxLength={18}
                                 defaultValue=""
@@ -82,13 +104,13 @@ export default function AddChores() {
                                     paddingRight: 3.91,
                                 }}
                             >
-                                $
+                                {<span style={{ fontSize:30 }}>{pType?.emoji}</span>}
                             </span>
                             <FormControl
                                 type="number"
                                 max={10000}
                                 maxLength={5}
-                                placeholder=".50"
+                                placeholder={pType?.type !== "money" ? "Example: 10"  : "Example: 1 or .25"}
                                 name="value"
                                 defaultValue=""
                                 min={0}
@@ -97,9 +119,12 @@ export default function AddChores() {
                             />
                         </div>
                     </FormGroup>
-                    <Button variant="primary" type="submit" className="mb-3">
-                        Save
-                    </Button>
+                    <div className="d-flex justify-content-center">
+                      
+                      <Button variant="primary" type="submit" className="mb-3">
+                          Save
+                      </Button>
+                    </div>
                 </FormGroup>
             </Form>
             <section className="d-flex family-members">

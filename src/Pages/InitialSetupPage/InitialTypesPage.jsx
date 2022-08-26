@@ -22,7 +22,7 @@ export default function InitialTypesPage() {
           <>
      
 
-            <Link to={"/main/initialTypes"} className="right-bottom-absolute">
+            <Link to={"/main/initialChores"} className="right-bottom-absolute">
               <Button>Next</Button>
             </Link>
           </>
