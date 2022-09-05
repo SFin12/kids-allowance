@@ -27,6 +27,8 @@ import InitialIntroPage from "../InitialSetupPage/InitialIntroPage"
 import InitialChoresPage from "../InitialSetupPage/InitialChoresPage"
 import InitialTypesPage from "../InitialSetupPage/InitialTypesPage"
 import InititialFamilyPage from "../InitialSetupPage/InitialFamilyPage"
+import InititialAttitudePage from "../InitialSetupPage/InitialAttitudePage"
+import InitialGoalsPage from "../InitialSetupPage/InitialGoalsPage"
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -111,8 +113,10 @@ export default function MainPage(props) {
                     <Route path="/" element={<TitlePage />} />
                     <Route path="/initialIntro" element={<InitialIntroPage />} />
                     <Route path="/initialFamily" element={<InititialFamilyPage />} />
-                    <Route path="/initialChores" element={<InitialChoresPage />} />
                     <Route path="/initialTypes" element={<InitialTypesPage />} />
+                    <Route path="/initialAttitude" element={<InititialAttitudePage />} />
+                    <Route path="/initialChores" element={<InitialChoresPage />} />
+                    <Route path="/initialGoals" element={<InitialGoalsPage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/chores" element={<ChoresPage />} />
                     <Route path="/allowance" element={<AllowancePage />} />

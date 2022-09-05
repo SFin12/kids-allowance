@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSelector } from "react-redux"
+import { selectPointsType } from "../../features/allowance/allowanceSlice"
 import { convertDecimalsToDollarsAndCents, isFloat } from "../../utils/helper";
 import "./AllowanceContainer.css";
 
@@ -8,6 +10,7 @@ export default function AllowanceContainer({
     percentageOfGoal,
 }) {
     const [barColor, setBarColor] = useState("theme-color");
+    const pType = useSelector(selectPointsType)
 
     const isGreaterThanZero = percentageOfGoal > 3 ? true : false;
     const familyMembersAllowance = allowance[activeFamilyMember].currentTotal;
@@ -54,13 +57,16 @@ export default function AllowanceContainer({
                 }}
             >
                 {/* Check if the total is higher than 3% of goal before displaying dollar amount */}
-                {isGreaterThanZero
+                {isGreaterThanZero && pType?.type === "money"
                     ? isFloat(familyMembersAllowance)
                         ? convertDecimalsToDollarsAndCents(
                               familyMembersAllowance
                           )
                         : `$${allowance[activeFamilyMember].currentTotal}`
                     : null}
+                {isGreaterThanZero && pType?.type !== "money" ?
+                `${allowance[activeFamilyMember].currentTotal}` : null  
+              }
             </div>
         </div>
     );

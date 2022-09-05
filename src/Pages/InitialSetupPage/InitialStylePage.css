@@ -37,20 +37,53 @@
 .arrow-down-container {
   position: relative;
   display: block;
-  bottom: 0px
+  /* bottom: 60px; */
+  z-index: 0;
+  width: 100%;
+  margin: auto;
 }
 
 .arrow-down-container img{
   display: block;
   margin: auto;
+  width: 20vh;
+  height: 20vh;
   position:relative;
-
   max-height: 30vh;
   
 }
 
 .right-bottom-absolute {
   position: absolute;
+  right: 40px;
   bottom: 100px;
-  right: 100px;
+  z-index: 0;
+}
+
+.front-layer-tutorial {
+  position: absolute;
+  z-index: 0;
+}
+
+@media (max-width: 912px) and (min-height: 1024px){
+
+  .arrow-down-container {
+    display: block;
+    height: 40vh;
+    z-index: 0;
+    width: 100%;
+    margin: auto;
+  }
+
+  .arrow-down-container img{
+    display: block;
+    margin: auto;
+    width: 40vh;
+    height: 40vh;
+    position:relative;
+    max-height: 50vh;
+    
+  }
+  
+
 }

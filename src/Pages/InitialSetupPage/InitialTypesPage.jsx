@@ -18,16 +18,14 @@ export default function InitialTypesPage() {
         <EditPointsType />
 
         <br />
-        {pointsType && (
-          <>
-     
-
-            <Link to={"/main/initialChores"} className="right-bottom-absolute">
+      </div>
+        {pointsType.type && (
+          
+            <Link to={"/main/initialAttitude"} className="right-bottom-absolute">
               <Button>Next</Button>
             </Link>
-          </>
+          
         )}
-      </div>
     </>
   )
 }

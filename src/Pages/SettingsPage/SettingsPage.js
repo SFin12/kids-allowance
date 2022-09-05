@@ -2,7 +2,7 @@ import { Accordion } from "react-bootstrap"
 
 import EditFamily from "../../components/Settings/EditFamily"
 import "./SettingsPage.css"
-import EditChores from "../../components/Settings/EditChoirs"
+import EditChores from "../../components/Settings/EditChores"
 
 export default function SettingsPage(props) {
   return (

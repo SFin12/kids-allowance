@@ -2,12 +2,12 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import EditChores from '../../components/Settings/EditChoirs'
-import { selectPointsType } from '../../features/allowance/allowanceSlice'
+import EditChores from '../../components/Settings/EditChores'
+import { selectChores } from '../../features/chores/choresSlice'
 
 export default function InitialChoresPage() {
-  const pointsType = useSelector(selectPointsType)
-
+  const chores = useSelector(selectChores)
+  console.log(chores)
   return (
     <>
       <div className="initial-container p-4">
@@ -17,11 +17,9 @@ export default function InitialChoresPage() {
         <EditChores />
 
         <br />
-        {pointsType && (
+        {chores && Object.keys(chores).length !== 0 && (
           <>
-     
-
-            <Link to={"/main/initialChores"} className="right-bottom-absolute">
+            <Link to={"/main/initialGoals"} className="right-bottom-absolute">
               <Button>Next</Button>
             </Link>
           </>
