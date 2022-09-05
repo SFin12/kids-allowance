@@ -75,12 +75,13 @@ export default function ChoreCard({ chore, value, completedBy }) {
 
   function handleAttitude(e) {
     let attitude = e.target.id
+    console.log(goodAttitudeValue)
     if(attitude === 'good-emoji'){
       updateAllowance(activeFamilyMember, goodAttitudeValue)
           .then(() => getAllowances()) // get new allowances and update redux store with new values
           .then((earnings) => dispatch(setAllowance(earnings)))
     } else if (attitude === 'bad-emoji'){
-      updateAllowance(activeFamilyMember, badAttitudeValue)
+      updateAllowance(activeFamilyMember, -badAttitudeValue)
           .then(() => getAllowances()) // get new allowances and update redux store with new values
           .then((earnings) => dispatch(setAllowance(earnings)))
     }

@@ -3,7 +3,7 @@ import { Button, Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { selectPointsType, setGoodAttitudeValue } from '../../features/allowance/allowanceSlice'
+import { selectPointsType, setBadAttitudeValue, setGoodAttitudeValue } from '../../features/allowance/allowanceSlice'
 import { updateAttitudeValues } from '../../utils/firestore'
 
 export default function EditAttitudeRewards() {
@@ -17,9 +17,12 @@ export default function EditAttitudeRewards() {
     e.preventDefault()
     const formData = new FormData(e.target)
     const { bonus, deduction } = Object.fromEntries(formData.entries())
-    dispatch(setGoodAttitudeValue({goodAttitudeValue: bonus}))
-    dispatch(setGoodAttitudeValue({badAttitudeValue: deduction}))
-    updateAttitudeValues(bonus, deduction)
+    let goodAttitudeValue = Number(bonus)
+    let badAttitudeValue = Number(deduction)
+    Number()
+    dispatch(setGoodAttitudeValue(goodAttitudeValue))
+    dispatch(setBadAttitudeValue(badAttitudeValue))
+    updateAttitudeValues(goodAttitudeValue, badAttitudeValue)
     if(location.pathname === '/main/initialAttitude') {
       navigate('/main/initialChores')
     }

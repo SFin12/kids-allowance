@@ -15,19 +15,6 @@
     z-index: 200;
 }
 
-/* .show {
-    background-color: aquamarine;
-    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
-}
-
-.show .link {
-    padding-bottom: 20px;
-}
-
-.navbar-collapse {
-    justify-content: end;
-    margin-right: 30px;
-} */
 
 .nav-logo {
     display: none;
@@ -69,8 +56,13 @@
     }
 
     .non-icon {
-        display: flex;
+        display: block;
     }
+
+    .non-icon::first-letter {
+      text-transform: capitalize;
+    }
+
     .nav-logo {
         display: inline;
         align-items: center;
