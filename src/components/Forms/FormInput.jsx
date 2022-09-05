@@ -6,12 +6,16 @@ import {
     FormGroup,
     FormLabel,
 } from "react-bootstrap";
+import { useSelector } from "react-redux"
+import { selectPointsType } from "../../features/allowance/allowanceSlice"
 
 export default function FormInput({
     titles = ["Title"],
     handleSubmit,
     placeholder,
 }) {
+    const pointsType = useSelector(selectPointsType)
+
     return (
         <Form onSubmit={handleSubmit} id="form">
             <FormGroup>
@@ -28,7 +32,7 @@ export default function FormInput({
                                         paddingRight: 3.91,
                                     }}
                                 >
-                                    $
+                                    {pointsType.icon}
                                 </span>
                             ) : (
                                 <span

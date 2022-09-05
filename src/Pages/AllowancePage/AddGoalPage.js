@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../../components/Forms/FormInput";
-import { setGoal } from "../../features/allowance/allowanceSlice";
+import { selectPointsType, setGoal } from "../../features/allowance/allowanceSlice";
 import {
     selectActiveFamilyMember,
     selectUserId,
@@ -13,6 +13,7 @@ export default function AddGoalPage() {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
     const [currentFamilyMember] = useState(activeFamilyMember);
     const userId = useSelector(selectUserId);
+    const pointsType = useSelector(selectPointsType)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

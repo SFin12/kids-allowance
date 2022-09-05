@@ -11,6 +11,7 @@ import {
     selectAllowance,
     selectChoresStats,
     selectGoals,
+    selectPointsType,
     setAllowance,
     setChoresStats,
     setGoal,
@@ -25,6 +26,7 @@ export default function AllowancePage() {
     const [percentageOfGoal, setPercentageOfGoal] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch();
+    const pointsType = useSelector(selectPointsType)
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
     const goals = useSelector(selectGoals);
     const allowance = useSelector(selectAllowance);
@@ -180,8 +182,8 @@ export default function AllowancePage() {
                             <h3 className="mt-3">
                                 {goals[activeFamilyMember]
                                     ? goals[activeFamilyMember].goal +
-                                      " $" +
-                                      goals[activeFamilyMember].value
+                                      pointsType.type === "money" && pointsType.icon +
+                                      goals[activeFamilyMember].value + pointsType.type !== "money" && pointsType.icon
                                     : null}
                             </h3>
 
