@@ -45,9 +45,7 @@ export default function ChoreCard({ chore, value, completedBy }) {
       )
       // updated firestore to show completed
       updateDbChore(chore, currentValue, activeFamilyMember, date)
-      updateAllowance(activeFamilyMember, currentValue)
-        .then(() => getAllowances()) // get new allowances and update redux store with new values
-        .then((earnings) => dispatch(setAllowance(earnings)))
+
       
  
     } else {
@@ -77,14 +75,15 @@ export default function ChoreCard({ chore, value, completedBy }) {
     let attitude = e.target.id
     console.log(goodAttitudeValue)
     if(attitude === 'good-emoji'){
-      updateAllowance(activeFamilyMember, goodAttitudeValue)
+      updateAllowance(activeFamilyMember, (currentValue + goodAttitudeValue))
           .then(() => getAllowances()) // get new allowances and update redux store with new values
           .then((earnings) => dispatch(setAllowance(earnings)))
     } else if (attitude === 'bad-emoji'){
-      updateAllowance(activeFamilyMember, -badAttitudeValue)
+      updateAllowance(activeFamilyMember, (currentValue - badAttitudeValue))
           .then(() => getAllowances()) // get new allowances and update redux store with new values
           .then((earnings) => dispatch(setAllowance(earnings)))
     }
+    
     setShowModal(false)
     
   }
