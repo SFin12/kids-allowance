@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { selectPointsType } from "../../features/allowance/allowanceSlice"
 
 import { selectActiveFamilyMember } from "../../features/user/userSlice";
+import { capitalizeFirstLetter } from "../../utils/helper"
 
 import "./EditAllowancePage.css";
 
 export default function EditAllowancePage(props) {
     const activeFamilyMember = useSelector(selectActiveFamilyMember);
     const navigate = useNavigate();
+    const pointsType = useSelector(selectPointsType)
 
     useEffect(() => {
         if (activeFamilyMember === null) {
@@ -25,7 +28,7 @@ export default function EditAllowancePage(props) {
                         className="flex-grow-1 align-middle edit-allowance-button"
                         name="spend-money"
                     >
-                        Spend Money
+                        Spend {pointsType.type && capitalizeFirstLetter(pointsType.type)}
                     </button>
                 </Link>
 
@@ -64,7 +67,7 @@ export default function EditAllowancePage(props) {
                         className="flex-grow-1 edit-allowance-button"
                         name="reset-allowance"
                     >
-                        Reset Allowance
+                        Reset {pointsType.type && capitalizeFirstLetter(pointsType.type)}
                     </button>
                 </Link>
             </div>

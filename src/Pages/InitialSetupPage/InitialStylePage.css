@@ -65,6 +65,17 @@
   z-index: 0;
 }
 
+.front-layer-chores-tutorial {
+  position: fixed;
+  bottom: 70px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px 1px rgba(0,0,0,.2);
+  width: 90%;
+  max-width: 600px;
+  z-index: 0;
+}
+
 @media (max-width: 912px) and (min-height: 1024px){
 
   .arrow-down-container {
@@ -84,6 +95,13 @@
     max-height: 50vh;
     
   }
-  
+  .front-layer-chores-tutorial {
+    position: absolute;
+    bottom: 70px;
+    background-color: white;
+    width: 50%;
+    max-width: 50%;
+    z-index: 0;
+  }
 
 }

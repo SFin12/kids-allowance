@@ -28,7 +28,8 @@ export default function SettingsPage(props) {
         const famData = async () => {
             const famArr = await getFamily(uid);
             if (famArr) {
-                props.memberCount(famArr.length)
+              if(props.memberCount) props.memberCount(famArr.length) // for initial tutorial to trigger next tutorial
+
                 // shows family members under input with option to delete
                 setDisplayFamily(famArr);
                 // set redux family members

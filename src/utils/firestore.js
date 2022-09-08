@@ -1,5 +1,8 @@
 import { db } from "../utils/firebaseConfig"
 import firebase from "firebase/compat/app"
+import { store } from "../app/store"
+import { convertPointsToDollars } from "./helper"
+
 
 export function getCurrentUserInfo() {
   return firebase.auth().currentUser
@@ -177,7 +180,7 @@ export const deleteFamily = (name) => {
   })
 }
 
-export const createAllowance = async (member, value = 0, userId = getCurrentUserInfo().uid) => {
+export const createAllowance = async (member, pointsType, value = 0, userId = getCurrentUserInfo().uid) => {
   if (member === isNaN || member === null || typeof member === "number") {
     return console.error("Must provide string value for first argument")
   }
@@ -198,10 +201,14 @@ export const createAllowance = async (member, value = 0, userId = getCurrentUser
 }
 
 export const updateAttitudeValues = async (goodAttitudeValue, badAttitudeValue) => {
+  const conversionRate = Number(store.getState().allowance.pointsType.pointToDollarConversion)
+  let goodAttitudeDollarValue = convertPointsToDollars(goodAttitudeValue, conversionRate)
+  let badAttitudeDollarValue = convertPointsToDollars(badAttitudeValue, conversionRate)
+  console.log(goodAttitudeDollarValue)
   try {
     const userId = getCurrentUserInfo().uid
     const userRef = db.collection("users").doc(userId)
-    userRef.set({goodAttitudeValue, badAttitudeValue},{merge: true})
+    userRef.set({goodAttitudeDollarValue, badAttitudeDollarValue},{merge: true})
     return "success"
     
   } catch (error) {

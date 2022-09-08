@@ -14,16 +14,19 @@ export default function EditPointsType() {
     let pointsType;
     if(selection){
       let icon;
+      let pointToDollarConversion = .05
       if(selection === "stars"){
         icon = '⭐️'
       } else if (selection === "tickets") {
         icon = '🎟'
       } else if (selection === "money") {
-        icon = '﹩'
+        icon = '$'
+        pointToDollarConversion = 1
       }
       pointsType = {
         type: selection,
-        icon: icon
+        icon,
+        pointToDollarConversion
       }
     }
     dispatch(setPointsType(pointsType))

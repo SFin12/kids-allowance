@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { MdOutlineIosShare } from "react-icons/md"
+import { BsThreeDotsVertical } from "react-icons/bs"
 import { CgAddR } from "react-icons/cg"
 import { Button, FormLabel, FormSelect } from "react-bootstrap"
 import { useState } from "react"
@@ -41,7 +42,7 @@ export default function InitialIntroPage() {
             <p>Chorzy is designed to work as a web app on your phone or tablet and will not work as intended unless it is saved as a web app. Follow the steps below to add it to your device</p>
             <FormLabel htmlFor="select-device">Select your device</FormLabel>
             <FormSelect aria-label="Select device" onChange={handleSelect} id="select-device">
-              <option value={"apple"}>Choose your device</option>
+              <option value={""}>Choose your device</option>
               <option value={"apple"}>iPhone / iPad</option>
               <option value={"android"}>Android Phone / Tablet</option>
               <option value={"computer"}>Desktop / Laptop</option>
@@ -77,6 +78,27 @@ export default function InitialIntroPage() {
                   <Button>Next</Button>
                 </Link>
               </div>
+            )}
+            {device === "android" && (
+              <div className="instructions">
+              <ol>
+                <li>Make sure Chorzy is open in Chrome</li>
+                <li>
+                  Tap the menu <BsThreeDotsVertical style={{ fontSize: 25 }} />
+                  <span> icon</span>
+                </li>
+                <li>
+                  Tap Add to Home Screen
+                </li>
+                <li>
+                  You can now close Chrome and click on the{" "}
+                  <span className="chorzy-icon">
+                    <img src={chorzyIcon} alt="Chorzy Icon" />
+                  </span>
+                  <span> icon</span>
+                </li>
+              </ol>
+            </div>
             )}
             <br />
           </section>

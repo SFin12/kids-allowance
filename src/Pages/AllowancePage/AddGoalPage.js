@@ -30,12 +30,13 @@ export default function AddGoalPage() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        const goal = e.target.elements.Goal.value;
+        const goal = e.target.elements["Goal Name / Item"].value;
         const cost = e.target.elements.Cost.value;
         dispatch(
             setGoal({ [activeFamilyMember]: { goal: goal, value: cost } })
         );
         // saves new goal to db
+        console.log('goal saved')
         updateGoal(activeFamilyMember, goal, cost, userId).then(() => {
             navigate("/main/allowance");
         });
@@ -55,7 +56,7 @@ export default function AddGoalPage() {
 
             <div className="w-75">
                 <FormInput
-                    titles={["Goal", "Cost"]}
+                    titles={["Goal Name / Item", "Cost"]}
                     handleSubmit={handleSubmit}
                 />
             </div>

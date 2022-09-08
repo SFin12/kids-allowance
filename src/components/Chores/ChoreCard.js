@@ -11,7 +11,7 @@ import MainModal from "../Modal/MainModal"
 
 export default function ChoreCard({ chore, value, completedBy }) {
   const [flip, setFlip] = useState(false)
-  const [lastChore, setLastChore] = useState()
+  // const [lastChore, setLastChore] = useState()
   const [dailyChore, setDailyChore] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [currentValue, setCurrentValue] = useState(value)
@@ -63,12 +63,12 @@ export default function ChoreCard({ chore, value, completedBy }) {
     }
     if (!flip) setShowModal(true)
     setFlip(!flip)
-    setLastChore({
-      chore,
-      value: currentValue,
-      completedBy: activeFamilyMember,
-      dateCompleted: date,
-    })
+    // setLastChore({
+    //   chore,
+    //   value: currentValue,
+    //   completedBy: activeFamilyMember,
+    //   dateCompleted: date,
+    // })
   }
 
   function handleAttitude(e) {
@@ -105,26 +105,29 @@ export default function ChoreCard({ chore, value, completedBy }) {
 
   return (
     <>
-      {/* flip card on mouse up */}
+      {/* flip card on click */}
       <div className="chore-card" onClick={handleClick} id={chore}>
         <div className={flip ? "main-card flip-card" : "main-card"}>
           <div className="card-front">
-            <div>{`${chore}`}</div>
+      
+            <div className="chore-name">{`${chore}`}</div>
             {currentValue ?  pType?.type === "money" ? (
-              <div>
+              <div className="chore-value">
                 {/* Check if numVal is a whole number or decimal */}
                 {numVal % 1 === 0 ? `$${value}` : `${convertDecimalsToDollarsAndCents(numVal)}`}
               </div>
             ) : (
-              <div>{`${value} ${pType.icon}`}</div>
+              <div className="chore-value">{`${value} ${pType.icon}`}</div>
             ): null }
-            <div className={dailyChore ? "daily-chore-active" : "daily-chore"} onClick={handleDailyChore}>Chore</div>
+           
+            <div className={dailyChore ? "daily-chore-active" : "daily-chore"} onClick={handleDailyChore}>Daily</div>
           </div>
 
           <div className="card-back">
             <div className="completed">{chore}</div>
-            <div>{`${completedBy ? completedBy : "Anonymous"}:`}</div>
+            <div className="completed-info"><div>{`${completedBy ? completedBy : "Anonymous"} `}</div>
             <div>{date}</div>
+            </div>
           </div>
         </div>
       </div>

@@ -48,6 +48,10 @@
     font-size: .7rem;
 }
 
+.non-icon::first-letter {
+  text-transform: capitalize;
+}
+
 .icon {
     font-size: 2rem;
 }
@@ -81,12 +85,8 @@
     }
 
     .non-icon {
-        display: block;
-        font-size: 1.1rem;
-    }
-
-    .non-icon::first-letter {
-      text-transform: capitalize;
+      justify-content: none; 
+      font-size: 1.1rem;
     }
 
     .nav-logo {

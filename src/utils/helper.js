@@ -34,3 +34,11 @@ export function convertDecimalsToDollarsAndCents(numVal) {
 export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export function convertPointsToDollars(value, conversionRate){
+  return (value * conversionRate).toFixed(2)
+}
+
+export function convertDollarsToPoints(value, pointsType){
+  return Math.round(value * (1 / pointsType.conversionRate))
+}

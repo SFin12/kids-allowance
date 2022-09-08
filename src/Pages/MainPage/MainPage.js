@@ -25,6 +25,7 @@ import ResetAllowancePage from "../AllowancePage/ResetAllowancePage";
 import SetBonusPage from "../AllowancePage/SetBonusPage";
 import InitialIntroPage from "../InitialSetupPage/InitialIntroPage"
 import InitialChoresPage from "../InitialSetupPage/InitialChoresPage"
+import InitialChoresTrialPage from "../InitialSetupPage/InitialChoresTrialPage"
 import InitialTypesPage from "../InitialSetupPage/InitialTypesPage"
 import InititialFamilyPage from "../InitialSetupPage/InitialFamilyPage"
 import InititialAttitudePage from "../InitialSetupPage/InitialAttitudePage"
@@ -116,6 +117,7 @@ export default function MainPage(props) {
                     <Route path="/initialTypes" element={<InitialTypesPage />} />
                     <Route path="/initialAttitude" element={<InititialAttitudePage />} />
                     <Route path="/initialChores" element={<InitialChoresPage />} />
+                    <Route path="/initialChoresTrial" element={<InitialChoresTrialPage />} />
                     <Route path="/initialGoals" element={<InitialGoalsPage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/chores" element={<ChoresPage />} />
