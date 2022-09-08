@@ -39,6 +39,6 @@ export function convertPointsToDollars(value, conversionRate){
   return (value * conversionRate).toFixed(2)
 }
 
-export function convertDollarsToPoints(value, pointsType){
-  return Math.round(value * (1 / pointsType.conversionRate))
+export function convertDollarsToPoints(value, conversionRate){
+  return Math.round(value * (1 / conversionRate))
 }

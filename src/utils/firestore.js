@@ -4,6 +4,10 @@ import { store } from "../app/store"
 import { convertPointsToDollars } from "./helper"
 
 
+function getConversionRate(){
+  return Number(store.getState().allowance.pointsType.pointToDollarConversion)
+}
+
 export function getCurrentUserInfo() {
   return firebase.auth().currentUser
 }
@@ -55,11 +59,13 @@ export const getLogins = async () => {
 }
 
 export const createChore = async (title, value) => {
+  const conversionRate = getConversionRate()
+  const dollarValue = convertPointsToDollars(Number(value), conversionRate)
   const userId = getCurrentUserInfo().uid
   const userDataRef = db.collection("users").doc(`${userId}`)
   userDataRef.update({
     [`chores.${title}`]: {
-      value,
+      value: dollarValue,
       completedBy: "",
       dateCompleted: "",
     },
@@ -67,6 +73,8 @@ export const createChore = async (title, value) => {
 }
 
 export const updateChore = async (title, value, completedBy, dateCompleted) => {
+  const conversionRate = getConversionRate()
+  const dollarValue = convertPointsToDollars(Number(value), conversionRate)
   const userId = getCurrentUserInfo().uid
   const userDataRef = await db.collection("users").doc(`${userId}`)
   userDataRef.update({
@@ -76,13 +84,14 @@ export const updateChore = async (title, value, completedBy, dateCompleted) => {
       dateCompleted,
     },
   })
-  if (completedBy && title && value && dateCompleted) {
-    updateChoreStats(completedBy, title, value, dateCompleted)
+  if (completedBy && title && dollarValue && dateCompleted) {
+    updateChoreStats(completedBy, title, dollarValue, dateCompleted)
   }
   return userDataRef
 }
 
 export const updateChoreStats = async (member, title, value, dateCompleted) => {
+ 
   const userId = getCurrentUserInfo().uid
   const userDataRef = await db.collection("users").doc(`${userId}`)
   const date = new Date()
@@ -180,11 +189,12 @@ export const deleteFamily = (name) => {
   })
 }
 
-export const createAllowance = async (member, pointsType, value = 0, userId = getCurrentUserInfo().uid) => {
+export const createAllowance = async (member, value = 0, userId = getCurrentUserInfo().uid) => {
   if (member === isNaN || member === null || typeof member === "number") {
     return console.error("Must provide string value for first argument")
   }
-  let currentTotal = Number(value)
+  const conversionRate = getConversionRate()
+  let currentTotal = convertPointsToDollars(Number(value), conversionRate)
 
   const userRef = await db.collection("users").doc(userId)
   const earnings = await userRef.collection("earnings")
@@ -201,10 +211,10 @@ export const createAllowance = async (member, pointsType, value = 0, userId = ge
 }
 
 export const updateAttitudeValues = async (goodAttitudeValue, badAttitudeValue) => {
-  const conversionRate = Number(store.getState().allowance.pointsType.pointToDollarConversion)
-  let goodAttitudeDollarValue = convertPointsToDollars(goodAttitudeValue, conversionRate)
-  let badAttitudeDollarValue = convertPointsToDollars(badAttitudeValue, conversionRate)
-  console.log(goodAttitudeDollarValue)
+  const conversionRate = getConversionRate()
+  let goodAttitudeDollarValue = Number(convertPointsToDollars(goodAttitudeValue, conversionRate))
+  let badAttitudeDollarValue = Number(convertPointsToDollars(badAttitudeValue, conversionRate))
+  
   try {
     const userId = getCurrentUserInfo().uid
     const userRef = db.collection("users").doc(userId)
@@ -220,7 +230,8 @@ export const updateAllowance = async (member, value = 0, userId = getCurrentUser
   if (member === isNaN || member === null || typeof member === "number") {
     return console.error("Must provide string value for first argument")
   }
-  let newTotal = Number(value)
+  const conversionRate = getConversionRate()
+  let newTotal = convertPointsToDollars(Number(value), conversionRate)
   let lifetimeTotal = newTotal
   const allowanceExists = await getAllowances()
   console.log(allowanceExists)
@@ -276,13 +287,15 @@ export const deleteAllowance = async (member) => {
 }
 
 export const updateGoal = async (member, goalName = "", goalValue = 0, userId = getCurrentUserInfo().uid) => {
+  const conversionRate = getConversionRate()
+  const goalDollarValue = convertPointsToDollars(Number(goalValue), conversionRate)
   const userRef = db.collection("users").doc(userId)
   const earnings = userRef.collection("goals")
   earnings.doc("goals").set(
     {
       [member]: {
         goal: goalName,
-        value: goalValue,
+        value: goalDollarValue,
       },
     },
     { merge: true }
