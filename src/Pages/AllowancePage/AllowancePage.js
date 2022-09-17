@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import AllowanceContainer from "../../components/Allowance/AllowanceContainer"
 import LoadingSpinner from "../../components/Loading/LoadingSpinner"
-import { selectAllowance, selectChoresStats, selectGoals, selectPointsType, setAllowance, setChoresStats, setGoal } from "../../features/allowance/allowanceSlice"
+import { selectAllowance, selectChoresStats, selectGoals, setAllowance, setChoresStats, setGoal } from "../../features/allowance/allowanceSlice"
 
-import { selectActiveFamilyMember } from "../../features/user/userSlice"
+import { selectActiveFamilyMember, selectPointsType } from "../../features/user/userSlice"
 import { getAllowances, getChoreStats, getGoals } from "../../utils/firestore"
 import { convertDecimalsToDollarsAndCents } from "../../utils/helper"
 import "./AllowancePage.css"
@@ -119,11 +119,10 @@ export default function AllowancePage() {
                         <Card.Title>Lifetime Earnings</Card.Title>
                       </Card.Header>
 
-                      <Card.Body>
-                        <div> {convertDecimalsToDollarsAndCents(allowance[activeFamilyMember].lifetimeTotal)}</div>
-                      </Card.Body>
+                      <Card.Body>{pointsType.type === "money" ? <div>{convertDecimalsToDollarsAndCents(allowance[activeFamilyMember].lifetimeTotal)}</div> : <div>{allowance[activeFamilyMember].lifetimeTotal + " " + pointsType.icon}</div>}</Card.Body>
                     </Card>
                   </div>
+
                   <div className="lifetime-chores">
                     <Card>
                       <Card.Header>
@@ -141,7 +140,7 @@ export default function AllowancePage() {
               <h3 className="mt-3">
                 {/* Check for money or points system and show symbol before or after value */}
                 {goals[activeFamilyMember] ? `${goals[activeFamilyMember].goal} ` : null}
-                {goals[activeFamilyMember] ? pointsType?.type === "money" ? <span>{pointsType.icon + goals[activeFamilyMember].value}</span> : <span>{goals[activeFamilyMember].value + pointsType.icon}</span> : null}
+                {goals[activeFamilyMember] ? pointsType?.type === "money" ? <span>{pointsType.icon + goals[activeFamilyMember].value}</span> : <span>{goals[activeFamilyMember].value + " " + pointsType.icon}</span> : null}
               </h3>
 
               <AllowanceContainer className="allowance-bar" allowance={allowance} goal={goals} activeFamilyMember={activeFamilyMember} percentageOfGoal={percentageOfGoal} style={{ height: `${percentageOfGoal}%` }} />

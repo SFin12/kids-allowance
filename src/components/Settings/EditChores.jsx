@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { Form, FormGroup, FormControl, FormLabel, Button } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { selectPointsType } from "../../features/allowance/allowanceSlice"
+import { selectPointsType } from "../../features/user/userSlice"
 import { setChores } from "../../features/chores/choresSlice"
 import { createChore, deleteChore, getChores } from "../../utils/firestore"
 
@@ -17,7 +17,7 @@ export default function EditChores() {
     getChores()
       .then((chores) => {
         setDisplayChores(Object.keys(chores))
-
+        console.log("updating chores display")
         dispatch(setChores(chores))
       })
       .catch((err) => console.error(err))
@@ -30,6 +30,7 @@ export default function EditChores() {
 
     createChore(title, value).then((results) => {
       setUpdate(!update)
+      setDisplayChores((prevState) => [...prevState, title])
     })
 
     e.currentTarget.reset()

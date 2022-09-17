@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../../components/Forms/FormInput";
-import { selectPointsType, setGoal } from "../../features/allowance/allowanceSlice";
+import { setGoal } from "../../features/allowance/allowanceSlice";
 import {
     selectActiveFamilyMember,
     selectUserId,
+    selectPointsType
 } from "../../features/user/userSlice";
 import { updateGoal } from "../../utils/firestore";
 
@@ -18,9 +19,7 @@ export default function AddGoalPage() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (activeFamilyMember === null) {
-            navigate("/main");
-        }
+        
         // if active member is switched, go back to main allowance page
         if (currentFamilyMember !== activeFamilyMember) {
             navigate("/main/allowance");
@@ -44,6 +43,12 @@ export default function AddGoalPage() {
     }
 
     return (
+      <>
+      {!activeFamilyMember ? (
+        <div className="d-flex flex-column justify-content-center">
+          <h3>Choose an active family member</h3>
+        </div>
+      ) :
         <div
             className="d-flex justify-content-center w-100 flex-column align-items-center"
             style={{ height: "70vh" }}
@@ -58,8 +63,10 @@ export default function AddGoalPage() {
                 <FormInput
                     titles={["Goal Name / Item", "Cost"]}
                     handleSubmit={handleSubmit}
+                    placeholders={["Example: Lego Set or Target"]}
                 />
             </div>
         </div>
-    );
+}</>
+    )
 }

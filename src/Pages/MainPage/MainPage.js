@@ -4,11 +4,7 @@ import firebase from "firebase/compat/app";
 import Navigation from "../../components/Nav/Navigation";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-    setUserLogout,
-    setActiveUser,
-    setFamilyMembers,
-} from "../../features/user/userSlice";
+import { setUserLogout, setActiveUser, setFamilyMembers, setPointsType } from "../../features/user/userSlice"
 import SettingsPage from "../SettingsPage/SettingsPage";
 import ChoresPage from "../ChoresPage/ChoresPage";
 import "./MainPage.css";
@@ -67,6 +63,7 @@ export default function MainPage(props) {
                                     familyMembers: dbData.family,
                                 })
                             );
+                            dispatch(setPointsType(dbData.pointsType))
                             // set redux chores from db
                             dispatch(setChores(dbData.chores));
                             updateLogins();

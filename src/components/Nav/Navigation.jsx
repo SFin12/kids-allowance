@@ -10,7 +10,7 @@ import { HiOutlineTicket } from "react-icons/hi"
 import { FaRegStar } from "react-icons/fa"
 import { BsShop } from "react-icons/bs"
 import { useSelector } from "react-redux"
-import { selectPointsType } from "../../features/allowance/allowanceSlice"
+import { selectPointsType } from "../../features/user/userSlice"
 
 export default function Navigation({ logout, lastName }) {
   const pointsType = useSelector(selectPointsType)

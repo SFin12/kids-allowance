@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { selectPointsType } from "../../features/allowance/allowanceSlice"
-
-import { selectActiveFamilyMember } from "../../features/user/userSlice";
+import { selectActiveFamilyMember, selectPointsType } from "../../features/user/userSlice";
 import { capitalizeFirstLetter } from "../../utils/helper"
 
 import "./EditAllowancePage.css";

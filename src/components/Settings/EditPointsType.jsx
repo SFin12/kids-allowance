@@ -1,8 +1,9 @@
 import React from "react"
-import { FormLabel, FormSelect } from "react-bootstrap"
+import { FormSelect } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { selectPointsType, setPointsType } from "../../features/allowance/allowanceSlice"
+import { selectPointsType, setPointsType } from "../../features/user/userSlice"
+import { updatePointsType } from "../../utils/firestore"
 
 export default function EditPointsType() {
 
@@ -30,6 +31,7 @@ export default function EditPointsType() {
       }
     }
     dispatch(setPointsType(pointsType))
+    updatePointsType(pointsType)
   }
 
   return (

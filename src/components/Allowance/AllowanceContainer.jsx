@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux"
-import { selectPointsType } from "../../features/allowance/allowanceSlice"
+import { selectPointsType } from "../../features/user/userSlice"
 import { convertDecimalsToDollarsAndCents, isFloat } from "../../utils/helper";
 import "./AllowanceContainer.css";
 

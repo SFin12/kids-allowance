@@ -5,7 +5,6 @@ const initialState = {
     goals: {},
     choresStats: {},
     pointsType: {},
-    conversionRate: .05,
     goodAttitudeValue: 0,
     badAttitudeValue: 0,
 };
@@ -23,10 +22,7 @@ export const allowanceSlice = createSlice({
         },
         setChoresStats: (state, action) => {
             state.choresStats = { ...state.choresStats, ...action.payload };
-        },
-        setPointsType: (state, action) => {
-          state.pointsType = action.payload // payload should be an object with  type: "stars" , "tickets", or "points" and icon: ⭐️,  🎟, 💵
-        },
+        },     
         setGoodAttitudeValue: (state, action) => {
           state.goodAttitudeValue = action.payload // bonus value added to chore when completed with a good attitude.
         },
@@ -39,12 +35,11 @@ export const allowanceSlice = createSlice({
     },
 });
 
-export const { setAllowance, setGoal, setChoresStats, setPointsType, setGoodAttitudeValue, setBadAttitudeValue } = allowanceSlice.actions;
+export const { setAllowance, setGoal, setChoresStats, setGoodAttitudeValue, setBadAttitudeValue } = allowanceSlice.actions;
 
 export const selectAllowance = (state) => state.allowance.earnings;
 export const selectGoals = (state) => state.allowance.goals;
 export const selectChoresStats = (state) => state.allowance.choresStats;
-export const selectPointsType = (state) => state.allowance.pointsType;
 export const selectGoodAttitudeValue = (state) => state.allowance.goodAttitudeValue;
 export const selectBadAttitudeValue = (state) => state.allowance.badAttitudeValue;
 export const selectConversionRate = (state) => state.allowance.conversionRate;

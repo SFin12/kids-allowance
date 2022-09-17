@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import EditPointsType from "../../components/Settings/EditPointsType"
-import { selectPointsType } from "../../features/allowance/allowanceSlice"
+import { selectPointsType } from "../../features/user/userSlice"
 
 export default function InitialTypesPage() {
 
@@ -19,7 +19,7 @@ export default function InitialTypesPage() {
 
         <br />
       </div>
-        {pointsType.type && (
+        {pointsType?.type && (
           
             <Link to={"/main/initialAttitude"} className="right-bottom-absolute">
               <Button>Next</Button>

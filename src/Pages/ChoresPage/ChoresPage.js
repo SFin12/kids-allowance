@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import ChoreCard from "../../components/Chores/ChoreCard";
 import { selectChores } from "../../features/chores/choresSlice";
 
+
 export default function ChoresPage() {
     const [sortedChores, setSortedChores] = useState([]);
     const chores = useSelector(selectChores);

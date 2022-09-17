@@ -7,6 +7,9 @@ const initialState = {
     id: null,
     familyMembers: null,
     activeFamilyMember: null,
+    tutorial: true,
+    logins: 0,
+    pointsType: {}
 };
 
 export const userSlice = createSlice({
@@ -19,12 +22,16 @@ export const userSlice = createSlice({
             state.email = action.payload.email;
             state.id = action.payload.id;
             state.image = action.payload.image;
+            state.logins = action.payload.logins;
+            state.pointsType = action.payload.pointsType;
         },
         setUserLogout: (state) => {
             state.name = null;
             state.email = null;
             state.id = null;
             state.image = null;
+            state.logins = null;
+            state.pointsType = null;
         },
         setFamilyMembers: (state, action) => {
             state.familyMembers = action.payload.familyMembers;
@@ -33,6 +40,15 @@ export const userSlice = createSlice({
         setActiveFamilyMember: (state, action) => {
             state.activeFamilyMember = action.payload.activeFamilyMember;
         },
+        setTutorial: (state, action) => {
+          state.tutorial = action.payload // true or false
+        }, 
+        setLogins: (state, action) => {
+          state.logins = action.payload // number
+        },
+        setPointsType: (state, action) => {
+          state.pointsType = action.payload // payload should be an object with  type: "stars" , "tickets", or "points",  icon: ⭐️,  🎟, 💵, conversionRate: float
+        }
     },
 });
 
@@ -41,6 +57,9 @@ export const {
     setUserLogout,
     setFamilyMembers,
     setActiveFamilyMember,
+    tutorial,
+    setLogins,
+    setPointsType
 } = userSlice.actions;
 
 export const selectUserName = (state) => state.user.name;
@@ -48,7 +67,9 @@ export const selectUserEmail = (state) => state.user.email;
 export const selectUserId = (state) => state.user.id;
 export const selectUserImage = (state) => state.user.image;
 export const selectFamilyMembers = (state) => state.user.familyMembers;
-export const selectActiveFamilyMember = (state) =>
-    state.user.activeFamilyMember;
+export const selectActiveFamilyMember = (state) => state.user.activeFamilyMember;
+export const selectTutorial = (state) => state.user.tutorial;
+export const selectLogins = (state) => state.user.logins;
+export const selectPointsType = (state) => state.user.pointsType;
 
 export default userSlice.reducer;

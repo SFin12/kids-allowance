@@ -3,7 +3,8 @@ import { Button, Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { selectBadAttitudeValue, selectGoodAttitudeValue, selectPointsType, setBadAttitudeValue, setGoodAttitudeValue } from '../../features/allowance/allowanceSlice'
+import { selectPointsType } from '../../features/user/userSlice'
+import { selectBadAttitudeValue, selectGoodAttitudeValue, setBadAttitudeValue, setGoodAttitudeValue } from '../../features/allowance/allowanceSlice'
 import { updateAttitudeValues } from '../../utils/firestore'
 
 export default function EditAttitudeRewards() {

@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { updateChore } from "../../features/chores/choresSlice"
 import { getAllowances, updateAllowance, updateChore as updateDbChore } from "../../utils/firestore"
-import { selectActiveFamilyMember } from "../../features/user/userSlice"
+import { selectActiveFamilyMember, selectPointsType } from "../../features/user/userSlice"
 import "./ChoreCard.css"
 import { convertDecimalsToDollarsAndCents } from "../../utils/helper"
-import { selectBadAttitudeValue, selectGoodAttitudeValue, selectPointsType, setAllowance } from "../../features/allowance/allowanceSlice"
+import { selectBadAttitudeValue, selectGoodAttitudeValue, setAllowance } from "../../features/allowance/allowanceSlice"
 import MainModal from "../Modal/MainModal"
 
 export default function ChoreCard({ chore, value, completedBy }) {
@@ -16,8 +16,8 @@ export default function ChoreCard({ chore, value, completedBy }) {
   const [showModal, setShowModal] = useState(false)
   const [currentValue, setCurrentValue] = useState(value)
 
-  const goodAttitudeValue = useSelector(selectGoodAttitudeValue);
-  const badAttitudeValue = useSelector(selectBadAttitudeValue);
+  const goodAttitudeValue = useSelector(selectGoodAttitudeValue)
+  const badAttitudeValue = useSelector(selectBadAttitudeValue)
   const dispatch = useDispatch()
   const numVal = Number(value)
   const date = new Date().toDateString().slice(0, -5)
@@ -34,7 +34,7 @@ export default function ChoreCard({ chore, value, completedBy }) {
   function handleClick(e) {
     if (!flip) {
       // update Redux to show completed w/out waiting for db
-   
+
       dispatch(
         updateChore({
           chore,
@@ -45,9 +45,6 @@ export default function ChoreCard({ chore, value, completedBy }) {
       )
       // updated firestore to show completed
       updateDbChore(chore, currentValue, activeFamilyMember, date)
-
-      
- 
     } else {
       // update redux store to show not completed w/out waiting for db
       dispatch(
@@ -73,29 +70,32 @@ export default function ChoreCard({ chore, value, completedBy }) {
 
   function handleAttitude(e) {
     let attitude = e.target.id
-    console.log(goodAttitudeValue)
-    if(attitude === 'good-emoji'){
-      updateAllowance(activeFamilyMember, (currentValue + goodAttitudeValue))
-          .then(() => getAllowances()) // get new allowances and update redux store with new values
-          .then((earnings) => dispatch(setAllowance(earnings)))
-    } else if (attitude === 'bad-emoji'){
-      updateAllowance(activeFamilyMember, (currentValue - badAttitudeValue))
-          .then(() => getAllowances()) // get new allowances and update redux store with new values
-          .then((earnings) => dispatch(setAllowance(earnings)))
+    console.log(attitude)
+    console.log(currentValue + goodAttitudeValue)
+    if (attitude === "good-emoji") {
+      updateAllowance(activeFamilyMember, currentValue + goodAttitudeValue)
+        .then(() => getAllowances()) // get new allowances and update redux store with new values
+        .then((earnings) => dispatch(setAllowance(earnings)))
+    } else if (attitude === "bad-emoji") {
+      updateAllowance(activeFamilyMember, currentValue - badAttitudeValue)
+        .then(() => getAllowances()) // get new allowances and update redux store with new values
+        .then((earnings) => dispatch(setAllowance(earnings)))
+    } else {
+      updateAllowance(activeFamilyMember, currentValue)
+        .then(() => getAllowances()) // get new allowances and update redux store with new values
+        .then((earnings) => dispatch(setAllowance(earnings)))
     }
-    
+
     setShowModal(false)
-    
   }
 
   function handleClose(e) {
-    
     setShowModal(false)
   }
 
   function handleDailyChore(e) {
     e.stopPropagation()
-    if(!dailyChore){
+    if (!dailyChore) {
       setCurrentValue(0)
     } else {
       setCurrentValue(value)
@@ -109,35 +109,43 @@ export default function ChoreCard({ chore, value, completedBy }) {
       <div className="chore-card" onClick={handleClick} id={chore}>
         <div className={flip ? "main-card flip-card" : "main-card"}>
           <div className="card-front">
-      
             <div className="chore-name">{`${chore}`}</div>
-            {currentValue ?  pType?.type === "money" ? (
-              <div className="chore-value">
-                {/* Check if numVal is a whole number or decimal */}
-                {numVal % 1 === 0 ? `$${value}` : `${convertDecimalsToDollarsAndCents(numVal)}`}
-              </div>
-            ) : (
-              <div className="chore-value">{`${value} ${pType.icon}`}</div>
-            ): null }
-           
-            <div className={dailyChore ? "daily-chore-active" : "daily-chore"} onClick={handleDailyChore}>Daily</div>
+            {currentValue ? (
+              pType?.type === "money" ? (
+                <div className="chore-value">
+                  {/* Check if numVal is a whole number or decimal */}
+                  {numVal % 1 === 0 ? `$${value}` : `${convertDecimalsToDollarsAndCents(numVal)}`}
+                </div>
+              ) : (
+                <div className="chore-value">{`${value} ${pType.icon}`}</div>
+              )
+            ) : null}
+
+            <div className={dailyChore ? "daily-chore-active" : "daily-chore"} onClick={handleDailyChore}>
+              Daily
+            </div>
           </div>
 
           <div className="card-back">
             <div className="completed">{chore}</div>
-            <div className="completed-info"><div>{`${completedBy ? completedBy : "Anonymous"} `}</div>
-            <div>{date}</div>
+            <div className="completed-info">
+              <div>{`${completedBy ? completedBy : ""} `}</div>
+              <div>{date}</div>
             </div>
           </div>
         </div>
       </div>
       <MainModal title={`${activeFamilyMember}'s Attitude`} show={showModal} onHide={handleClose}>
         <div onClick={handleAttitude} className="attitude-emoji-container">
-          <span className="attitude-emoji" name="good" id="good-emoji">😁</span>
+          <span className="attitude-emoji" name="good" id="good-emoji">
+            😁
+          </span>
           <span className="attitude-emoji" name="neutral" id="neutral-emoji">
             😐
           </span>
-          <span className="attitude-emoji" name="bad" id="bad-emoji">😡</span>
+          <span className="attitude-emoji" name="bad" id="bad-emoji">
+            😡
+          </span>
         </div>
       </MainModal>
     </>

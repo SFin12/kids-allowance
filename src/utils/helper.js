@@ -35,10 +35,14 @@ export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export function convertPointsToDollars(value, conversionRate){
-  return (value * conversionRate).toFixed(2)
+export function convertPointsToDollars(value, conversionRate) {
+  console.log(value, conversionRate)
+  return Number((value * conversionRate).toFixed(2))
 }
 
-export function convertDollarsToPoints(value, conversionRate){
-  return Math.round(value * (1 / conversionRate))
+export function convertDollarsToPoints(value, conversionRate) {
+  console.log(value, conversionRate)
+  console.log(1 / conversionRate)
+  console.log(Math.round(Number(value) * (1 / conversionRate)))
+  return Number(Math.round(Number(value) * (1 / conversionRate)))
 }

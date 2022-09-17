@@ -7,12 +7,12 @@ import {
     FormLabel,
 } from "react-bootstrap";
 import { useSelector } from "react-redux"
-import { selectPointsType } from "../../features/allowance/allowanceSlice"
+import { selectPointsType } from "../../features/user/userSlice"
 
 export default function FormInput({
     titles = ["Title"],
     handleSubmit,
-    placeholder,
+    placeholders = [""],
 }) {
     const pointsType = useSelector(selectPointsType)
 
@@ -57,7 +57,7 @@ export default function FormInput({
                                 presicion={2}
                                 step={0.25}
                                 defaultValue=""
-                                placeholder={placeholder}
+                                placeholder={placeholders[i]}
                                 required
                                 maxLength={20}
                             ></FormControl>

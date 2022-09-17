@@ -1,11 +1,12 @@
 import { db } from "../utils/firebaseConfig"
 import firebase from "firebase/compat/app"
 import { store } from "../app/store"
-import { convertPointsToDollars } from "./helper"
+import { convertDollarsToPoints, convertPointsToDollars } from "./helper"
 
-
-function getConversionRate(){
-  return Number(store.getState().allowance.pointsType.pointToDollarConversion)
+function getConversionRate() {
+  if (store.getState().user.pointsType?.pointToDollarConversion) {
+    return Number(store.getState().user.pointsType.pointToDollarConversion)
+  }
 }
 
 export function getCurrentUserInfo() {
@@ -20,6 +21,7 @@ export const createUser = (user) => {
         id: user.uid,
         name: user.displayName,
         email: user.email,
+        pointsType: { type: "money", icon: "$", pointToDollarConversion: 1 },
         logins: 0,
       },
       { merge: true }
@@ -59,7 +61,7 @@ export const getLogins = async () => {
 }
 
 export const createChore = async (title, value) => {
-  const conversionRate = getConversionRate()
+  const conversionRate = await getConversionRate()
   const dollarValue = convertPointsToDollars(Number(value), conversionRate)
   const userId = getCurrentUserInfo().uid
   const userDataRef = db.collection("users").doc(`${userId}`)
@@ -79,7 +81,7 @@ export const updateChore = async (title, value, completedBy, dateCompleted) => {
   const userDataRef = await db.collection("users").doc(`${userId}`)
   userDataRef.update({
     [`chores.${title}`]: {
-      value,
+      value: dollarValue,
       completedBy,
       dateCompleted,
     },
@@ -91,7 +93,6 @@ export const updateChore = async (title, value, completedBy, dateCompleted) => {
 }
 
 export const updateChoreStats = async (member, title, value, dateCompleted) => {
- 
   const userId = getCurrentUserInfo().uid
   const userDataRef = await db.collection("users").doc(`${userId}`)
   const date = new Date()
@@ -135,7 +136,14 @@ export const getChores = async () => {
   const userId = getCurrentUserInfo().uid
   const userRef = await db.collection("users")
   const snapshot = await userRef.doc(`${userId}`).get()
-  return snapshot.data().chores
+  let choresObj = snapshot.data().chores
+  if (store.getState().user.pointsType.type !== "money") {
+    Object.keys(choresObj).forEach((key) => {
+      choresObj[key].value = convertDollarsToPoints(choresObj[key].value, getConversionRate())
+    })
+  }
+
+  return choresObj
 }
 
 export const deleteChore = async (title) => {
@@ -193,11 +201,13 @@ export const createAllowance = async (member, value = 0, userId = getCurrentUser
   if (member === isNaN || member === null || typeof member === "number") {
     return console.error("Must provide string value for first argument")
   }
-  const conversionRate = getConversionRate()
+  const conversionRate = await getConversionRate()
+  console.log(conversionRate)
+  console.log(value)
   let currentTotal = convertPointsToDollars(Number(value), conversionRate)
 
-  const userRef = await db.collection("users").doc(userId)
-  const earnings = await userRef.collection("earnings")
+  const userRef = db.collection("users").doc(userId)
+  const earnings = userRef.collection("earnings")
   earnings.doc("earnings").set(
     {
       [member]: {
@@ -210,36 +220,25 @@ export const createAllowance = async (member, value = 0, userId = getCurrentUser
   console.log("updated allowance")
 }
 
-export const updateAttitudeValues = async (goodAttitudeValue, badAttitudeValue) => {
-  const conversionRate = getConversionRate()
-  let goodAttitudeDollarValue = Number(convertPointsToDollars(goodAttitudeValue, conversionRate))
-  let badAttitudeDollarValue = Number(convertPointsToDollars(badAttitudeValue, conversionRate))
-  
-  try {
-    const userId = getCurrentUserInfo().uid
-    const userRef = db.collection("users").doc(userId)
-    userRef.set({goodAttitudeDollarValue, badAttitudeDollarValue},{merge: true})
-    return "success"
-    
-  } catch (error) {
-    alert(error)
-  }
-}
-
 export const updateAllowance = async (member, value = 0, userId = getCurrentUserInfo().uid) => {
   if (member === isNaN || member === null || typeof member === "number") {
     return console.error("Must provide string value for first argument")
   }
+  if (value === isNaN) {
+    return console.error("value isNaN")
+  }
+
   const conversionRate = getConversionRate()
+  console.log(conversionRate, value)
   let newTotal = convertPointsToDollars(Number(value), conversionRate)
-  let lifetimeTotal = newTotal
+  let lifetimeTotal = Number(newTotal)
   const allowanceExists = await getAllowances()
-  console.log(allowanceExists)
+
   // if an allowance exists and family member exists w/ value greater than zero, add to total.
   if (allowanceExists) {
     if (allowanceExists[member]?.currentTotal) {
-      let currentTotal = Number(allowanceExists[member].currentTotal)
-      lifetimeTotal = newTotal <= 0 ? Number(allowanceExists[member].lifetimeTotal) : Number(allowanceExists[member].lifetimeTotal) + newTotal
+      let currentTotal = convertPointsToDollars(allowanceExists[member].currentTotal, conversionRate)
+      lifetimeTotal = newTotal <= 0 ? convertPointsToDollars(Number(allowanceExists[member].lifetimeTotal), conversionRate) : convertPointsToDollars(Number(allowanceExists[member].lifetimeTotal), conversionRate) + newTotal
       newTotal += currentTotal // old allowance
     }
   } else {
@@ -259,6 +258,21 @@ export const updateAllowance = async (member, value = 0, userId = getCurrentUser
   console.log(`Created allowance for ${member}.`)
 }
 
+export const updateAttitudeValues = async (goodAttitudeValue, badAttitudeValue) => {
+  const conversionRate = getConversionRate()
+  let goodAttitudeDollarValue = Number(convertPointsToDollars(goodAttitudeValue, conversionRate))
+  let badAttitudeDollarValue = Number(convertPointsToDollars(badAttitudeValue, conversionRate))
+
+  try {
+    const userId = getCurrentUserInfo().uid
+    const userRef = db.collection("users").doc(userId)
+    userRef.set({ goodAttitudeDollarValue, badAttitudeDollarValue }, { merge: true })
+    return "success"
+  } catch (error) {
+    alert(error)
+  }
+}
+
 export const getAllowances = async () => {
   let uid = ""
   if (!uid) {
@@ -266,10 +280,18 @@ export const getAllowances = async () => {
       uid = await getCurrentUserInfo().uid
     } catch (err) {}
   }
-  const userRef = await db.collection("users")
+  let conversionRate = getConversionRate()
+  const userRef = db.collection("users")
   const snapshot = await userRef.doc(`${uid}`).collection("earnings").doc("earnings").get()
-  const earnings = await snapshot.data()
-  return earnings
+  console.log(snapshot.data())
+  let earningsObj = snapshot.data()
+  if (store.getState().user.pointsType.type !== "money") {
+    Object.keys(earningsObj).forEach((key) => {
+      earningsObj[key].currentTotal = convertDollarsToPoints(earningsObj[key].currentTotal, conversionRate)
+      earningsObj[key].lifetimeTotal = convertDollarsToPoints(earningsObj[key].lifetimeTotal, conversionRate)
+    })
+  }
+  return earningsObj
 }
 
 export const deleteAllowance = async (member) => {
@@ -284,6 +306,28 @@ export const deleteAllowance = async (member) => {
   snapshot.update({
     [member]: firebase.firestore.FieldValue.delete(),
   })
+}
+
+export const updatePointsType = async (pointsType) => {
+  try {
+    const userId = getCurrentUserInfo().uid
+    const userRef = db.collection("users").doc(userId)
+    userRef.set({ pointsType }, { merge: true })
+    return "success"
+  } catch (error) {
+    alert(error)
+  }
+}
+
+export const getPointsType = async () => {
+  try {
+    const uid = getCurrentUserInfo().uid
+    const userRef = db.collection("users")
+    const snapshot = await userRef.doc(`${uid}`).get()
+    return snapshot.data().pointsType
+  } catch (error) {
+    alert(error)
+  }
 }
 
 export const updateGoal = async (member, goalName = "", goalValue = 0, userId = getCurrentUserInfo().uid) => {
@@ -306,8 +350,13 @@ export const getGoals = async () => {
   const uid = await getCurrentUserInfo().uid
   const userRef = await db.collection("users")
   const snapshot = await userRef.doc(`${uid}`).collection("goals").doc("goals").get()
-  const goals = await snapshot.data()
-  return goals
+  const goalsObj = await snapshot.data()
+  if (store.getState().allowance.pointsType.type !== "money") {
+    Object.keys(goalsObj).forEach((key) => {
+      goalsObj[key].value = convertDollarsToPoints(goalsObj[key].value, getConversionRate())
+    })
+  }
+  return goalsObj
 }
 
 export const deleteGoal = async (member, goal, userId = getCurrentUserInfo().uid) => {
