@@ -26,6 +26,7 @@ import InitialTypesPage from "../InitialSetupPage/InitialTypesPage"
 import InititialFamilyPage from "../InitialSetupPage/InitialFamilyPage"
 import InititialAttitudePage from "../InitialSetupPage/InitialAttitudePage"
 import InitialGoalsPage from "../InitialSetupPage/InitialGoalsPage"
+import ShopPage from "../ShopPage/ShopPage"
 
 export default function MainPage(props) {
     const [lastName, setLastName] = useState("");
@@ -103,42 +104,34 @@ export default function MainPage(props) {
 
 
     return (
-        <div className="main">
-            <Navigation logout={handleLogout} lastName={lastName} />
+      <div className="main">
+        <Navigation logout={handleLogout} lastName={lastName} />
 
-            <div className="d-flex justify-content-center w-100 h-100">
-                <Routes>
-                    <Route path="/" element={<TitlePage />} />
-                    <Route path="/initialIntro" element={<InitialIntroPage />} />
-                    <Route path="/initialFamily" element={<InititialFamilyPage />} />
-                    <Route path="/initialTypes" element={<InitialTypesPage />} />
-                    <Route path="/initialAttitude" element={<InititialAttitudePage />} />
-                    <Route path="/initialChores" element={<InitialChoresPage />} />
-                    <Route path="/initialChoresTrial" element={<InitialChoresTrialPage />} />
-                    <Route path="/initialGoals" element={<InitialGoalsPage />} />
-                    <Route path="/settings" element={<SettingsPage />} />
-                    <Route path="/chores" element={<ChoresPage />} />
-                    <Route path="/allowance" element={<AllowancePage />} />
-                    <Route
-                        path="/editAllowance"
-                        element={<EditAllowancePage />}
-                    />
-                    <Route path="/spend" element={<SpendPage />} />
-                    <Route path="/addGoal" element={<AddGoalPage />} />
-                    <Route path="/setBonus" element={<SetBonusPage />} />
-                    <Route
-                        path="/adjustAllowance"
-                        element={<AdjustTotalPage />}
-                    />
+        <div className="d-flex justify-content-center w-100 h-100">
+          <Routes>
+            <Route path="/" element={<TitlePage />} />
+            <Route path="/initialIntro" element={<InitialIntroPage />} />
+            <Route path="/initialFamily" element={<InititialFamilyPage />} />
+            <Route path="/initialTypes" element={<InitialTypesPage />} />
+            <Route path="/initialAttitude" element={<InititialAttitudePage />} />
+            <Route path="/initialChores" element={<InitialChoresPage />} />
+            <Route path="/initialChoresTrial" element={<InitialChoresTrialPage />} />
+            <Route path="/initialGoals" element={<InitialGoalsPage />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/chores" element={<ChoresPage />} />
+            <Route path="/allowance" element={<AllowancePage />} />
+            <Route path="/editAllowance" element={<EditAllowancePage />} />
+            <Route path="/spend" element={<SpendPage />} />
+            <Route path="/addGoal" element={<AddGoalPage />} />
+            <Route path="/setBonus" element={<SetBonusPage />} />
+            <Route path="/adjustAllowance" element={<AdjustTotalPage />} />
 
-                    <Route
-                        path="/resetAllowance"
-                        element={<ResetAllowancePage />}
-                    />
-                </Routes>
+            <Route path="/resetAllowance" element={<ResetAllowancePage />} />
+          </Routes>
 
-                {location.pathname !== "/main/settings" ? <Footer /> : null}
-            </div>
+          {location.pathname !== "/main/settings" ? <Footer /> : null}
         </div>
-    );
+      </div>
+    )
 }

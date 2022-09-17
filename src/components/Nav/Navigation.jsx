@@ -29,7 +29,7 @@ export default function Navigation({ logout, lastName }) {
           <GiBroom className="mx-1 icon" />
           <span className="non-icon">Chores</span>
         </Nav.Link>
-        
+
         <Nav.Link as={Link} to="/main/allowance" disabled={inTutorial} href="/main/allowance" className="link d-flex align-items-center non-icon">
           {pointsType?.type && pointsType?.type !== "money" ? (
             <>
@@ -44,7 +44,7 @@ export default function Navigation({ logout, lastName }) {
             </>
           )}
         </Nav.Link>
-        <Nav.Link as={Link} to="/main/shop" disabled={inTutorial} href="/main/settings" className="link d-flex align-items-center">
+        <Nav.Link as={Link} to="/main/shop" disabled={inTutorial} href="/main/shop" className="link d-flex align-items-center">
           <BsShop className="mx-1 icon" />
           <span className="non-icon">Shop</span>
         </Nav.Link>
