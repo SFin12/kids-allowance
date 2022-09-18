@@ -7,8 +7,7 @@ import { selectPointsType } from '../../features/user/userSlice'
 import { selectBadAttitudeValue, selectGoodAttitudeValue, setBadAttitudeValue, setGoodAttitudeValue } from '../../features/allowance/allowanceSlice'
 import { updateAttitudeValues } from '../../utils/firestore'
 
-export default function EditAttitudeRewards() {
-
+export default function EditAttitudeRewards({ closeAccordian }) {
   const pointsType = useSelector(selectPointsType)
   const goodAttitudeValue = useSelector(selectGoodAttitudeValue)
   const badAttitudeValue = useSelector(selectBadAttitudeValue)
@@ -16,7 +15,7 @@ export default function EditAttitudeRewards() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault()
     const formData = new FormData(e.target)
     const { bonus, deduction } = Object.fromEntries(formData.entries())
@@ -26,17 +25,18 @@ export default function EditAttitudeRewards() {
     dispatch(setGoodAttitudeValue(goodAttitudeValue))
     dispatch(setBadAttitudeValue(badAttitudeValue))
     updateAttitudeValues(goodAttitudeValue, badAttitudeValue)
-    if(location.pathname === '/main/initialAttitude') {
-      navigate('/main/initialChores')
+    if (location.pathname === "/main/initialAttitude") {
+      navigate("/main/initialChores")
     }
+    closeAccordian()
   }
 
   return (
     <div>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <FormGroup className="mb-3 position-relative" controlId="valueArea">
-            <FormLabel>😁 Good Attitude Bonus</FormLabel>
+          <FormGroup className="mb-3 position-relative d-block text-start" controlId="valueArea">
+            <FormLabel className="label">😁 Good Attitude Bonus</FormLabel>
             {/* div to allow dollar sign in front of input */}
             <div className="d-flex align-items-center">
               <span style={{ fontSize: 30, paddingRight: 5 }}>{pointsType?.icon}</span>
@@ -44,8 +44,8 @@ export default function EditAttitudeRewards() {
               <FormControl type="number" max={10000} maxLength={5} placeholder={pointsType?.type !== "money" ? "Example: 2" : "Example: .10 or .25"} name="bonus" defaultValue={goodAttitudeValue ? goodAttitudeValue : ""} min={0} step={pointsType?.type !== "money" ? 1 : 0.05} required />
             </div>
           </FormGroup>
-          <FormGroup className="mb-3 position-relative" controlId="valueArea">
-            <FormLabel>😡 Bad Attitude Deduction</FormLabel>
+          <FormGroup className="mb-3 position-relative d-block text-start" controlId="valueArea">
+            <FormLabel className="label text-start">😡 Bad Attitude Deduction</FormLabel>
             {/* div to allow dollar sign in front of input */}
             <div className="d-flex align-items-center">
               <span style={{ fontSize: 30, paddingRight: 5 }}>{pointsType?.icon}</span>

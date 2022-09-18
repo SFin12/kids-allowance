@@ -8,7 +8,6 @@ import { selectChores } from '../../features/chores/choresSlice'
 
 export default function InitialChoresPage() {
   const chores = useSelector(selectChores)
-  console.log(chores)
   return (
     <>
       <div className="initial-container p-4">

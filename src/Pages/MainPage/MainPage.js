@@ -58,25 +58,26 @@ export default function MainPage(props) {
                         
                         const dbData = await getUserInfo(user.uid);
                         if (dbData) {
-                            // set redux family info from db
-                            dispatch(
-                                setFamilyMembers({
-                                    familyMembers: dbData.family,
-                                })
-                            );
-                            dispatch(setPointsType(dbData.pointsType))
-                            // set redux chores from db
-                            dispatch(setChores(dbData.chores));
-                            updateLogins();
-                            setIsFirstLogin(false)
-                            navigate('/main/initialIntro')
+                          // set redux family info from db
+                          dispatch(
+                            setFamilyMembers({
+                              familyMembers: dbData.family,
+                            })
+                          )
+
+                          dispatch(setPointsType(dbData.pointsType))
+                          // set redux chores from db
+                          dispatch(setChores(dbData.chores))
+                          updateLogins()
+                          setIsFirstLogin(false)
+                          if (dbData.tutorialOn) navigate("/main/initialIntro")
                         } else {
                             // If getUserInfo is undefined, add new user to database.
                             createUser(user);
                             updateLogins();
                             createFamily([]);
                             setIsFirstLogin(true)
-                            navigate('/initialIntro')
+                            if (dbData.tutorialOn) navigate("/main/initialIntro")
 
                         }
                     };

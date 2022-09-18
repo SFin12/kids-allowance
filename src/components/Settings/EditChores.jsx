@@ -17,7 +17,6 @@ export default function EditChores() {
     getChores()
       .then((chores) => {
         setDisplayChores(Object.keys(chores))
-        console.log("updating chores display")
         dispatch(setChores(chores))
       })
       .catch((err) => console.error(err))
@@ -49,21 +48,21 @@ export default function EditChores() {
     <>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <FormGroup className="mb-3 position-relative" controlId="titleInput">
-            <FormLabel>Title (you can add emojis 😁)</FormLabel>
+          <FormGroup className="mb-3 position-relative d-block text-start" controlId="titleInput">
+            <FormLabel className="label">Title (you can add emojis 😁)</FormLabel>
             {/* div to match dollar sign spacing below*/}
             <div className="d-flex">
               {/* <span style={{ paddingRight: 15.5 }}></span> */}
               <FormControl type="text" placeholder="Example: Wash Dishes 🍽" name="text" maxLength={18} defaultValue="" required />
             </div>
           </FormGroup>
-          <FormGroup className="mb-3 position-relative" controlId="valueArea">
-            <FormLabel>Value</FormLabel>
+          <FormGroup className="mb-3 position-relative d-block text-start" controlId="valueArea">
+            {/* <FormLabel className="label">Value</FormLabel> */}
             {/* div to allow dollar sign in front of input */}
             <div className="d-flex align-items-center">
               <span style={{ fontSize: 30, paddingRight: 5 }}>{pointsType?.icon}</span>
 
-              <FormControl type="number" max={10000} maxLength={5} placeholder={pointsType?.type !== "money" ? "Example: 10" : "Example: 1 or .25"} name="value" defaultValue="" min={0} step={pointsType?.type !== "money" ? 1 : 0.25} required />
+              <FormControl type="number" max={10000} maxLength={5} placeholder={pointsType?.type !== "money" ? "Chore Value" : "Chore Value ( .25 or 1.50 )"} name="value" defaultValue="" min={0} step={pointsType?.type !== "money" ? 1 : 0.25} required />
             </div>
           </FormGroup>
           <div className="d-flex justify-content-center">
