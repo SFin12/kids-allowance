@@ -11,7 +11,7 @@ import MainModal from "../Modal/MainModal"
 
 export default function ChoreCard({ chore, value, completedBy }) {
   const [flip, setFlip] = useState(false)
-  // const [lastChore, setLastChore] = useState()
+  const [lastChore, setLastChore] = useState()
   const [dailyChore, setDailyChore] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [currentValue, setCurrentValue] = useState(value)
@@ -38,13 +38,13 @@ export default function ChoreCard({ chore, value, completedBy }) {
       dispatch(
         updateChore({
           chore,
-          value: currentValue,
+          value,
           completedBy: activeFamilyMember,
           dateCompleted: date,
         })
       )
       // updated firestore to show completed
-      updateDbChore(chore, currentValue, activeFamilyMember, date)
+      updateDbChore(chore, value, activeFamilyMember, date)
     } else {
       // update redux store to show not completed w/out waiting for db
       dispatch(
@@ -60,12 +60,12 @@ export default function ChoreCard({ chore, value, completedBy }) {
     }
     if (!flip) setShowModal(true)
     setFlip(!flip)
-    // setLastChore({
-    //   chore,
-    //   value: currentValue,
-    //   completedBy: activeFamilyMember,
-    //   dateCompleted: date,
-    // })
+    setLastChore({
+      chore,
+      value: currentValue,
+      completedBy: activeFamilyMember,
+      dateCompleted: date,
+    })
   }
 
   function handleAttitude(e) {

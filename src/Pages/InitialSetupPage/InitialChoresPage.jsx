@@ -11,15 +11,14 @@ export default function InitialChoresPage() {
   return (
     <>
       <div className="initial-container p-4">
-        <h1 className="text-center">Add your first choir</h1>
-        
+        <h1 className="text-center">Add a chore</h1>
+
         <br />
         <EditChores />
 
         <br />
         {chores && Object.keys(chores).length !== 0 && (
           <>
-        
             <Link to={"/main/initialChoresTrial"} className="right-bottom-absolute">
               <Button>Next</Button>
             </Link>

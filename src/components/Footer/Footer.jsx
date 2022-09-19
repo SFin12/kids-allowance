@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { selectActiveFamilyMember, selectFamilyMembers, setActiveFamilyMember } from "../../features/user/userSlice"
+import { selectActiveFamilyMember, selectFamilyMembers, selectTutorialOn, setActiveFamilyMember } from "../../features/user/userSlice"
 import "./Footer.css"
 
 export default function Footer() {
@@ -9,6 +9,7 @@ export default function Footer() {
   const dispatch = useDispatch()
   const familyMembers = useSelector(selectFamilyMembers)
   const activeFamilyMember = useSelector(selectActiveFamilyMember)
+  const tutorialOn = useSelector(selectTutorialOn)
 
   useEffect(() => {
     setActiveMember(activeFamilyMember)
@@ -57,7 +58,7 @@ export default function Footer() {
             </div>
           )
         })
-      ) : (
+      ) : tutorialOn ? null : (
         <h5 className="d-flex w-100 justify-content-center align-items-center">Go to Settings to add Family Members</h5>
       )}
     </div>

@@ -1,4 +1,4 @@
-import { Accordion, Card, Collapse } from "react-bootstrap"
+import { Accordion, Button, Card, Collapse } from "react-bootstrap"
 
 import EditFamily from "../../components/Settings/EditFamily"
 import "./SettingsPage.css"
@@ -6,10 +6,17 @@ import EditChores from "../../components/Settings/EditChores"
 import EditPointsType from "../../components/Settings/EditPointsType"
 import EditAttitudeRewards from "../../components/Settings/EditAttitudeRewards"
 import { useState } from "react"
+import AccordionBody from "react-bootstrap/esm/AccordionBody"
+import { useDispatch, useSelector } from "react-redux"
+import { selectTutorialOn, setTutorialOn } from "../../features/user/userSlice"
+import { updateTutorial } from "../../utils/firestore"
+import { useNavigate } from "react-router-dom"
 
 export default function SettingsPage() {
   const [showPointsType, setShowPointsType] = useState(false)
   const [showAttitudeValues, setShowAttideValues] = useState(false)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   function toggleShowEditPoints() {
     setShowPointsType(!showPointsType)
@@ -18,6 +25,13 @@ export default function SettingsPage() {
   function toggleShowAttitude() {
     setShowAttideValues(!showAttitudeValues)
   }
+
+  function handleTutorial() {
+    updateTutorial(true)
+    dispatch(setTutorialOn(true))
+    navigate("/main/initialIntro")
+  }
+
   return (
     <div className="d-block w-100">
       <Accordion>
@@ -50,6 +64,15 @@ export default function SettingsPage() {
               <EditAttitudeRewards closeAccordian={toggleShowAttitude} />
             </Card.Body>
           </Collapse>
+        </Accordion.Item>
+        <Accordion.Item eventKey="4">
+          <Accordion.Header>Tutorial</Accordion.Header>
+
+          <Accordion.Body>
+            <Button size="lg" onClick={handleTutorial}>
+              Start Tutorial / Setup
+            </Button>
+          </Accordion.Body>
         </Accordion.Item>
       </Accordion>
     </div>

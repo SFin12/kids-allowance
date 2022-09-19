@@ -214,12 +214,15 @@ export const createAllowance = async (member, value = 0, userId = getCurrentUser
 
   const userRef = db.collection("users").doc(userId)
   const earnings = userRef.collection("earnings")
-  earnings.doc("earnings").create({
-    [member]: {
-      currentTotal: currentTotal,
-      lifetimeTotal: currentTotal,
+  earnings.doc("earnings").set(
+    {
+      [member]: {
+        currentTotal: currentTotal,
+        lifetimeTotal: currentTotal,
+      },
     },
-  })
+    { merge: true }
+  )
   console.log("created allowance")
 }
 

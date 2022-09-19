@@ -1,14 +1,14 @@
 import React from "react"
 import { useState } from "react"
-import { Button, Form, FormGroup, FormLabel, FormSelect } from "react-bootstrap"
+import { Button, FormGroup, FormLabel, FormSelect } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { setChores } from "../../features/chores/choresSlice"
 import { selectPointsType, setPointsType } from "../../features/user/userSlice"
 import { getChores, updatePointsType } from "../../utils/firestore"
 
-export default function EditPointsType({ closeAccordian }) {
+export default function EditPointsType({ continueTutorial, closeAccordian }) {
   const pointsType = useSelector(selectPointsType)
   const [pType, setPType] = useState(pointsType)
   const dispatch = useDispatch()
@@ -49,7 +49,7 @@ export default function EditPointsType({ closeAccordian }) {
       if (location.pathname === "/main/settings") {
         getChores().then((chores) => dispatch(setChores(chores)))
       }
-      closeAccordian()
+      continueTutorial() || closeAccordian()
     } else {
       alert("Choose a rewards type before saving.")
     }
@@ -89,20 +89,20 @@ export default function EditPointsType({ closeAccordian }) {
           </FormSelect>
         </FormGroup>
       )}
-      <Button onClick={handleSave}>Save</Button>
+      <div className="d-flex justify-content-center">
+        <Button onClick={handleSave}>Save</Button>
+      </div>
 
-      {location.pathname !== "/main/settings" && pointsType?.type && pointsType?.type !== "money" ? (
+      {location.pathname !== "/main/settings" && pType?.type && pType?.type !== "money" ? (
         <section className="pt-4">
-          <p>{`You may use ${pointsType?.type} how you see fit to motivate a family member.`}</p>
-          <p>{`Some examples include: screen time, prizes, candy or allowing them to eat! You will have an opportunity to create a shop later, where family members can purchase various rewards with their ${pointsType?.type}.`}</p>
-          <p>{`You may or may not want to attach a monetary value to ${pointsType?.type} but in order to allow that option down the road, the default conversion rate for points to cash is 5¢ per ${pointsType?.type.slice(0, pointsType.type.length - 1)}. This can be changed later in Settings.`}</p>
-          <p>{`For example: 201 ${pointsType?.type} = $10.05`}</p>
+          <p>{`You may use ${pType?.type} how you see fit to motivate a family member.`}</p>
+          <p>{`Some examples include: screen time, prizes, candy or allowing them to eat! You will have an opportunity to create a shop later, where family members can purchase various rewards with their ${pType?.type}.`}</p>
+          <p>{`You may or may not want to attach a monetary value to ${pType?.type} but in order to allow for that option down the road you must choose a default conversion rate. This can be changed later in Settings.`}</p>
         </section>
       ) : (
         location.pathname !== "/main/settings" && ( // Only display this when in tutorial
           <div className="pt-4">
-            <p>If you decide to change your points system later, the default conversion will be 1 point for every 5¢. This can be changed later in Settings.</p>
-            <p>For example: $10.05 = 201 tickets</p>
+            <p>You can change the reward system later in settings.</p>
           </div>
         )
       )}

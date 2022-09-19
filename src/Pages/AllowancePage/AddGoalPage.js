@@ -44,29 +44,19 @@ export default function AddGoalPage() {
 
     return (
       <>
-      {!activeFamilyMember ? (
-        <div className="d-flex flex-column justify-content-center">
-          <h3>Choose an active family member</h3>
-        </div>
-      ) :
-        <div
-            className="d-flex justify-content-center w-100 flex-column align-items-center"
-            style={{ height: "70vh" }}
-        >
-            <h4 className="title">
-                {activeFamilyMember
-                    ? `Set a goal for ${activeFamilyMember}`
-                    : null}
-            </h4>
+        {!activeFamilyMember ? (
+          <div className="d-flex flex-column justify-content-center">
+            <h3>Choose an active family member</h3>
+          </div>
+        ) : (
+          <div className="d-flex justify-content-center w-100 flex-column align-items-center" style={{ height: "70vh" }}>
+            <h4 className="title">{activeFamilyMember ? `Set a goal for ${activeFamilyMember}` : null}</h4>
 
             <div className="w-75">
-                <FormInput
-                    titles={["Goal Name / Item", "Cost"]}
-                    handleSubmit={handleSubmit}
-                    placeholders={["Example: Lego Set or Target"]}
-                />
+              <FormInput titles={["Goal Name / Item", "Cost"]} handleSubmit={handleSubmit} placeholders={["Example: Legos or Goal"]} />
             </div>
-        </div>
-}</>
+          </div>
+        )}
+      </>
     )
 }
