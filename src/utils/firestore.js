@@ -226,6 +226,21 @@ export const createAllowance = async (member, value = 0, userId = getCurrentUser
   console.log("created allowance")
 }
 
+export const updateLifetimeTotal = async (member, value) => {
+  try {
+    const conversionRate = getConversionRate()
+    let newLifetimeTotal = convertPointsToDollars(Number(value), conversionRate)
+    let uid = getCurrentUserInfo().uid
+    const userRef = await db.collection("users").doc(uid)
+    const earnings = await userRef.collection("earnings")
+    earnings.doc("earnings").update({
+      [`${member}.lifetimeTotal`]: newLifetimeTotal,
+    })
+  } catch (error) {
+    alert(error)
+  }
+}
+
 export const updateAllowance = async (member, value = 0, userId = getCurrentUserInfo().uid) => {
   if (member === isNaN || member === null || typeof member === "number") {
     return console.error("Must provide string value for first argument")

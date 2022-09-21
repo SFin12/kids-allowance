@@ -32,28 +32,17 @@ export default function ResetAllowancePage() {
     }
 
     return (
-        <div
-            className="d-flex justify-content-center w-100 flex-column align-items-center"
-            style={{ height: "70vh" }}
-        >
-            <h4 className="title">
-                {activeFamilyMember
-                    ? `Are you sure you want to reset ${activeFamilyMember}'s allowance?`
-                    : null}
-            </h4>
+      <div className="d-flex justify-content-center w-100 flex-column align-items-center" style={{ height: "70vh" }}>
+        <h4 className="title">{activeFamilyMember ? `Are you sure you want to reset ${activeFamilyMember}'s earnings? This will also reset their lifetime total!` : null}</h4>
 
-            <div className="w-75 d-flex flex-column justify-content-around">
-                <Button className="reset-button" onClick={handleReset}>
-                    Yes
-                </Button>
-                <Button
-                    variant="secondary"
-                    className=""
-                    onClick={() => navigate(-1)}
-                >
-                    Cancel
-                </Button>
-            </div>
+        <div className="w-75 d-flex flex-column justify-content-around">
+          <Button className="reset-button" onClick={handleReset}>
+            Yes
+          </Button>
+          <Button variant="secondary" className="" onClick={() => navigate(-1)}>
+            Cancel
+          </Button>
         </div>
-    );
+      </div>
+    )
 }

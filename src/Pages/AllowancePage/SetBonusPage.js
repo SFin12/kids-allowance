@@ -30,7 +30,7 @@ export default function SetBonusPage() {
           ? `Set a target amount and bonus if ${activeFamilyMember} reaches the target ?`
           : null}
       </h4>
-      <p className="w-75">You will soon be able to set a target amount and reward bonus money for exercising patience when saving. For example, every $10 saved earns a $1 bonus.</p>
+      <p className="w-75">You will soon be able to set a target amount and reward a bonus for exercising patience when saving. For example, every 10 saved earns 1 bonus point.</p>
     </div>
   )
 }

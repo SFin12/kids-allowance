@@ -7,7 +7,7 @@ import { selectPointsType } from '../../features/user/userSlice'
 import { selectBadAttitudeValue, selectGoodAttitudeValue, setBadAttitudeValue, setGoodAttitudeValue } from '../../features/allowance/allowanceSlice'
 import { updateAttitudeValues } from '../../utils/firestore'
 
-export default function EditAttitudeRewards({ closeAccordian }) {
+export default function EditAttitudeRewards({ closeAccordion }) {
   const pointsType = useSelector(selectPointsType)
   const goodAttitudeValue = useSelector(selectGoodAttitudeValue)
   const badAttitudeValue = useSelector(selectBadAttitudeValue)
@@ -28,7 +28,7 @@ export default function EditAttitudeRewards({ closeAccordian }) {
     if (location.pathname === "/main/initialAttitude") {
       navigate("/main/initialChores")
     }
-    closeAccordian()
+    if (closeAccordion) closeAccordion()
   }
 
   return (

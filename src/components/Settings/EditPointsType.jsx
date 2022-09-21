@@ -1,6 +1,6 @@
 import React from "react"
 import { useState } from "react"
-import { Button, FormGroup, FormLabel, FormSelect } from "react-bootstrap"
+import { Button, FormControl, FormGroup, FormLabel, FormSelect } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
@@ -8,7 +8,7 @@ import { setChores } from "../../features/chores/choresSlice"
 import { selectPointsType, setPointsType } from "../../features/user/userSlice"
 import { getChores, updatePointsType } from "../../utils/firestore"
 
-export default function EditPointsType({ continueTutorial, closeAccordian }) {
+export default function EditPointsType({ continueTutorial, closeAccordion }) {
   const pointsType = useSelector(selectPointsType)
   const [pType, setPType] = useState(pointsType)
   const dispatch = useDispatch()
@@ -49,7 +49,8 @@ export default function EditPointsType({ continueTutorial, closeAccordian }) {
       if (location.pathname === "/main/settings") {
         getChores().then((chores) => dispatch(setChores(chores)))
       }
-      continueTutorial() || closeAccordian()
+      if (continueTutorial) continueTutorial()
+      if (closeAccordion) closeAccordion()
     } else {
       alert("Choose a rewards type before saving.")
     }
@@ -63,18 +64,14 @@ export default function EditPointsType({ continueTutorial, closeAccordian }) {
         <FormLabel htmlFor="select" className="label">
           Reward Type
         </FormLabel>
-        <FormSelect aria-label="Select" onChange={handleRewardType} id="select" required>
-          <option value={pointsType?.type ? pointsType.type : ""}>Select a reward type</option>
-          <option value={"stars"} selected={pointsType?.type === "stars"}>
-            Stars ⭐️
+        <FormControl aria-label="Select" as="select" type="select" onChange={handleRewardType} id="select" required value={pType?.type ? pType.type : ""}>
+          <option value={"stars"}>Stars ⭐️</option>
+          <option value={"tickets"}>Tickets 🎟</option>
+          <option value={"money"}>Dollars and Cents 💵</option>
+          <option value={pointsType?.type ? pointsType.type : ""} hidden={pointsType?.type ? true : false}>
+            Select a reward type
           </option>
-          <option value={"tickets"} selected={pointsType?.type === "tickets"}>
-            Tickets 🎟
-          </option>
-          <option value={"money"} selected={pointsType?.type === "money"}>
-            Dollars and Cents 💵
-          </option>
-        </FormSelect>
+        </FormControl>
       </FormGroup>
       {pType && pType?.type !== "money" && (
         <FormGroup className="mb-3 d-block text-start">

@@ -35,7 +35,7 @@ export default function SettingsPage() {
   return (
     <div className="d-block w-100">
       <Accordion>
-        <Accordion.Item eventKey="0" className="">
+        <Accordion.Item eventKey="0" className="settings-item">
           <Accordion.Header>Edit Family</Accordion.Header>
           <Accordion.Body>
             <EditFamily />
@@ -52,7 +52,7 @@ export default function SettingsPage() {
           <Accordion.Header onClick={toggleShowEditPoints}>Edit Points Type</Accordion.Header>
           <Collapse in={showPointsType}>
             <Card.Body>
-              <EditPointsType closeAccordian={toggleShowEditPoints} />
+              <EditPointsType closeAccordion={toggleShowEditPoints} />
             </Card.Body>
           </Collapse>
         </Accordion.Item>
@@ -61,15 +61,14 @@ export default function SettingsPage() {
           <Accordion.Header onClick={toggleShowAttitude}>Edit Attitude Values</Accordion.Header>
           <Collapse in={showAttitudeValues}>
             <Card.Body>
-              <EditAttitudeRewards closeAccordian={toggleShowAttitude} />
+              <EditAttitudeRewards closeAccordion={toggleShowAttitude} />
             </Card.Body>
           </Collapse>
         </Accordion.Item>
         <Accordion.Item eventKey="4">
           <Accordion.Header>Tutorial</Accordion.Header>
-
           <Accordion.Body>
-            <Button size="lg" onClick={handleTutorial}>
+            <Button size="lg" onClick={handleTutorial} className="reset-button">
               Start Tutorial / Setup
             </Button>
           </Accordion.Body>

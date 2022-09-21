@@ -27,6 +27,7 @@ import InititialFamilyPage from "../InitialSetupPage/InitialFamilyPage"
 import InititialAttitudePage from "../InitialSetupPage/InitialAttitudePage"
 import InitialGoalsPage from "../InitialSetupPage/InitialGoalsPage"
 import ShopPage from "../ShopPage/ShopPage"
+import AdjustLifetimeTotalPage from "../AllowancePage/AdjustLifetimeTotalPage"
 
 export default function MainPage(props) {
   const [lastName, setLastName] = useState("")
@@ -122,6 +123,7 @@ export default function MainPage(props) {
           <Route path="/addGoal" element={<AddGoalPage />} />
           <Route path="/setBonus" element={<SetBonusPage />} />
           <Route path="/adjustAllowance" element={<AdjustTotalPage />} />
+          <Route path="/adjustLifetimeAllowance" element={<AdjustLifetimeTotalPage />} />
 
           <Route path="/resetAllowance" element={<ResetAllowancePage />} />
         </Routes>
