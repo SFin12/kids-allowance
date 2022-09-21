@@ -8,7 +8,7 @@ import { setUserLogout, setActiveUser, setFamilyMembers, setPointsType, setTutor
 import SettingsPage from "../SettingsPage/SettingsPage"
 import ChoresPage from "../ChoresPage/ChoresPage"
 import "./MainPage.css"
-import { createFamily, createUser, getUserInfo, updateLogins } from "../../utils/firestore"
+import { createFamily, createUser, getChores, getUserInfo, updateLogins } from "../../utils/firestore"
 import { setChores } from "../../features/chores/choresSlice"
 import AllowancePage from "../AllowancePage/AllowancePage"
 import Footer from "../../components/Footer/Footer"
@@ -65,9 +65,10 @@ export default function MainPage(props) {
 
             dispatch(setPointsType(dbData.pointsType))
             // set redux chores from db
-            dispatch(setChores(dbData.chores))
             updateLogins()
             setIsFirstLogin(false)
+            const chores = await getChores()
+            dispatch(setChores(chores))
             dispatch(setTutorialOn(dbData.tutorialOn))
             if (dbData.tutorialOn) navigate("/main/initialIntro")
           } else {
