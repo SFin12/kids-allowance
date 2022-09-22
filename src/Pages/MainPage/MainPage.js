@@ -4,7 +4,7 @@ import firebase from "firebase/compat/app";
 import Navigation from "../../components/Nav/Navigation";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUserLogout, setActiveUser, setFamilyMembers, setPointsType, setTutorialOn } from "../../features/user/userSlice"
+import { setUserLogout, setActiveUser, setFamilyMembers, setPointsType, setTutorialOn, setLogins } from "../../features/user/userSlice"
 import SettingsPage from "../SettingsPage/SettingsPage"
 import ChoresPage from "../ChoresPage/ChoresPage"
 import "./MainPage.css"
@@ -28,6 +28,7 @@ import InititialAttitudePage from "../InitialSetupPage/InitialAttitudePage"
 import InitialGoalsPage from "../InitialSetupPage/InitialGoalsPage"
 import ShopPage from "../ShopPage/ShopPage"
 import AdjustLifetimeTotalPage from "../AllowancePage/AdjustLifetimeTotalPage"
+import { getPWADisplayMode } from "../../utils/helper"
 
 export default function MainPage(props) {
   const [lastName, setLastName] = useState("")
@@ -62,7 +63,7 @@ export default function MainPage(props) {
                 familyMembers: dbData.family,
               })
             )
-
+            dispatch(setLogins(dbData.logins))
             dispatch(setPointsType(dbData.pointsType))
             // set redux chores from db
             updateLogins()
@@ -87,6 +88,14 @@ export default function MainPage(props) {
     })
     return () => unregisterAuthObserver()
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const displayMode = getPWADisplayMode()
+    console.log(window.innerWidth)
+    if (displayMode === "browser" && window.innerWidth < 768) {
+      navigate("/main/initialIntro")
+    }
   }, [])
 
   function handleLogout() {

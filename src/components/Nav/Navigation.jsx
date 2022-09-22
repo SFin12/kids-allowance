@@ -10,12 +10,13 @@ import { HiOutlineTicket } from "react-icons/hi"
 import { FaRegStar } from "react-icons/fa"
 import { BsShop } from "react-icons/bs"
 import { useSelector } from "react-redux"
-import { selectPointsType } from "../../features/user/userSlice"
+import { selectLogins, selectPointsType } from "../../features/user/userSlice"
 
 export default function Navigation({ logout, lastName }) {
   const pointsType = useSelector(selectPointsType)
-  const location = useLocation();
-  const inTutorial = location.pathname.includes('initial')
+  const location = useLocation()
+  const logins = useSelector(selectLogins)
+  const inTutorial = location.pathname.includes("initial")
 
   return (
     <Navbar fixed="top" className="custom-navbar">
@@ -25,12 +26,12 @@ export default function Navigation({ logout, lastName }) {
       </Link>
 
       <Nav className="">
-        <Nav.Link as={Link} to="/main/chores" disabled={inTutorial} href="/main/chores" className="link d-flex align-items-center non-icon">
+        <Nav.Link as={Link} to="/main/chores" disabled={inTutorial && logins < 10} href="/main/chores" className="link d-flex align-items-center non-icon">
           <GiBroom className="mx-1 icon" />
           <span className="non-icon">Chores</span>
         </Nav.Link>
 
-        <Nav.Link as={Link} to="/main/allowance" disabled={inTutorial} href="/main/allowance" className="link d-flex align-items-center non-icon">
+        <Nav.Link as={Link} to="/main/allowance" disabled={inTutorial && logins < 10} href="/main/allowance" className="link d-flex align-items-center non-icon">
           {pointsType?.type && pointsType?.type !== "money" ? (
             <>
               {pointsType.type === "tickets" ? <HiOutlineTicket className="mx-1 icon" /> : <FaRegStar className="mx-1 icon" />}
@@ -44,11 +45,11 @@ export default function Navigation({ logout, lastName }) {
             </>
           )}
         </Nav.Link>
-        <Nav.Link as={Link} to="/main/shop" disabled={inTutorial} href="/main/shop" className="link d-flex align-items-center">
+        <Nav.Link as={Link} to="/main/shop" disabled={inTutorial && logins < 10} href="/main/shop" className="link d-flex align-items-center">
           <BsShop className="mx-1 icon" />
           <span className="non-icon">Shop</span>
         </Nav.Link>
-        <Nav.Link as={Link} to="/main/settings" disabled={inTutorial} href="/main/settings" className="link d-flex align-items-center">
+        <Nav.Link as={Link} to="/main/settings" disabled={inTutorial && logins < 10} href="/main/settings" className="link d-flex align-items-center">
           <FiSettings className="mx-1 icon" />
           <span className="non-icon">Settings</span>
         </Nav.Link>

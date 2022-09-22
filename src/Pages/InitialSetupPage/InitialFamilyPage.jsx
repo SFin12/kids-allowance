@@ -33,9 +33,9 @@ export default function InititialFamilyPage() {
             <div className="arrow-down-container">
               <img src={arrowDown} alt="Arrow down" />
             </div>
-              <Link to={"/main/initialTypes"} className="right-bottom-absolute">
-                <Button>Next</Button>
-              </Link>
+            <Link to={"/main/initialTypes"} className="center-bottom">
+              <Button>Next</Button>
+            </Link>
           </>
         )}
       </div>

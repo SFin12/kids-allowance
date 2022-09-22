@@ -42,3 +42,13 @@ export function convertDollarsToPoints(value, conversionRate) {
 
   return Number(Math.round(Number(value) * (1 / conversionRate)))
 }
+
+export function getPWADisplayMode() {
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches
+  if (document.referrer.startsWith("android-app://")) {
+    return "twa"
+  } else if (navigator.standalone || isStandalone) {
+    return "standalone"
+  }
+  return "browser"
+}

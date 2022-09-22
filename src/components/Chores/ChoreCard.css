@@ -11,11 +11,11 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    min-height: 75px;
+    min-height: 70px;
     min-width: 250px;
     width: 100%;
     height: 15%;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 400;
     color: cadetblue;
     font-family: var(--chore-font);
@@ -30,8 +30,9 @@
   background-color: aquamarine;
   height: 100%;
   width: 80px;
+  min-width: 80px;
   border-radius: 0 10px 10px 0;
-  
+  box-shadow: inset 4px 0px 4px rgba(0, 0, 0, 0.2);
 }
 
 .daily-chore-active {
@@ -40,10 +41,31 @@
   align-items: center;
   height: 100%;
   width: 80px;
+  min-width: 80px;
   border-radius: 0 10px 10px 0;
   background: rgb(255, 255, 0);
+  box-shadow: inset 4px 0px 4px rgba(0, 0, 0, 0.2);
 }
 
+.chore-name-value-container {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 12px;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+ 
+}
+
+.chore-name {
+  text-align: left;
+  line-height: 1.8rem;
+}
+
+.chore-value {
+  min-width: 90px;
+  text-align: right;
+}
 
 .attitude-emoji-container {
   display: flex;
@@ -161,6 +183,7 @@
 .chore-card:active {
     box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
     transform: translateY(3px);
+  
 }
 
 .main-card {
@@ -186,14 +209,34 @@
     backface-visibility: hidden;
 }
 
+.chore-name-value-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: 10px 10px 0 0;
+    backface-visibility: hidden;
+}
+
+
 .chore-name {
   display: flex;
   height: 50%;
   align-items: flex-end;
+  text-align: center;
+  line-height: normal;
+  flex-wrap: wrap;
+  padding: 10px;
+  
 }
 
 .chore-value {
   height: 45%;
+  min-width: none;
+  text-align: center;
 }
 
 .card-back {
@@ -204,7 +247,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     backface-visibility: hidden;
     border-radius: 10px;
     box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
@@ -229,7 +271,8 @@
   height: 25%;
   width: 100%;
   border-radius: 0 0 10px 10px;
-  
+  box-shadow: none;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .daily-chore-active {
@@ -240,6 +283,7 @@
   width: 100%;
   border-radius: 0 0 10px 10px;
   background: rgb(255, 255, 0);
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
  
 }

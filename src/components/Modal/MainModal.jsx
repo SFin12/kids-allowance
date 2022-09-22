@@ -6,10 +6,8 @@ export default function MainModal({title, show, onHide, children}) {
   return (
     <>
       <Modal show={show} onHide={onHide} backdrop="static" centered>
-        <Modal.Title className='text-center'>{title}</Modal.Title>
-        <Modal.Body className='text-center'>
-          {children}
-        </Modal.Body>
+        <Modal.Title className="text-center pt-3">{title}</Modal.Title>
+        <Modal.Body className="text-center">{children}</Modal.Body>
       </Modal>
     </>
   )

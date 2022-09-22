@@ -107,18 +107,22 @@ export default function ChoreCard({ chore, value, completedBy }) {
       <div className="chore-card" onClick={handleClick} id={chore}>
         <div className={flip ? "main-card flip-card" : "main-card"}>
           <div className="card-front">
-            <div className="chore-name">{`${chore}`}</div>
-            {currentValue ? (
-              pType?.type === "money" ? (
-                <div className="chore-value">
-                  {/* Check if numVal is a whole number or decimal */}
-                  {numVal % 1 === 0 ? `$${value}` : `${convertDecimalsToDollarsAndCents(numVal)}`}
-                </div>
-              ) : (
-                <div className="chore-value">{`${value} ${pType.icon}`}</div>
-              )
-            ) : null}
-
+            <div className="chore-name-value-container">
+              <div className="chore-name">{`${chore}`}</div>
+              {currentValue ? (
+                pType?.type === "money" ? (
+                  <div className="chore-value">
+                    {/* Check if numVal is a whole number or decimal */}
+                    {numVal % 1 === 0 ? `$${value}` : `${convertDecimalsToDollarsAndCents(numVal)}`}
+                  </div>
+                ) : (
+                  <div>
+                    <div className="chore-value">{value + " " + pType.icon}</div>
+                    <div>{}</div>
+                  </div>
+                )
+              ) : null}
+            </div>
             <div className={dailyChore ? "daily-chore-active" : "daily-chore"} onClick={handleDailyChore}>
               Daily
             </div>

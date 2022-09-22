@@ -8,22 +8,13 @@ import { useState } from "react"
 import chorzyIcon from "../../assets/chorzy-icon.png"
 import "./InitialStylePage.css"
 import { useEffect } from "react"
+import { getPWADisplayMode } from "../../utils/helper"
 
 export default function InitialIntroPage() {
   const [device, setDevice] = useState(null)
   const [displayMode, setDisplayMode] = useState("")
 
   useEffect(() => {
-    function getPWADisplayMode() {
-      const isStandalone = window.matchMedia("(display-mode: standalone)").matches
-      if (document.referrer.startsWith("android-app://")) {
-        return "twa"
-      } else if (navigator.standalone || isStandalone) {
-        return "standalone"
-      }
-      return "browser"
-    }
-    console.log(getPWADisplayMode())
     setDisplayMode(getPWADisplayMode())
   }, [])
 
@@ -81,24 +72,22 @@ export default function InitialIntroPage() {
             )}
             {device === "android" && (
               <div className="instructions">
-              <ol>
-                <li>Make sure Chorzy is open in Chrome</li>
-                <li>
-                  Tap the menu <BsThreeDotsVertical style={{ fontSize: 25 }} />
-                  <span> icon</span>
-                </li>
-                <li>
-                  Tap Add to Home Screen
-                </li>
-                <li>
-                  You can now close Chrome and click on the{" "}
-                  <span className="chorzy-icon">
-                    <img src={chorzyIcon} alt="Chorzy Icon" />
-                  </span>
-                  <span> icon</span>
-                </li>
-              </ol>
-            </div>
+                <ol>
+                  <li>Make sure Chorzy is open in Chrome</li>
+                  <li>
+                    Tap the menu <BsThreeDotsVertical style={{ fontSize: 25 }} />
+                    <span> icon</span>
+                  </li>
+                  <li>Tap Add to Home Screen</li>
+                  <li>
+                    You can now close Chrome and click on the{" "}
+                    <span className="chorzy-icon">
+                      <img src={chorzyIcon} alt="Chorzy Icon" />
+                    </span>
+                    <span> icon</span>
+                  </li>
+                </ol>
+              </div>
             )}
             <br />
           </section>

@@ -8,7 +8,7 @@ import { setChores } from "../../features/chores/choresSlice"
 import { selectPointsType, setPointsType } from "../../features/user/userSlice"
 import { getChores, updatePointsType } from "../../utils/firestore"
 
-export default function EditPointsType({ continueTutorial, closeAccordion }) {
+export default function EditPointsType({ continueTutorial, currentSelection, closeAccordion }) {
   const pointsType = useSelector(selectPointsType)
   const [pType, setPType] = useState(pointsType)
   const dispatch = useDispatch()
@@ -35,6 +35,7 @@ export default function EditPointsType({ continueTutorial, closeAccordion }) {
       }
     }
     setPType(pointsType) // local state
+    if (currentSelection) currentSelection(pointsType)
   }
 
   function handleConversionRate(e) {
@@ -90,19 +91,6 @@ export default function EditPointsType({ continueTutorial, closeAccordion }) {
         <Button onClick={handleSave}>Save</Button>
       </div>
 
-      {location.pathname !== "/main/settings" && pType?.type && pType?.type !== "money" ? (
-        <section className="pt-4">
-          <p>{`You may use ${pType?.type} how you see fit to motivate a family member.`}</p>
-          <p>{`Some examples include: screen time, prizes, candy or allowing them to eat! You will have an opportunity to create a shop later, where family members can purchase various rewards with their ${pType?.type}.`}</p>
-          <p>{`You may or may not want to attach a monetary value to ${pType?.type} but in order to allow for that option down the road you must choose a default conversion rate. This can be changed later in Settings.`}</p>
-        </section>
-      ) : (
-        location.pathname !== "/main/settings" && ( // Only display this when in tutorial
-          <div className="pt-4">
-            <p>You can change the reward system later in settings.</p>
-          </div>
-        )
-      )}
       {location.pathname === "/main/settings" && (
         <div className="text-start pt-2">
           <p>WARNING: This will change the earnings and chore values based on the conversion rate but can be changed back at anytime.</p>

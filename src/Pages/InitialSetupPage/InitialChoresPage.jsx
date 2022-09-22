@@ -19,7 +19,7 @@ export default function InitialChoresPage() {
         <br />
         {chores && Object.keys(chores).length !== 0 && (
           <>
-            <Link to={"/main/initialChoresTrial"} className="right-bottom-absolute">
+            <Link to={"/main/initialChoresTrial"} className="center-bottom">
               <Button>Next</Button>
             </Link>
           </>
