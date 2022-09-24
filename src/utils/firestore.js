@@ -366,7 +366,7 @@ export const updateGoal = async (member, goalName = "", goalValue = 0, userId = 
 }
 
 export const getGoals = async () => {
-  const uid = await getCurrentUserInfo().uid
+  const uid = getCurrentUserInfo().uid
   const userRef = await db.collection("users")
   const snapshot = await userRef.doc(`${uid}`).collection("goals").doc("goals").get()
   const goalsObj = await snapshot.data()

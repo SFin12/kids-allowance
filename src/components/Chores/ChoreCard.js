@@ -58,8 +58,13 @@ export default function ChoreCard({ chore, value, completedBy }) {
       // updated firestore to show not completed
       updateDbChore(chore, value, "", "")
     }
-    if (!flip) setShowModal(true)
+    
     setFlip(!flip)
+    if (!flip) {
+      setTimeout(() => {
+        setShowModal(true)
+      }, 500)
+    } 
     setLastChore({
       chore,
       value: currentValue,
