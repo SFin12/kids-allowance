@@ -14,7 +14,7 @@ export default function AdjustLifetimeTotalPage() {
   const pointsType = useSelector(selectPointsType)
   const navigate = useNavigate()
   const currentAllowance = useSelector(selectAllowance)
-  console.log(currentAllowance)
+
   let placeholders = pointsType.type !== "money" ? currentAllowance[activeFamilyMember]?.lifetimeTotal : convertDecimalsToDollarsAndCents(currentAllowance[activeFamilyMember]?.lifetimeTotal).slice(1)
 
   useEffect(() => {

@@ -92,7 +92,7 @@ export default function MainPage(props) {
 
   useEffect(() => {
     const displayMode = getPWADisplayMode()
-    console.log(window.innerWidth)
+
     if (displayMode === "browser" && window.innerWidth < 768) {
       navigate("/main/initialIntro")
     }
