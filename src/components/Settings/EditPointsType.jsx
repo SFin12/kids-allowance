@@ -4,13 +4,17 @@ import { Button, FormControl, FormGroup, FormLabel, FormSelect } from "react-boo
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
+import { selectBadAttitudeValue, selectGoodAttitudeValue, setBadAttitudeValue, setGoodAttitudeValue } from "../../features/allowance/allowanceSlice"
 import { setChores } from "../../features/chores/choresSlice"
 import { selectPointsType, setPointsType } from "../../features/user/userSlice"
 import { getChores, updatePointsType } from "../../utils/firestore"
+import { convertDollarsToPoints, convertPointsToDollars } from "../../utils/helper"
 
 export default function EditPointsType({ continueTutorial, currentSelection, closeAccordion }) {
   const pointsType = useSelector(selectPointsType)
   const [pType, setPType] = useState(pointsType)
+  const goodAttitudeValue = useSelector(selectGoodAttitudeValue)
+  const badAttitudeValue = useSelector(selectBadAttitudeValue)
   const dispatch = useDispatch()
   const location = useLocation()
 
@@ -45,11 +49,30 @@ export default function EditPointsType({ continueTutorial, currentSelection, clo
 
   function handleSave() {
     if (pType?.type) {
+      console.log(pType.type, pointsType.type)
+      if (pointsType.type !== pType.type) {
+        let goodAttitudeConverted
+        let badAttitudeConverted
+        if (pointsType.type === "money" && pType.type !== "money") {
+          goodAttitudeConverted = convertDollarsToPoints(goodAttitudeValue, pType.pointToDollarConversion) // use new conversion rate to get points
+          badAttitudeConverted = convertDollarsToPoints(badAttitudeValue, pType.pointToDollarConversion)
+
+          dispatch(setGoodAttitudeValue(goodAttitudeConverted))
+          dispatch(setBadAttitudeValue(badAttitudeConverted))
+        } else if (pointsType.type !== "money" && pType.type === "money") {
+          goodAttitudeConverted = convertPointsToDollars(goodAttitudeValue, pointsType.pointToDollarConversion) // use prev conversion rate to convert to dollars
+          badAttitudeConverted = convertPointsToDollars(badAttitudeValue, pointsType.pointToDollarConversion)
+
+          dispatch(setGoodAttitudeValue(goodAttitudeConverted))
+          dispatch(setBadAttitudeValue(badAttitudeConverted))
+        }
+      }
       dispatch(setPointsType(pType)) // redux state
       updatePointsType(pType) // db
       if (location.pathname === "/main/settings") {
         getChores().then((chores) => dispatch(setChores(chores)))
       }
+
       if (continueTutorial) continueTutorial()
       if (closeAccordion) closeAccordion()
     } else {

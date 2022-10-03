@@ -2,27 +2,32 @@
 import React, { useEffect, useState } from "react"
 import { Card } from "react-bootstrap"
 import { act } from "react-dom/test-utils"
+import { IconContext } from "react-icons"
 import { AiOutlineEdit } from "react-icons/ai"
+import { BsEmojiSmile, BsEmojiSmileFill } from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
+import useSound from "use-sound"
 import AllowanceContainer from "../../components/Allowance/AllowanceContainer"
 import LoadingSpinner from "../../components/Loading/LoadingSpinner"
-import { selectAllowance, selectChoresStats, selectGoals, setAllowance, setChoresStats, setGoal } from "../../features/allowance/allowanceSlice"
+import { selectAllowance, selectChoresStats, selectGoals, selectGoodAttitudeValue, setAllowance, setChoresStats, setGoal } from "../../features/allowance/allowanceSlice"
 
 import { selectActiveFamilyMember, selectPointsType } from "../../features/user/userSlice"
-import { getAllowances, getChoreStats, getGoals } from "../../utils/firestore"
+import { getAllowances, getChoreStats, getGoals, updateAllowance } from "../../utils/firestore"
 import { convertDecimalsToDollarsAndCents } from "../../utils/helper"
 import "./AllowancePage.css"
 
 export default function AllowancePage() {
   const [percentageOfGoal, setPercentageOfGoal] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+
   const dispatch = useDispatch()
   const pointsType = useSelector(selectPointsType)
   const activeFamilyMember = useSelector(selectActiveFamilyMember)
   const goals = useSelector(selectGoals)
   const allowance = useSelector(selectAllowance)
   const choresStats = useSelector(selectChoresStats)
+  const goodAttitudeValue = useSelector(selectGoodAttitudeValue)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -67,7 +72,7 @@ export default function AllowancePage() {
         return navigate("/main/addGoal")
       }
     }
-
+    // console.log(allowance["Donovan"])
     calculateGoalPercentage(allowance)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allowance, activeFamilyMember, goals])
@@ -88,10 +93,22 @@ export default function AllowancePage() {
     setPercentageOfGoal(Math.floor(percentage))
   }
 
+  function handleAttitude(e) {
+    const attitude = e.currentTarget.id
+    console.log(goodAttitudeValue)
+    if (attitude === "good-emoji") {
+      updateAllowance(activeFamilyMember, goodAttitudeValue)
+        .then(() => getAllowances()) // get new allowances and update redux store with new values
+        .then((earnings) => {
+          return dispatch(setAllowance(earnings))
+        })
+    }
+  }
+
   // conditoinal edit icon button added if an active member is clicked. Used to add / edit goal
   const EditIcon = (
-    <Link className="target-icon" to={"/main/editAllowance"}>
-      <AiOutlineEdit style={{ height: "2rem", width: "2rem", color: "teal" }} />
+    <Link to={"/main/editAllowance"} style={{ height: 20 }}>
+      <AiOutlineEdit style={{ height: "2rem", width: "2rem", color: "teal", marginTop: "1.25rem" }} />
     </Link>
   )
 
@@ -144,7 +161,14 @@ export default function AllowancePage() {
               </h3>
 
               <AllowanceContainer className="allowance-bar" allowance={allowance} goal={goals} activeFamilyMember={activeFamilyMember} percentageOfGoal={percentageOfGoal} style={{ height: `${percentageOfGoal}%` }} />
-              {activeFamilyMember ? EditIcon : null}
+              {activeFamilyMember ? (
+                <div className="allowance-icons-container">
+                  <div onClick={handleAttitude} name="good" id="good-emoji">
+                    <BsEmojiSmile className="attitude-bonus" />
+                  </div>
+                  {EditIcon}
+                </div>
+              ) : null}
             </div>
           )}
         </>

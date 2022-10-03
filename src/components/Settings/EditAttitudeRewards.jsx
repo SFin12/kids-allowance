@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { selectPointsType } from '../../features/user/userSlice'
 import { selectBadAttitudeValue, selectGoodAttitudeValue, setBadAttitudeValue, setGoodAttitudeValue } from '../../features/allowance/allowanceSlice'
 import { updateAttitudeValues } from '../../utils/firestore'
+import { useEffect } from "react"
 
 export default function EditAttitudeRewards({ closeAccordion }) {
   const pointsType = useSelector(selectPointsType)
@@ -14,6 +15,8 @@ export default function EditAttitudeRewards({ closeAccordion }) {
   const dispatch = useDispatch()
   const location = useLocation()
   const navigate = useNavigate()
+
+  useEffect(() => {}, [goodAttitudeValue, badAttitudeValue])
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -29,6 +32,9 @@ export default function EditAttitudeRewards({ closeAccordion }) {
       navigate("/main/initialChores")
     }
     if (closeAccordion) closeAccordion()
+    if (location.pathname === "/main/settings") {
+      navigate("/main/settings")
+    }
   }
 
   return (
@@ -41,7 +47,18 @@ export default function EditAttitudeRewards({ closeAccordion }) {
             <div className="d-flex align-items-center">
               <span style={{ fontSize: 30, paddingRight: 5 }}>{pointsType?.icon}</span>
 
-              <FormControl type="number" max={10000} maxLength={5} placeholder={pointsType?.type !== "money" ? "Example: 2" : "Example: .10 or .25"} name="bonus" defaultValue={goodAttitudeValue ? goodAttitudeValue : ""} min={0} step={pointsType?.type !== "money" ? 1 : 0.05} required />
+              <FormControl
+                type="number"
+                max={10000}
+                maxLength={5}
+                placeholder={pointsType?.type !== "money" ? "Example: 2" : "Example: .10 or .25"}
+                key={goodAttitudeValue}
+                name="bonus"
+                defaultValue={goodAttitudeValue ? goodAttitudeValue : ""}
+                min={0}
+                step={pointsType?.type !== "money" ? 1 : 0.05}
+                required
+              />
             </div>
           </FormGroup>
           <FormGroup className="mb-3 position-relative d-block text-start" controlId="valueArea">
@@ -50,7 +67,18 @@ export default function EditAttitudeRewards({ closeAccordion }) {
             <div className="d-flex align-items-center">
               <span style={{ fontSize: 30, paddingRight: 5 }}>{pointsType?.icon}</span>
 
-              <FormControl type="number" max={10000} maxLength={5} placeholder={pointsType?.type !== "money" ? "Example: 1" : "Example: .10 or .05"} name="deduction" defaultValue={badAttitudeValue ? badAttitudeValue : ""} min={0} step={pointsType?.type !== "money" ? 1 : 0.05} required />
+              <FormControl
+                type="number"
+                max={10000}
+                maxLength={5}
+                placeholder={pointsType?.type !== "money" ? "Example: 1" : "Example: .10 or .05"}
+                name="deduction"
+                key={badAttitudeValue} // used to force defaultValue to update on state change
+                defaultValue={badAttitudeValue ? badAttitudeValue : ""}
+                min={0}
+                step={pointsType?.type !== "money" ? 1 : 0.05}
+                required
+              />
             </div>
           </FormGroup>
           <div className="d-flex justify-content-center">

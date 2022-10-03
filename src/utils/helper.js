@@ -39,7 +39,7 @@ export function convertPointsToDollars(value, conversionRate) {
 }
 
 export function convertDollarsToPoints(value, conversionRate) {
-
+  if (conversionRate === 1) return value
   return Number(Math.round(Number(value) * (1 / conversionRate)))
 }
 

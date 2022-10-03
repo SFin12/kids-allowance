@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { updateChore } from "../../features/chores/choresSlice"
 import { getAllowances, updateAllowance, updateChore as updateDbChore } from "../../utils/firestore"
 import { selectActiveFamilyMember, selectPointsType } from "../../features/user/userSlice"
-import "./ChoreCard.css"
 import { convertDecimalsToDollarsAndCents } from "../../utils/helper"
 import { selectBadAttitudeValue, selectGoodAttitudeValue, setAllowance } from "../../features/allowance/allowanceSlice"
 import MainModal from "../Modal/MainModal"
+import "./ChoreCard.css"
 
 export default function ChoreCard({ chore, value, completedBy }) {
   const [flip, setFlip] = useState(false)

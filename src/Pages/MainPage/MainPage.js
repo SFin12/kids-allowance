@@ -29,6 +29,7 @@ import InitialGoalsPage from "../InitialSetupPage/InitialGoalsPage"
 import ShopPage from "../ShopPage/ShopPage"
 import AdjustLifetimeTotalPage from "../AllowancePage/AdjustLifetimeTotalPage"
 import { getPWADisplayMode } from "../../utils/helper"
+import { setBadAttitudeValue, setGoodAttitudeValue } from "../../features/allowance/allowanceSlice"
 
 export default function MainPage(props) {
   const [lastName, setLastName] = useState("")
@@ -71,6 +72,8 @@ export default function MainPage(props) {
             const chores = await getChores()
             dispatch(setChores(chores))
             dispatch(setTutorialOn(dbData.tutorialOn))
+            if (dbData.goodAttitudeDollarValue) dispatch(setGoodAttitudeValue(dbData.goodAttitudeDollarValue))
+            if (dbData.badAttitudeDollarValue) dispatch(setBadAttitudeValue(dbData.badAttitudeDollarValue))
             if (dbData.tutorialOn) navigate("/main/initialIntro")
           } else {
             // If getUserInfo is undefined, add new user to database.
