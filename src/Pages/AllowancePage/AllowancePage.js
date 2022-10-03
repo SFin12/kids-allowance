@@ -4,13 +4,13 @@ import { Card } from "react-bootstrap"
 import { act } from "react-dom/test-utils"
 import { IconContext } from "react-icons"
 import { AiOutlineEdit } from "react-icons/ai"
-import { BsEmojiSmile, BsEmojiSmileFill } from "react-icons/bs"
+import { BsEmojiFrown, BsEmojiSmile, BsEmojiSmileFill } from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import useSound from "use-sound"
 import AllowanceContainer from "../../components/Allowance/AllowanceContainer"
 import LoadingSpinner from "../../components/Loading/LoadingSpinner"
-import { selectAllowance, selectChoresStats, selectGoals, selectGoodAttitudeValue, setAllowance, setChoresStats, setGoal } from "../../features/allowance/allowanceSlice"
+import { selectAllowance, selectBadAttitudeValue, selectChoresStats, selectGoals, selectGoodAttitudeValue, setAllowance, setChoresStats, setGoal } from "../../features/allowance/allowanceSlice"
 
 import { selectActiveFamilyMember, selectPointsType } from "../../features/user/userSlice"
 import { getAllowances, getChoreStats, getGoals, updateAllowance } from "../../utils/firestore"
@@ -28,6 +28,7 @@ export default function AllowancePage() {
   const allowance = useSelector(selectAllowance)
   const choresStats = useSelector(selectChoresStats)
   const goodAttitudeValue = useSelector(selectGoodAttitudeValue)
+  const badAttitudeValue = useSelector(selectBadAttitudeValue)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -95,9 +96,15 @@ export default function AllowancePage() {
 
   function handleAttitude(e) {
     const attitude = e.currentTarget.id
-    console.log(goodAttitudeValue)
+
     if (attitude === "good-emoji") {
       updateAllowance(activeFamilyMember, goodAttitudeValue)
+        .then(() => getAllowances()) // get new allowances and update redux store with new values
+        .then((earnings) => {
+          return dispatch(setAllowance(earnings))
+        })
+    } else if (attitude === "bad-emoji") {
+      updateAllowance(activeFamilyMember, -badAttitudeValue)
         .then(() => getAllowances()) // get new allowances and update redux store with new values
         .then((earnings) => {
           return dispatch(setAllowance(earnings))
@@ -165,6 +172,9 @@ export default function AllowancePage() {
                 <div className="allowance-icons-container">
                   <div onClick={handleAttitude} name="good" id="good-emoji">
                     <BsEmojiSmile className="attitude-bonus" />
+                  </div>
+                  <div onClick={handleAttitude} name="bad" id="bad-emoji" style={{ marginTop: "1.25rem" }}>
+                    <BsEmojiFrown className="attitude-bonus" />
                   </div>
                   {EditIcon}
                 </div>
