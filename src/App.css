@@ -2,11 +2,14 @@
 /* font-family: 'Gochi Hand', cursive; */
 @import url("https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Shrikhand&display=swap");
 /* font-family: 'Shrikhand', cursive; */
+@import url('https://fonts.googleapis.com/css2?family=Sansita+Swashed&display=swap');
+/* font-family: 'Sansita Swashed', cursive */
 
 :root {
     --chore-font: "Gochi Hand", cursive;
     --title-font: "Shrikhand", cursive;
-    --main-color: aquamarine;
+    --main-color: #7fffd4;
+    /* --title-font: 'Sansita Swashed', cursive; */
 }
 
 h1,
