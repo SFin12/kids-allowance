@@ -25,9 +25,10 @@
 
     height: 0%;
     transition: height 2s;
-    -webkit-animation: progress-bar 2s;
-    -moz-animation: progress-bar 2s;
-    animation: progress-bar 2s;
+    -webkit-transition: height 2s;
+    animation: progress-bar .08s;
+    -webkit-animation: progress-bar .08s;
+    -moz-animation: progress-bar .08s;
 }
 
 .theme-color {
@@ -61,6 +62,7 @@
 @-webkit-keyframes progress-bar {
     0% {
         height: 0;
+        
     }
 }
 @-moz-keyframes progress-bar {
