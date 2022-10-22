@@ -1,20 +1,20 @@
 import { Accordion, Button, Card, Collapse } from "react-bootstrap"
 
 import EditFamily from "../../components/Settings/EditFamily"
-import "./SettingsPage.css"
 import EditChores from "../../components/Settings/EditChores"
 import EditPointsType from "../../components/Settings/EditPointsType"
 import EditAttitudeRewards from "../../components/Settings/EditAttitudeRewards"
 import { useState } from "react"
-import AccordionBody from "react-bootstrap/esm/AccordionBody"
-import { useDispatch, useSelector } from "react-redux"
-import { selectTutorialOn, setTutorialOn } from "../../features/user/userSlice"
+import { useDispatch } from "react-redux"
+import { setTutorialOn } from "../../features/user/userSlice"
 import { updateTutorial } from "../../utils/firestore"
 import { useNavigate } from "react-router-dom"
+import "./SettingsPage.css"
 
 export default function SettingsPage() {
   const [showPointsType, setShowPointsType] = useState(false)
   const [showAttitudeValues, setShowAttideValues] = useState(false)
+  const [showTutorialOptions, setShowTutorialOptions] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -26,10 +26,19 @@ export default function SettingsPage() {
     setShowAttideValues(!showAttitudeValues)
   }
 
-  function handleTutorial() {
+  function toggleShowwTutorialOptions() {
+    setShowTutorialOptions(!showTutorialOptions)
+  }
+
+  function handleTutorialOn() {
     updateTutorial(true)
     dispatch(setTutorialOn(true))
     navigate("/main/initialIntro")
+  }
+  function handleTutorialOff() {
+    updateTutorial(false)
+    dispatch(setTutorialOn(false))
+    setShowTutorialOptions(false)
   }
 
   return (
@@ -66,12 +75,20 @@ export default function SettingsPage() {
           </Collapse>
         </Accordion.Item>
         <Accordion.Item eventKey="4">
-          <Accordion.Header>Tutorial</Accordion.Header>
-          <Accordion.Body>
-            <Button size="lg" onClick={handleTutorial} className="reset-button">
-              Start Tutorial / Setup
-            </Button>
-          </Accordion.Body>
+          <Accordion.Header onClick={toggleShowwTutorialOptions}>Tutorial</Accordion.Header>
+          <Collapse in={showTutorialOptions}>
+            <Card.Body>
+              <div className="d-grid gap-1">
+                <Button size="lg" onClick={handleTutorialOn} className="reset-button">
+                  Start Tutorial / Setup
+                </Button>
+
+                <Button size="lg" onClick={handleTutorialOff} className="" variant="secondary">
+                  Turn Off Tutorial
+                </Button>
+              </div>
+            </Card.Body>
+          </Collapse>
         </Accordion.Item>
       </Accordion>
     </div>
