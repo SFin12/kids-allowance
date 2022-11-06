@@ -101,7 +101,7 @@ export default function AllowancePage() {
       updateAllowance(activeFamilyMember, goodAttitudeValue)
         .then(() => getAllowances()) // get new allowances and update redux store with new values
         .then((earnings) => {
-          return dispatch(setAllowance(earnings))
+          dispatch(setAllowance(earnings))
         })
     } else if (attitude === "bad-emoji") {
       updateAllowance(activeFamilyMember, -badAttitudeValue)

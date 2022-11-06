@@ -14,7 +14,8 @@ export default function AdjustTotalPage() {
   const pointsType = useSelector(selectPointsType)
   const navigate = useNavigate()
   const currentAllowance = useSelector(selectAllowance)
-  let placeholders = pointsType.type !== "money" ? currentAllowance[activeFamilyMember].currentTotal : convertDecimalsToDollarsAndCents(currentAllowance[activeFamilyMember].currentTotal).slice(1)
+  let placeholders = pointsType.type !== "money" ? currentAllowance[activeFamilyMember].currentTotal : currentAllowance[activeFamilyMember].currentTotal.toFixed(2)
+  
 
   useEffect(() => {
     if (activeFamilyMember === null) {

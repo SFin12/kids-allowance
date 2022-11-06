@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import useSound from "use-sound"
+import { selectAllowance } from "../../features/allowance/allowanceSlice"
 import { selectPointsType } from "../../features/user/userSlice"
 import { convertDecimalsToDollarsAndCents, isFloat } from "../../utils/helper"
 import trumpetSound from "../../assets/goal-achieved.mp3"
@@ -13,7 +14,9 @@ export default function AllowanceContainer({ allowance, activeFamilyMember, perc
 
   const pType = useSelector(selectPointsType)
   const isGreaterThanZero = percentageOfGoal > 3 ? true : false
-  const familyMembersAllowance = allowance[activeFamilyMember].currentTotal
+  const allowanceObj = useSelector(selectAllowance)
+  const familyMembersAllowance = allowanceObj[activeFamilyMember].currentTotal
+  // const familyMembersAllowance = allowance[activeFamilyMember].currentTotal
   const borderRadius = percentageOfGoal > 98 ? 15 : 0
   const success = percentageOfGoal >= 100
 
@@ -21,7 +24,7 @@ export default function AllowanceContainer({ allowance, activeFamilyMember, perc
     if (success) {
       playSound()
     }
-  }, [success])
+  }, [success, playSound])
 
   function handleBarClick(e) {
     switch (barColor) {
