@@ -278,7 +278,8 @@ export const updateAllowance = async (member, value = 0, userId = getCurrentUser
     },
     { merge: true }
   )
-  console.log(`updated allowance for ${member}.`)
+  return console.log(`updated allowance for ${member}.`)
+  
 }
 
 export const updateAttitudeValues = async (goodAttitudeValue, badAttitudeValue) => {
