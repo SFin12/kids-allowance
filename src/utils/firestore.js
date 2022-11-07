@@ -178,6 +178,8 @@ export const getChoreStats = async () => {
   return choresStats
 }
 
+export const deleteChoreStats = async (uid, name) => {}
+
 export const createFamily = async (namesArr) => {
   const userId = getCurrentUserInfo().uid
   const userDataRef = db.collection("users").doc(`${userId}`)
@@ -190,7 +192,7 @@ export const getFamily = async (userId) => {
   let uid = userId
   if (!uid) {
     try {
-      uid = await getCurrentUserInfo().uid
+      uid = getCurrentUserInfo().uid
     } catch (err) {
       return console.error(err.message + " in getCurrentUserInfo()")
     }
@@ -200,12 +202,25 @@ export const getFamily = async (userId) => {
   return snapshot.data().family
 }
 
-export const deleteFamily = (name) => {
+export const deleteFamily = async (name) => {
   const userId = getCurrentUserInfo().uid
   const userDataRef = db.collection("users").doc(`${userId}`)
+  const choresRef = userDataRef.collection("choresStats").doc("choresStats")
+  const goalsRef = userDataRef.collection("goals").doc("goals")
+  const earningsRef = userDataRef.collection("earnings").doc("earnings")
   userDataRef.update({
     family: firebase.firestore.FieldValue.arrayRemove(name),
   })
+  choresRef.update({
+    [name]: firebase.firestore.FieldValue.delete(),
+  })
+  goalsRef.update({
+    [name]: firebase.firestore.FieldValue.delete(),
+  })
+  earningsRef.update({
+    [name]: firebase.firestore.FieldValue.delete(),
+  })
+  return
 }
 
 export const createAllowance = async (member, value = 0, userId = getCurrentUserInfo().uid) => {
