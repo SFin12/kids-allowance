@@ -205,21 +205,21 @@ export const getFamily = async (userId) => {
 export const deleteFamily = async (name) => {
   const userId = getCurrentUserInfo().uid
   const userDataRef = db.collection("users").doc(`${userId}`)
-  const choresRef = userDataRef.collection("choresStats").doc("choresStats")
-  const goalsRef = userDataRef.collection("goals").doc("goals")
-  const earningsRef = userDataRef.collection("earnings").doc("earnings")
+  // const choresRef = userDataRef.collection("choresStats").doc("choresStats")
+  // const goalsRef = userDataRef.collection("goals").doc("goals")
+  // const earningsRef = userDataRef.collection("earnings").doc("earnings")
   userDataRef.update({
     family: firebase.firestore.FieldValue.arrayRemove(name),
   })
-  choresRef.update({
-    [name]: firebase.firestore.FieldValue.delete(),
-  })
-  goalsRef.update({
-    [name]: firebase.firestore.FieldValue.delete(),
-  })
-  earningsRef.update({
-    [name]: firebase.firestore.FieldValue.delete(),
-  })
+  // choresRef.update({
+  //   [name]: firebase.firestore.FieldValue.delete(),
+  // })
+  // goalsRef.update({
+  //   [name]: firebase.firestore.FieldValue.delete(),
+  // })
+  // earningsRef.update({
+  //   [name]: firebase.firestore.FieldValue.delete(),
+  // })
   return
 }
 

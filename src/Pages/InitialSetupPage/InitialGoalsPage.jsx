@@ -16,7 +16,7 @@ export default function InitialGoalsPage() {
     <>
       <MainModal title={"Set Initial Goals"} show={showModal}>
         <p>Chorzy uses an allowance meter to show progress so you must always have a default goal. This helps kids visualize their progress.</p>
-        <p>If you don't have a goal in mind, We recommend you set a goal that's approximately four times their weekly earnings as an initial goal. Goals can be updated at anytime.</p>
+        <p>If you don't have a goal in mind, we recommend you set a goal that's about four times their weekly earnings. Goals can be updated at anytime.</p>
         <Button onClick={handleCloseModal}>Got it!</Button>
       </MainModal>
       <AddGoalPage />

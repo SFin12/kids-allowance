@@ -34,6 +34,7 @@ import { setBadAttitudeValue, setGoodAttitudeValue } from "../../features/allowa
 export default function MainPage(props) {
   const [lastName, setLastName] = useState("")
   const [isFirstLogin, setIsFirstLogin] = useState(true)
+  const [signedIn, setSignedIn] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
@@ -87,6 +88,7 @@ export default function MainPage(props) {
         setInitialRedux()
       } else {
         alert("You are not logged in.")
+        navigate("/")
       }
     })
     return () => unregisterAuthObserver()
@@ -137,7 +139,6 @@ export default function MainPage(props) {
           <Route path="/setBonus" element={<SetBonusPage />} />
           <Route path="/adjustAllowance" element={<AdjustTotalPage />} />
           <Route path="/adjustLifetimeAllowance" element={<AdjustLifetimeTotalPage />} />
-
           <Route path="/resetAllowance" element={<ResetAllowancePage />} />
         </Routes>
 

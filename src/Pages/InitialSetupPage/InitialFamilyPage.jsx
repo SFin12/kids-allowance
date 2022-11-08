@@ -27,7 +27,7 @@ export default function InititialFamilyPage() {
         <br />
         {showTip && (
           <>
-            <p>You can always remove a family member by clicking the "x" on their name (Just in case they start talking back!)</p>
+            <p>To remove a family member click the "x" by their name.</p>
 
             <p>You'll notice the names are now added below. This is how you'll switch between family members for chores or other information. Try selecting someone.</p>
             <div className="arrow-down-container">

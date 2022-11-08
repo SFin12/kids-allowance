@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { MdOutlineIosShare } from "react-icons/md"
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { CgAddR } from "react-icons/cg"
-import { Button, FormLabel, FormSelect } from "react-bootstrap"
+import { Button, FormSelect } from "react-bootstrap"
 import { useState } from "react"
 import chorzyIcon from "../../assets/apple-touch-icon.png"
 import "./InitialStylePage.css"
@@ -29,9 +29,9 @@ export default function InitialIntroPage() {
       <main>
         {!displayMode || displayMode === "browser" ? (
           <section>
-            <p>Chorzy is a simple chores app for families. It uses a points system to motivate your children to perform tasks with good attitudes.</p>
-            <p>Chorzy is designed to work as a web app on your phone or tablet and will not work as intended unless it is saved as a web app. Follow the steps below to add it to your device</p>
-            <FormLabel htmlFor="select-device">Select your device</FormLabel>
+            <p>Chorzy is a simple chore app for families. It uses a point system to motivate children to complete chores with good attitudes.</p>
+            <p>Chorzy is designed to work as a web app on a phone, tablet, or desktop. Follow the steps below to add it to your device.</p>
+
             <FormSelect aria-label="Select device" onChange={handleSelect} id="select-device">
               <option value={""}>Choose your device</option>
               <option value={"apple"}>iPhone / iPad</option>
@@ -43,19 +43,16 @@ export default function InitialIntroPage() {
                 <ol>
                   <li>Make sure Chorzy is open in Safari</li>
                   <li>
-                    Click on the share <MdOutlineIosShare style={{ fontSize: 25 }} />
-                    <span> icon</span>
+                    Tap on share <MdOutlineIosShare style={{ fontSize: 25 }} />
                   </li>
                   <li>
-                    Scroll down to the Add to home screen <CgAddR style={{ fontSize: 25 }} />
-                    <span> icon</span>
+                    Scroll down to Add to Home Screen <CgAddR style={{ fontSize: 25 }} />
                   </li>
                   <li>
-                    You can now close Safari and click on the{" "}
-                    <span className="chorzy-icon">
+                    Close Safari and tap on{" "}
+                    <span className="chorzy-icon mx-1">
                       <img src={chorzyIcon} alt="Chorzy Icon" />
                     </span>
-                    <span> icon</span>
                   </li>
                 </ol>
               </div>
@@ -75,16 +72,14 @@ export default function InitialIntroPage() {
                 <ol>
                   <li>Make sure Chorzy is open in Chrome</li>
                   <li>
-                    Tap the menu <BsThreeDotsVertical style={{ fontSize: 25 }} />
-                    <span> icon</span>
+                    Tap menu <BsThreeDotsVertical style={{ fontSize: 25 }} />
                   </li>
                   <li>Tap Add to Home Screen</li>
                   <li>
-                    You can now close Chrome and click on the{" "}
+                    Close Chrome and click on{" "}
                     <span className="chorzy-icon">
                       <img src={chorzyIcon} alt="Chorzy Icon" />
                     </span>
-                    <span> icon</span>
                   </li>
                 </ol>
               </div>
@@ -93,7 +88,7 @@ export default function InitialIntroPage() {
           </section>
         ) : (
           <section>
-            <p>Lets get started.</p>
+            <p>Let's get started.</p>
             <Link to={"/main/initialFamily"} className="d-flex justify-content-center pt-4">
               <Button>Next</Button>
             </Link>

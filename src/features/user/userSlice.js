@@ -38,9 +38,7 @@ export const userSlice = createSlice({
     setActiveFamilyMember: (state, action) => {
       state.activeFamilyMember = action.payload.activeFamilyMember
     },
-    setTutorial: (state, action) => {
-      state.tutorial = action.payload // true or false
-    },
+
     setLogins: (state, action) => {
       state.logins = action.payload // number
     },

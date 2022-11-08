@@ -11,7 +11,7 @@ export default function InitialChoresPage() {
   return (
     <>
       <div className="initial-container p-4">
-        <h1 className="text-center">Add a chore</h1>
+        <h1 className="text-center">Add a Chore</h1>
 
         <br />
         <EditChores />

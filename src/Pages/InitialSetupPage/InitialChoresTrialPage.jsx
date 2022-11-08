@@ -11,8 +11,17 @@ export default function InitialChoresTrialPage() {
       <ChoresPage />
       <div className="front-layer-chores-tutorial p-4">
         <h3 className="text-center">Complete Chores</h3>
-        <p>Select a name at the bottom, tap anywhere on the white section of the chore. You will be prompted to select an attitude (good 😁, neutral 😐, or bad 😡) to give a bonus or deduction. Neutral doesn't change the original value. (You can reset their earnings after this!)</p>
-        <p>"Daily" allows you to remove values from a chore (You already feed them!). You may still give a bonus or deduction based on attitude.</p>
+        <ol className="text-start">
+          <li>Choose a family member below</li>
+          <li>Tap or toggle Daily</li>
+          <details>Turns awards on or off for a chore</details>
+          <li>Tap white section of the chore</li>
+          <details>The chosen member will be awarded allownce for completing the chore</details>
+          <li>Choose an attitude 😁, 😐, 😡</li>
+          <details>A bonus or deduction will be given based on attitude. Neutral doesn't affect value</details>
+          <li>To reset a chore, tap it again</li>
+        </ol>
+
         <Link to={"/main/initialGoals"}>
           <Button>Next</Button>
         </Link>
