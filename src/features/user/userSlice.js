@@ -7,7 +7,7 @@ const initialState = {
   id: null,
   familyMembers: null,
   activeFamilyMember: null,
-  tutorialOn: true,
+  tutorialOn: false,
   logins: 0,
   pointsType: {},
 }
@@ -59,7 +59,7 @@ export const selectUserId = (state) => state.user.id
 export const selectUserImage = (state) => state.user.image
 export const selectFamilyMembers = (state) => state.user.familyMembers
 export const selectActiveFamilyMember = (state) => state.user.activeFamilyMember
-export const selectTutorial = (state) => state.user.tutorial
+// export const selectTutorial = (state) => state.user.tutorial
 export const selectLogins = (state) => state.user.logins
 export const selectPointsType = (state) => state.user.pointsType
 export const selectTutorialOn = (state) => state.user.tutorialOn

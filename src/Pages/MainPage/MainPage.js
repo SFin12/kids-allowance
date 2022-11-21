@@ -33,7 +33,6 @@ import { setBadAttitudeValue, setGoodAttitudeValue } from "../../features/allowa
 
 export default function MainPage(props) {
   const [lastName, setLastName] = useState("")
-  const [isFirstLogin, setIsFirstLogin] = useState(true)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
@@ -68,7 +67,7 @@ export default function MainPage(props) {
             dispatch(setPointsType(dbData.pointsType))
             // set redux chores from db
             updateLogins()
-            setIsFirstLogin(false)
+
             const chores = await getChores()
             dispatch(setChores(chores))
             dispatch(setTutorialOn(dbData.tutorialOn))
@@ -80,7 +79,7 @@ export default function MainPage(props) {
             createUser(user)
             updateLogins()
             createFamily([])
-            // setIsFirstLogin(true)
+            dispatch(setTutorialOn(true))
             if (dbData.tutorialOn) navigate("/main/initialIntro")
           }
         }
