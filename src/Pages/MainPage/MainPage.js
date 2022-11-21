@@ -34,7 +34,6 @@ import { setBadAttitudeValue, setGoodAttitudeValue } from "../../features/allowa
 export default function MainPage(props) {
   const [lastName, setLastName] = useState("")
   const [isFirstLogin, setIsFirstLogin] = useState(true)
-  const [signedIn, setSignedIn] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
@@ -81,8 +80,8 @@ export default function MainPage(props) {
             createUser(user)
             updateLogins()
             createFamily([])
-            setIsFirstLogin(true)
-            if (dbData.tutorialOn || isFirstLogin) navigate("/main/initialIntro")
+            // setIsFirstLogin(true)
+            if (dbData.tutorialOn) navigate("/main/initialIntro")
           }
         }
         setInitialRedux()
