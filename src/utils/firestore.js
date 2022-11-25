@@ -211,6 +211,8 @@ export const deleteFamily = async (name) => {
   userDataRef.update({
     family: firebase.firestore.FieldValue.arrayRemove(name),
   })
+
+  // Adding lines below will delete all data for a family member. Without them, their name is deleted and doesn't appear to the user but their data will still remain incase the member is restored or created again.
   // choresRef.update({
   //   [name]: firebase.firestore.FieldValue.delete(),
   // })
@@ -282,9 +284,9 @@ export const updateAllowance = async (member, value = 0, userId = getCurrentUser
   } else {
     console.log(`Allowance doesn't exist yet for ${member}.`)
   }
-  const userRef = await db.collection("users").doc(userId)
-  const earnings = await userRef.collection("earnings")
-  earnings.doc("earnings").set(
+  const userRef = db.collection("users").doc(userId)
+  const earnings = userRef.collection("earnings")
+  const setEarnings = await earnings.doc("earnings").set(
     {
       [member]: {
         currentTotal: newTotal,
@@ -293,8 +295,32 @@ export const updateAllowance = async (member, value = 0, userId = getCurrentUser
     },
     { merge: true }
   )
-  return console.log(`updated allowance for ${member}.`)
-  
+  return console.log(setEarnings)
+}
+
+export const updateAllowanceBarColor = async (member, colorString, userId = getCurrentUserInfo().uid) => {
+  if (member === isNaN || member === null || typeof member === "number") {
+    return console.error("Must provide string value of active member for first argument")
+  }
+
+  const allowanceExists = await getAllowances()
+
+  // if an allowance exists and family member exists w/ value greater than zero, add to total.
+  if (allowanceExists) {
+  } else {
+    console.log(`Allowance doesn't exist yet for ${member}.`)
+  }
+  const userRef = await db.collection("users").doc(userId)
+  const earnings = await userRef.collection("earnings")
+  earnings.doc("earnings").set(
+    {
+      [member]: {
+        color: colorString,
+      },
+    },
+    { merge: true }
+  )
+  return console.log(`updated bar color for ${member}.`)
 }
 
 export const updateAttitudeValues = async (goodAttitudeValue, badAttitudeValue) => {

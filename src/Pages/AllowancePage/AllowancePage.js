@@ -98,17 +98,17 @@ export default function AllowancePage() {
     const attitude = e.currentTarget.id
 
     if (attitude === "good-emoji") {
-      updateAllowance(activeFamilyMember, goodAttitudeValue)
-        .then(() => getAllowances()) // get new allowances and update redux store with new values
-        .then((earnings) => {
-          dispatch(setAllowance(earnings))
-        })
-    } else if (attitude === "bad-emoji") {
-      updateAllowance(activeFamilyMember, -badAttitudeValue)
-        .then(() => getAllowances()) // get new allowances and update redux store with new values
-        .then((earnings) => {
+      updateAllowance(activeFamilyMember, goodAttitudeValue).then(() =>
+        getAllowances().then((earnings) => {
           return dispatch(setAllowance(earnings))
         })
+      ) // get new allowances and update redux store with new values
+    } else if (attitude === "bad-emoji") {
+      updateAllowance(activeFamilyMember, -badAttitudeValue).then(() =>
+        getAllowances().then((earnings) => {
+          return dispatch(setAllowance(earnings))
+        })
+      ) // get new allowances and update redux store with new values
     }
   }
 

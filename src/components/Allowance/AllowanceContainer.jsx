@@ -2,16 +2,18 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import useSound from "use-sound"
-import { selectAllowance } from "../../features/allowance/allowanceSlice"
+import { selectAllowance, setAllowance } from "../../features/allowance/allowanceSlice"
 import { selectPointsType } from "../../features/user/userSlice"
 import { convertDecimalsToDollarsAndCents, isFloat } from "../../utils/helper"
 import trumpetSound from "../../assets/goal-achieved.mp3"
 import "./AllowanceContainer.css"
+import { getAllowances, updateAllowanceBarColor } from "../../utils/firestore"
+import { useDispatch } from "react-redux"
 
 export default function AllowanceContainer({ allowance, activeFamilyMember, percentageOfGoal }) {
-  const [barColor, setBarColor] = useState("theme-color")
+  const [barColor, setBarColor] = useState(allowance[activeFamilyMember].color || "theme-color")
   const [playSound] = useSound(trumpetSound)
-
+  const dispatch = useDispatch()
   const pType = useSelector(selectPointsType)
   const isGreaterThanZero = percentageOfGoal > 3 ? true : false
   const allowanceObj = useSelector(selectAllowance)
@@ -26,6 +28,18 @@ export default function AllowanceContainer({ allowance, activeFamilyMember, perc
     }
   }, [success, playSound])
 
+  useEffect(() => {
+    if (allowance[activeFamilyMember].color) {
+      setBarColor(allowance[activeFamilyMember].color)
+    }
+  }, [activeFamilyMember])
+
+  useEffect(() => {
+    updateAllowanceBarColor(activeFamilyMember, barColor).then(() => {
+      getAllowances().then((earnings) => dispatch(setAllowance(earnings)))
+    })
+  }, [barColor])
+
   function handleBarClick(e) {
     switch (barColor) {
       case "theme-color":
@@ -35,6 +49,9 @@ export default function AllowanceContainer({ allowance, activeFamilyMember, perc
         setBarColor("red-color")
         break
       case "red-color":
+        setBarColor("red-gradient-color")
+        break
+      case "red-gradient-color":
         setBarColor("black-color")
         break
       case "black-color":
@@ -44,9 +61,15 @@ export default function AllowanceContainer({ allowance, activeFamilyMember, perc
         setBarColor("blue-color")
         break
       case "blue-color":
+        setBarColor("blue-gradient-color")
+        break
+      case "blue-gradient-color":
         setBarColor("yellow-color")
         break
       case "yellow-color":
+        setBarColor("teal-gradient-color")
+        break
+      case "teal-gradient-color":
         setBarColor("theme-color")
         break
       default:

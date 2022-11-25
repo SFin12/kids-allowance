@@ -32,31 +32,45 @@
 }
 
 .theme-color {
-    background-color: aquamarine;
+    background: linear-gradient(90deg, rgb(107, 235, 192),rgb(147, 255, 232), rgb(107, 235, 192)) ;
 }
 
 .coral-color {
-    background-color: rgb(252, 137, 30);
+    background: linear-gradient(0deg,blue, rgb(255, 133, 2)) ;
+    color: white;
 }
 
 .red-color {
-    background-color: red;
+    background: linear-gradient(90deg, red, rgb(253, 82, 60), red) ;
+    color: white;
+}
+.red-gradient-color {
+    background: linear-gradient(0deg, red, yellow);
     color: white;
 }
 .black-color {
-    background-color: black;
+    background: linear-gradient(90deg, black, gray, black) ;
     color: white;
 }
 .pink-color {
-    background-color: rgb(255, 135, 225);
+    background: linear-gradient(90deg, rgb(255, 85, 165), pink, rgb(255, 85, 165)) ;
+    color: white
 }
 .blue-color {
-    background-color: rgb(47, 92, 255);
+    background: linear-gradient(0deg, rgb(163, 25, 255), rgb(255, 85, 165)) ;
+    color: white;
+}
+.blue-gradient-color {
+    background: linear-gradient(90deg, rgb(47, 92, 255),rgb(0, 46, 237),rgb(47, 92, 255)) ;
     color: white;
 }
 .yellow-color {
-    background-color: yellow;
+    background: linear-gradient(0deg, rgb(170, 255, 0), yellow);
 }
+.teal-gradient-color {
+    background: linear-gradient(0deg, aquamarine,hwb(160 80% 0%));
+}
+
 
 /* Fills the allowance bar slowly */
 @-webkit-keyframes progress-bar {
