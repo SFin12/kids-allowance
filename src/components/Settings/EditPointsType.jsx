@@ -69,11 +69,12 @@ export default function EditPointsType({ continueTutorial, currentSelection, clo
       }
       dispatch(setPointsType(pType)) // redux state
       updatePointsType(pType) // db
+      if (continueTutorial) continueTutorial()
+
       if (location.pathname === "/main/settings") {
         getChores().then((chores) => dispatch(setChores(chores)))
       }
 
-      if (continueTutorial) continueTutorial()
       if (closeAccordion) closeAccordion()
     } else {
       alert("Choose a rewards type before saving.")

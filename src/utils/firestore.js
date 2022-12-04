@@ -42,7 +42,8 @@ export const getUserInfo = async (userId) => {
   const userRef = db.collection("users")
   const snapshot = await userRef.doc(`${uid}`).get()
   const userData = snapshot.data()
-  if (userData.goodAttitudeDollarValue && userData.badAttitudeDollarValue) {
+
+  if (userData?.goodAttitudeDollarValue && userData?.badAttitudeDollarValue) {
     userData.goodAttitudeDollarValue = convertDollarsToPoints(userData.goodAttitudeDollarValue, userData.pointsType.pointToDollarConversion)
     userData.badAttitudeDollarValue = convertDollarsToPoints(userData.badAttitudeDollarValue, userData.pointsType.pointToDollarConversion)
   }

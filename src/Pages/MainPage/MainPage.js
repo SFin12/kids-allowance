@@ -56,6 +56,7 @@ export default function MainPage(props) {
         // sets family members, chores, and logins for current user from firestore db and updates Redux.
         const setInitialRedux = async () => {
           const dbData = await getUserInfo(user.uid)
+
           if (dbData) {
             // set redux family info from db
             dispatch(
@@ -71,6 +72,7 @@ export default function MainPage(props) {
             const chores = await getChores()
             dispatch(setChores(chores))
             dispatch(setTutorialOn(dbData.tutorialOn))
+
             if (dbData.goodAttitudeDollarValue) dispatch(setGoodAttitudeValue(dbData.goodAttitudeDollarValue))
             if (dbData.badAttitudeDollarValue) dispatch(setBadAttitudeValue(dbData.badAttitudeDollarValue))
             if (dbData.tutorialOn) navigate("/main/initialIntro")
@@ -85,6 +87,7 @@ export default function MainPage(props) {
         }
         setInitialRedux()
       } else {
+
         alert("You are not logged in.")
         navigate("/")
       }
