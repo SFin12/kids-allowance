@@ -244,7 +244,7 @@ export const createAllowance = async (member, value = 0, userId = getCurrentUser
     },
     { merge: true }
   )
-  console.log("created allowance")
+  return console.log("created allowance")
 }
 
 export const updateLifetimeTotal = async (member, value) => {
@@ -350,7 +350,7 @@ export const getAllowances = async () => {
   const userRef = db.collection("users")
   const snapshot = await userRef.doc(`${uid}`).collection("earnings").doc("earnings").get()
   let earningsObj = snapshot.data()
-  if (store.getState().user.pointsType.type !== "money") {
+  if (earningsObj && store.getState().user.pointsType.type !== "money") {
     Object.keys(earningsObj).forEach((key) => {
       earningsObj[key].currentTotal = convertDollarsToPoints(earningsObj[key].currentTotal, conversionRate)
       earningsObj[key].lifetimeTotal = convertDollarsToPoints(earningsObj[key].lifetimeTotal, conversionRate)
@@ -416,7 +416,7 @@ export const getGoals = async () => {
   const userRef = await db.collection("users")
   const snapshot = await userRef.doc(`${uid}`).collection("goals").doc("goals").get()
   const goalsObj = await snapshot.data()
-  if (store.getState().allowance.pointsType.type !== "money") {
+  if (goalsObj && store.getState().allowance.pointsType.type !== "money") {
     Object.keys(goalsObj).forEach((key) => {
       goalsObj[key].value = convertDollarsToPoints(goalsObj[key].value, getConversionRate())
     })

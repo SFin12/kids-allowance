@@ -48,18 +48,17 @@ export default function EditPointsType({ continueTutorial, currentSelection, clo
   }
 
   function handleSave() {
-    if (pType?.type) {
-      console.log(pType.type, pointsType.type)
-      if (pointsType.type !== pType.type) {
+    if (pType && pType.type) {
+      if (pointsType?.type !== pType.type) {
         let goodAttitudeConverted
         let badAttitudeConverted
-        if (pointsType.type === "money" && pType.type !== "money") {
+        if (pointsType?.type === "money" && pType.type !== "money") {
           goodAttitudeConverted = convertDollarsToPoints(goodAttitudeValue, pType.pointToDollarConversion) // use new conversion rate to get points
           badAttitudeConverted = convertDollarsToPoints(badAttitudeValue, pType.pointToDollarConversion)
 
           dispatch(setGoodAttitudeValue(goodAttitudeConverted))
           dispatch(setBadAttitudeValue(badAttitudeConverted))
-        } else if (pointsType.type !== "money" && pType.type === "money") {
+        } else if (pointsType?.type !== "money" && pType.type === "money") {
           goodAttitudeConverted = convertPointsToDollars(goodAttitudeValue, pointsType.pointToDollarConversion) // use prev conversion rate to convert to dollars
           badAttitudeConverted = convertPointsToDollars(badAttitudeValue, pointsType.pointToDollarConversion)
 

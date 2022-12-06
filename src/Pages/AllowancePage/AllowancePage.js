@@ -1,26 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react"
 import { Card } from "react-bootstrap"
-import { act } from "react-dom/test-utils"
-import { IconContext } from "react-icons"
 import { AiOutlineEdit } from "react-icons/ai"
-import { BsEmojiFrown, BsEmojiSmile, BsEmojiSmileFill } from "react-icons/bs"
+import { BsEmojiFrown, BsEmojiSmile } from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-import useSound from "use-sound"
 import AllowanceContainer from "../../components/Allowance/AllowanceContainer"
 import LoadingSpinner from "../../components/Loading/LoadingSpinner"
 import { selectAllowance, selectBadAttitudeValue, selectChoresStats, selectGoals, selectGoodAttitudeValue, setAllowance, setChoresStats, setGoal } from "../../features/allowance/allowanceSlice"
-
 import { selectActiveFamilyMember, selectPointsType } from "../../features/user/userSlice"
-import { getAllowances, getChoreStats, getGoals, updateAllowance } from "../../utils/firestore"
+import { createAllowance, getAllowances, getChoreStats, getGoals, updateAllowance } from "../../utils/firestore"
 import { convertDecimalsToDollarsAndCents } from "../../utils/helper"
 import "./AllowancePage.css"
 
 export default function AllowancePage() {
   const [percentageOfGoal, setPercentageOfGoal] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
-
   const dispatch = useDispatch()
   const pointsType = useSelector(selectPointsType)
   const activeFamilyMember = useSelector(selectActiveFamilyMember)
@@ -48,12 +43,15 @@ export default function AllowancePage() {
       return goals
     }
 
+    // calls above function for firebase and returns goals portion
     getAllAllowances().then((goals) => {
       if (!unmounted) {
-        setIsLoading(false)
-
         if ((activeFamilyMember && !goals) || !goals[activeFamilyMember] || !goals[activeFamilyMember].goal) {
-          return navigate("/main/addGoal")
+          updateAllowance(activeFamilyMember).then((confirmation) => {
+            return navigate("/main/addGoal")
+          })
+        } else {
+          setIsLoading(false)
         }
       }
     })
