@@ -2,6 +2,8 @@ import { useSelector } from "react-redux"
 import { selectActiveFamilyMember, selectPointsType } from "../../features/user/userSlice"
 import { capitalizeFirstLetter } from "../../utils/helper"
 
+// WIP
+
 export default function ShopPage() {
   const pointsType = useSelector(selectPointsType)
 

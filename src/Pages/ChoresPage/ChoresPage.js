@@ -34,19 +34,10 @@ export default function ChoresPage() {
                             {/* Creates a card for each chore with value used for front and back of card */}
                             {sortedChores.map((key, i) => {
                                 return (
-                                    <Col
-                                        key={i + key}
-                                        className="d-flex justify-content-center"
-                                    >
-                                        <ChoreCard
-                                            chore={key}
-                                            value={chores[key].value}
-                                            completedBy={
-                                                chores[key].completedBy
-                                            }
-                                        />
-                                    </Col>
-                                );
+                                  <Col key={i + key} className="d-flex justify-content-center">
+                                    <ChoreCard chore={key} value={chores[key].value} dateCompleted={chores[key].dateCompleted} completedBy={chores[key].completedBy} />
+                                  </Col>
+                                )
                             })}
                         </Row>
                     </Container>

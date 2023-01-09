@@ -9,7 +9,7 @@ import AllowanceContainer from "../../components/Allowance/AllowanceContainer"
 import LoadingSpinner from "../../components/Loading/LoadingSpinner"
 import { selectAllowance, selectBadAttitudeValue, selectChoresStats, selectGoals, selectGoodAttitudeValue, setAllowance, setChoresStats, setGoal } from "../../features/allowance/allowanceSlice"
 import { selectActiveFamilyMember, selectPointsType } from "../../features/user/userSlice"
-import { createAllowance, getAllowances, getChoreStats, getGoals, updateAllowance } from "../../utils/firestore"
+import { getAllowances, getChoreStats, getGoals, updateAllowance } from "../../utils/firestore"
 import { convertDecimalsToDollarsAndCents } from "../../utils/helper"
 import "./AllowancePage.css"
 
