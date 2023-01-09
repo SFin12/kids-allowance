@@ -66,9 +66,8 @@ export default function MainPage(props) {
             )
             dispatch(setLogins(dbData.logins))
             dispatch(setPointsType(dbData.pointsType))
-            // set redux chores from db
             updateLogins()
-
+            // set redux chores from db
             const chores = await getChores()
             dispatch(setChores(chores))
             dispatch(setTutorialOn(dbData.tutorialOn))
