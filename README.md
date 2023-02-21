@@ -19,3 +19,17 @@ When you sign in you will be prompted to download / add the app to your device. 
 If you used google-sign-in for your account, you will be automatically signed in to that account when you open the app. 
 * If you wish to sign in to a different account you will need to logout of the app, open safari (apple devices) or chrome (android devices) and sign out of your google account.
 * Next time you sign in to the app you will be prompted to choose the account you wish to login as.
+
+## Technical
+
+The following technologies where the main libraies used for this application:
+* React v17
+* React-Bootstrap 2.2
+* Bootstrap 5
+* Redux 7
+* Redux Toolkit 1.8
+* React-Router-Dom 6
+* Firebase (Firestore and Auth)
+* React-Icons
+* npm
+
