@@ -7,7 +7,7 @@ import { selectActiveFamilyMember, selectPointsType } from "../../features/user/
 import { convertDecimalsToDollarsAndCents } from "../../utils/helper"
 import { selectBadAttitudeValue, selectGoodAttitudeValue, setAllowance } from "../../features/allowance/allowanceSlice"
 import MainModal from "../Modal/MainModal"
-import "./ChoreCard.css"
+import "./Card.css"
 
 export default function ChoreCard({ chore, value, dateCompleted, completedBy }) {
   const [flip, setFlip] = useState(false)

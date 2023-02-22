@@ -23,6 +23,7 @@ export const createUser = (user) => {
         email: user.email,
         pointsType: { type: "money", icon: "$", pointToDollarConversion: 1 },
         logins: 0,
+        createdAt: new Date().toISOString(),
         tutorialOn: true,
       },
       { merge: true }
@@ -429,6 +430,32 @@ export const deleteGoal = async (member, goal, userId = getCurrentUserInfo().uid
   const earnings = await userRef.collection("goals")
   earnings.doc("goals").update({
     [`${member}.${goal}`]: firebase.firestore.FieldValue.delete(),
+  })
+}
+
+export const updateStoreItems = async (itemName, price, description, imageUrl = "", purchasedBy = "") => {
+  const userId = getCurrentUserInfo().uid
+  const userDataRef = await db.collection("users").doc(`${userId}`)
+  const date = new Date()
+  const dateString = date.toISOString()
+  userDataRef.update({
+    [`storeItems.${itemName}`]: {
+      createdAt: dateString,
+      itemName: itemName,
+      id: Date.now(),
+      price: price,
+      description: description,
+      imageUrl: imageUrl,
+      lastPurchesedBy: purchasedBy,
+    },
+  })
+}
+
+export const deleteStoreItem = async (itemName) => {
+  const userId = getCurrentUserInfo().uid
+  const userDataRef = db.collection("users").doc(`${userId}`)
+  userDataRef.update({
+    [`storeItems.${itemName}`]: firebase.firestore.FieldValue.delete(),
   })
 }
 

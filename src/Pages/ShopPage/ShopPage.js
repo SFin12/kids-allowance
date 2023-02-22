@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux"
-import { selectActiveFamilyMember, selectPointsType } from "../../features/user/userSlice"
+import { selectActiveFamilyMember, selectPointsType, selectStoreItems } from "../../features/user/userSlice"
 import { capitalizeFirstLetter } from "../../utils/helper"
 
 // WIP
 
 export default function ShopPage() {
   const pointsType = useSelector(selectPointsType)
+  const storeItems = useSelector(selectStoreItems)
 
   return (
     <div className="d-flex justify-content-center w-100 flex-column align-items-center" style={{ height: "70vh" }}>

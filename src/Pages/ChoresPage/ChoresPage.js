@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import ChoreCard from "../../components/Chores/ChoreCard";
+import ChoreCard from "../../components/Cards/ChoreCard"
 import { selectChores } from "../../features/chores/choresSlice";
 
 

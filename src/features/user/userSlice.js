@@ -10,6 +10,7 @@ const initialState = {
   tutorialOn: false,
   logins: 0,
   pointsType: {},
+  storeItems: {},
 }
 
 export const userSlice = createSlice({
@@ -48,10 +49,13 @@ export const userSlice = createSlice({
     setTutorialOn: (state, action) => {
       state.tutorialOn = action.payload // true or false
     },
+    setStoreItems: (state, action) => {
+      state.storeItems = action.payload // array of objects
+    },
   },
 })
 
-export const { setActiveUser, setUserLogout, setFamilyMembers, setActiveFamilyMember, tutorial, setLogins, setPointsType, setTutorialOn } = userSlice.actions
+export const { setActiveUser, setUserLogout, setFamilyMembers, setActiveFamilyMember, tutorial, setLogins, setPointsType, setTutorialOn, setStoreItems } = userSlice.actions
 
 export const selectUserName = (state) => state.user.name
 export const selectUserEmail = (state) => state.user.email
@@ -63,5 +67,6 @@ export const selectActiveFamilyMember = (state) => state.user.activeFamilyMember
 export const selectLogins = (state) => state.user.logins
 export const selectPointsType = (state) => state.user.pointsType
 export const selectTutorialOn = (state) => state.user.tutorialOn
+export const selectStoreItems = (state) => state.user.storeItems
 
 export default userSlice.reducer;
