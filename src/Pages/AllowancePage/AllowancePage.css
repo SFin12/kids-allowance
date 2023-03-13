@@ -34,11 +34,15 @@
     padding: 10px;
 }
 
-.reset-button {
+.main-button {
     background-color: aquamarine !important;
     border: aquamarine !important;
     color: black !important;
     margin: 15px 0px 15px 0px;
+}
+
+.btn-shadow {
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
 }
 
 .lifetime-earnings {

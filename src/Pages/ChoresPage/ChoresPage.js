@@ -12,10 +12,10 @@ export default function ChoresPage() {
     useEffect(() => {
         // Creates sorted array of keys to look up chore info and display alphabetically
         setSortedChores(
-            Object.keys(chores)
-                .filter((chore, i) => chore !== "choresStats")
-                .sort()
-        );
+          Object.keys(chores)
+            .filter((chore) => chore !== "choresStats")
+            .sort()
+        )
     }, [chores]);
 
     return (

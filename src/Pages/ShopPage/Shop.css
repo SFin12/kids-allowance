@@ -1,0 +1,12 @@
+.add-item-button-container {
+  position: fixed;
+  bottom: 90px;
+  right: 30px;
+}
+
+.add-item-button {
+  background-color: aquamarine;
+  border: 3px aquamarine solid;
+  border-radius: 50%;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+}

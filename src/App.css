@@ -28,3 +28,7 @@ h2 {
     font: size 1.2em;
     min-height: 100vh;
 }
+
+.form-label {
+  margin-bottom: .25rem !important;
+}

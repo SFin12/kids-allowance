@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import firebase from "firebase/compat/app";
-import Navigation from "../../components/Nav/Navigation";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react"
+import { Routes, Route, useLocation } from "react-router-dom"
+import firebase from "firebase/compat/app"
+import Navigation from "../../components/Nav/Navigation"
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
 import { setUserLogout, setActiveUser, setFamilyMembers, setPointsType, setTutorialOn, setLogins } from "../../features/user/userSlice"
 import SettingsPage from "../SettingsPage/SettingsPage"
 import ChoresPage from "../ChoresPage/ChoresPage"
@@ -30,8 +30,11 @@ import ShopPage from "../ShopPage/ShopPage"
 import AdjustLifetimeTotalPage from "../AllowancePage/AdjustLifetimeTotalPage"
 import { getPWADisplayMode } from "../../utils/helper"
 import { setBadAttitudeValue, setGoodAttitudeValue } from "../../features/allowance/allowanceSlice"
+import StoreLinkPage from "../ShopPage/StoreLinkPage"
+import AddStoreItemPage from "../ShopPage/AddStoreItemPage"
+import EditStoreItemPage from "../ShopPage/EditStoreItemPage"
 
-export default function MainPage(props) {
+export default function MainPage() {
   const [lastName, setLastName] = useState("")
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -86,13 +89,11 @@ export default function MainPage(props) {
         }
         setInitialRedux()
       } else {
-
         alert("You are not logged in.")
         navigate("/")
       }
     })
     return () => unregisterAuthObserver()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -130,6 +131,9 @@ export default function MainPage(props) {
           <Route path="/initialChoresTrial" element={<InitialChoresTrialPage />} />
           <Route path="/initialGoals" element={<InitialGoalsPage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/addStoreItem" element={<AddStoreItemPage />} />
+          <Route path="/editStoreItem" element={<EditStoreItemPage />} />
+          <Route path="/storeLink" element={<StoreLinkPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/chores" element={<ChoresPage />} />
           <Route path="/allowance" element={<AllowancePage />} />

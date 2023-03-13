@@ -26,8 +26,7 @@ export default function EditChores() {
     e.preventDefault()
     const formData = new FormData(e.target)
     const { text: title, value } = Object.fromEntries(formData.entries())
-
-    createChore(title, value).then((results) => {
+    createChore(title, value).then(() => {
       setUpdate(!update)
       setDisplayChores((prevState) => [...prevState, title])
     })

@@ -42,7 +42,7 @@ export default function FormInput({
                     &nbsp;&nbsp;
                   </span>
                 )}
-                <FormControl name={title} type={title === "Cost" || title === "Value" || title === "Amount" ? "number" : "text"} min={0} presicion={2} step={pointsType.type === "money" ? 0.05 : 1} defaultValue="" placeholder={placeholders[i]} required maxLength={20}></FormControl>
+                <FormControl name={title} type={title === "Cost" || title === "Value" || title === "Amount" ? "number" : "text"} min={0} precision={2} step={pointsType.type === "money" ? 0.05 : 1} defaultValue="" placeholder={placeholders[i]} required maxLength={20}></FormControl>
               </div>
             </div>
           ))}

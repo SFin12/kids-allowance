@@ -1,4 +1,7 @@
 {
   "editor.wordWrap": "on",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "reactSnippets.settings.importReactOnTop": false,
+  "eslint.probe": ["javascript", "javascriptreact", "typescript", "typescriptreact", "html", "vue", "markdown", "react"],
+  "eslint.rules.customizations": []
 }

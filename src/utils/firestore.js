@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { db } from "../utils/firebaseConfig"
 import firebase from "firebase/compat/app"
 import { store } from "../app/store"
@@ -25,6 +26,8 @@ export const createUser = (user) => {
         logins: 0,
         createdAt: new Date().toISOString(),
         tutorialOn: true,
+        chores: {},
+        storeItems: {},
       },
       { merge: true }
     )
@@ -172,11 +175,13 @@ export const getChoreStats = async () => {
   if (!uid) {
     try {
       uid = await getCurrentUserInfo().uid
-    } catch (err) {}
+    } catch (err) {
+      console.log(err.message)
+    }
   }
-  const userRef = await db.collection("users")
+  const userRef = db.collection("users")
   const snapshot = await userRef.doc(`${uid}`).collection("choresStats").doc("choresStats").get()
-  const choresStats = await snapshot.data()
+  const choresStats = snapshot.data()
   return choresStats
 }
 
@@ -304,16 +309,11 @@ export const updateAllowanceBarColor = async (member, colorString, userId = getC
   if (member === isNaN || member === null || typeof member === "number") {
     return console.error("Must provide string value of active member for first argument")
   }
-
-  const allowanceExists = await getAllowances()
-
-  // if an allowance exists and family member exists w/ value greater than zero, add to total.
-  if (allowanceExists) {
-  } else {
-    console.log(`Allowance doesn't exist yet for ${member}.`)
+  if (colorString === isNaN || colorString === null || typeof colorString === "number") {
+    return console.error("Must provide string value of color for second argument")
   }
-  const userRef = await db.collection("users").doc(userId)
-  const earnings = await userRef.collection("earnings")
+  const userRef = db.collection("users").doc(userId)
+  const earnings = userRef.collection("earnings")
   earnings.doc("earnings").set(
     {
       [member]: {
@@ -345,7 +345,9 @@ export const getAllowances = async () => {
   if (!uid) {
     try {
       uid = await getCurrentUserInfo().uid
-    } catch (err) {}
+    } catch (err) {
+      console.log("error getting uid", err)
+    }
   }
   let conversionRate = getConversionRate()
   const userRef = db.collection("users")
@@ -365,7 +367,9 @@ export const deleteAllowance = async (member) => {
   if (!uid) {
     try {
       uid = await getCurrentUserInfo().uid
-    } catch (err) {}
+    } catch (err) {
+      console.log("error getting uid", err)
+    }
   }
   const userRef = await db.collection("users")
   const snapshot = await userRef.doc(`${uid}`).collection("earnings").doc("earnings")
@@ -433,22 +437,47 @@ export const deleteGoal = async (member, goal, userId = getCurrentUserInfo().uid
   })
 }
 
-export const updateStoreItems = async (itemName, price, description, imageUrl = "", purchasedBy = "") => {
+export const getStoreItems = async () => {
   const userId = getCurrentUserInfo().uid
   const userDataRef = await db.collection("users").doc(`${userId}`)
+  const snapshot = await userDataRef.get()
+  let storeItems = snapshot.data().storeItems
+  if (store.getState().user.pointsType?.type !== "money") {
+    Object.keys(storeItems).forEach((key) => {
+      storeItems[key].price = convertDollarsToPoints(storeItems[key].price, getConversionRate())
+    })
+  }
+
+  return storeItems
+}
+
+export const updateStoreItems = async (storeItem) => {
+  const { itemName, itemPrice: price, itemDescription: description = "", itemLink: link = "", itemImgLink: imageUrl = "", purchasedBy = "", purchasedOn = "" } = storeItem
+  console.log(storeItem)
   const date = new Date()
   const dateString = date.toISOString()
-  userDataRef.update({
-    [`storeItems.${itemName}`]: {
-      createdAt: dateString,
-      itemName: itemName,
-      id: Date.now(),
-      price: price,
-      description: description,
-      imageUrl: imageUrl,
-      lastPurchesedBy: purchasedBy,
-    },
-  })
+  const userId = getCurrentUserInfo().uid
+  const conversionRate = await getConversionRate()
+  const dollarValue = convertPointsToDollars(Number(price), conversionRate)
+  const userDataRef = db.collection("users").doc(`${userId}`)
+  try {
+    userDataRef.update({
+      [`storeItems.${itemName}`]: {
+        createdAt: dateString,
+        itemName: itemName,
+        id: Date.now(),
+        price: dollarValue,
+        link: link,
+        description: description,
+        imageUrl: imageUrl,
+        lastPurchesedBy: purchasedBy,
+        purchasedOn: purchasedOn,
+      },
+    })
+  } catch (error) {
+    console.error(error)
+    alert(error.message)
+  }
 }
 
 export const deleteStoreItem = async (itemName) => {

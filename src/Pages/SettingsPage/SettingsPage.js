@@ -79,7 +79,7 @@ export default function SettingsPage() {
           <Collapse in={showTutorialOptions}>
             <Card.Body>
               <div className="d-grid gap-1">
-                <Button size="lg" onClick={handleTutorialOn} className="reset-button">
+                <Button size="lg" onClick={handleTutorialOn} className="main-button">
                   Start Tutorial / Setup
                 </Button>
 

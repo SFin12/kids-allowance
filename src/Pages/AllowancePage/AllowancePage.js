@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Card } from "react-bootstrap"
 import { AiOutlineEdit } from "react-icons/ai"
 import { BsEmojiFrown, BsEmojiSmile } from "react-icons/bs"
@@ -47,7 +46,7 @@ export default function AllowancePage() {
     getAllAllowances().then((goals) => {
       if (!unmounted) {
         if ((activeFamilyMember && !goals) || !goals[activeFamilyMember] || !goals[activeFamilyMember].goal) {
-          updateAllowance(activeFamilyMember).then((confirmation) => {
+          updateAllowance(activeFamilyMember).then(() => {
             return navigate("/main/addGoal")
           })
         } else {
@@ -71,9 +70,8 @@ export default function AllowancePage() {
         return navigate("/main/addGoal")
       }
     }
-    // console.log(allowance["Donovan"])
+
     calculateGoalPercentage(allowance)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allowance, activeFamilyMember, goals])
 
   function calculateGoalPercentage(allowance) {

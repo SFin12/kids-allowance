@@ -50,7 +50,7 @@ export const userSlice = createSlice({
       state.tutorialOn = action.payload // true or false
     },
     setStoreItems: (state, action) => {
-      state.storeItems = action.payload // array of objects
+      state.storeItems = { ...state.storeItems, ...action.payload } // array of objects
     },
   },
 })
