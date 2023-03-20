@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import "./App.css"
 import { Routes, Route, useNavigate } from "react-router-dom"
 import "firebase/compat/auth"

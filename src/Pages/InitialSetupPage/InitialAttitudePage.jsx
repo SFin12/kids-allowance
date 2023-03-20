@@ -1,9 +1,6 @@
-import React from "react"
 import EditAttitudeRewards from "../../components/Settings/EditAttitudeRewards"
 
-
 export default function InitialAttitudePage() {
-  
   return (
     <>
       <div className="initial-container p-4">

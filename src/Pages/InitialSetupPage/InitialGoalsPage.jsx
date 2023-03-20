@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Button } from "react-bootstrap"
 import MainModal from "../../components/Modal/MainModal"
 import { updateTutorial } from "../../utils/firestore"

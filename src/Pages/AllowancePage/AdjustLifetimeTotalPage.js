@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import FormInput from "../../components/Forms/FormInput"
@@ -25,7 +25,6 @@ export default function AdjustLifetimeTotalPage() {
     if (currentFamilyMember !== activeFamilyMember) {
       navigate("/main/allowance")
     }
-
   }, [activeFamilyMember])
 
   function handleSubmit(e) {

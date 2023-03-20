@@ -40,7 +40,7 @@ export default function AllowanceContainer({ allowance, activeFamilyMember, perc
     })
   }, [barColor])
 
-  function handleBarClick(e) {
+  function handleBarClick() {
     switch (barColor) {
       case "theme-color":
         setBarColor("coral-color")

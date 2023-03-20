@@ -1,4 +1,3 @@
-import React from "react"
 import { Link } from "react-router-dom"
 import { MdOutlineIosShare } from "react-icons/md"
 import { BsThreeDotsVertical } from "react-icons/bs"

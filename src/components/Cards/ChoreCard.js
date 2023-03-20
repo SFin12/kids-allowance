@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { updateChore } from "../../features/chores/choresSlice"
 import { getAllowances, updateAllowance, updateChore as updateDbChore } from "../../utils/firestore"

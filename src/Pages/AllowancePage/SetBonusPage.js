@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+/* eslint-disable no-constant-condition */
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 import { selectActiveFamilyMember } from "../../features/user/userSlice"
-
 
 export default function SetBonusPage() {
   const activeFamilyMember = useSelector(selectActiveFamilyMember)
@@ -19,14 +19,13 @@ export default function SetBonusPage() {
     if (currentFamilyMember !== activeFamilyMember) {
       navigate("/main/allowance")
     }
-
   }, [activeFamilyMember])
 
   return (
     <div className="d-flex justify-content-center w-100 flex-column align-items-center" style={{ height: "70vh" }}>
       <h4 className="title">
         Coming Soon
-        {false // Replace false with activeFamilyMember when ready to fnish
+        {false // Replace false with activeFamilyMember when ready to finish
           ? `Set a target amount and bonus if ${activeFamilyMember} reaches the target ?`
           : null}
       </h4>

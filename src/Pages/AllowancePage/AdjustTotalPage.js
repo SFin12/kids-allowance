@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import FormInput from "../../components/Forms/FormInput";
-import { selectAllowance } from "../../features/allowance/allowanceSlice";
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import FormInput from "../../components/Forms/FormInput"
+import { selectAllowance } from "../../features/allowance/allowanceSlice"
 import { selectActiveFamilyMember, selectPointsType, selectUserId } from "../../features/user/userSlice"
-import { createAllowance, updateAllowance } from "../../utils/firestore"
-import { convertDecimalsToDollarsAndCents } from "../../utils/helper"
+import { updateAllowance } from "../../utils/firestore"
 
 export default function AdjustTotalPage() {
   const activeFamilyMember = useSelector(selectActiveFamilyMember)
@@ -15,7 +14,6 @@ export default function AdjustTotalPage() {
   const navigate = useNavigate()
   const currentAllowance = useSelector(selectAllowance)
   let placeholders = pointsType.type !== "money" ? currentAllowance[activeFamilyMember].currentTotal : currentAllowance[activeFamilyMember].currentTotal.toFixed(2)
-  
 
   useEffect(() => {
     if (activeFamilyMember === null) {

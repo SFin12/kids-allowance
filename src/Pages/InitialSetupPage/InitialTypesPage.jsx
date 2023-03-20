@@ -1,8 +1,7 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { useEffect } from "react"
-import { Button } from "react-bootstrap"
 import { useSelector } from "react-redux"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import EditPointsType from "../../components/Settings/EditPointsType"
 import { selectPointsType } from "../../features/user/userSlice"
 

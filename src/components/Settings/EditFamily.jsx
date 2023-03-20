@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { selectUserId, setFamilyMembers } from "../../features/user/userSlice";
+/* eslint-disable no-prototype-builtins */
+import { useEffect, useState } from "react"
+import { selectUserId, setFamilyMembers } from "../../features/user/userSlice"
 import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap"
 import { createFamily, deleteFamily, getFamily, updateAllowance } from "../../utils/firestore"
 import { useDispatch, useSelector } from "react-redux"

@@ -1,8 +1,5 @@
-import React from "react"
 import { Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import EditAttitudeRewards from "../../components/Settings/EditAttitudeRewards"
-import AllowancePage from "../AllowancePage/AllowancePage"
 import ChoresPage from "../ChoresPage/ChoresPage"
 
 export default function InitialChoresTrialPage() {
