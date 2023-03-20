@@ -15,7 +15,7 @@ export default function EditAllowancePage(props) {
         if (activeFamilyMember === null) {
             navigate("/main");
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, [activeFamilyMember]);
 
     return (

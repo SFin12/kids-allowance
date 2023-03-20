@@ -25,7 +25,6 @@ export default function AdjustTotalPage() {
     if (currentFamilyMember !== activeFamilyMember) {
       navigate("/main/allowance")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFamilyMember])
 
   function handleSubmit(e) {
@@ -33,7 +32,7 @@ export default function AdjustTotalPage() {
 
     const newTotal = Number(e.target.elements.Amount.value)
     const difference = newTotal - currentAllowance[activeFamilyMember].currentTotal
-    console.log(difference)
+
     updateAllowance(activeFamilyMember, difference, userId).then(() => {
       navigate("/main/allowance")
     })

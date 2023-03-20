@@ -11,13 +11,9 @@ import "./Shop.css"
 
 export default function EditStoreItemPage() {
   const location = useLocation()
-  console.log(location.state.storeItem)
+
   let { itemName, itemPrice, itemDescription, itemLink, itemImageUrl, itemId } = location.state.storeItem
-  // const [itemName, setItemName] = useState(itemName)
-  // const [itemPrice, setItemPrice] = useState(itemPrice)
-  // const [itemDescription, setItemDescription] = useState(itemDescription)
-  // const [itemLink, setItemLink] = useState(itemLink)
-  // const [itemImgLink, setItemImgLink] = useState(itemImageUrl)
+
   const pointsType = useSelector(selectPointsType)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -40,7 +36,6 @@ export default function EditStoreItemPage() {
 
   function handleDelete() {
     deleteStoreItem(itemId).then((results) => {
-      console.log(results)
       if (results === "success") {
         dispatch(deleteReduxStoreItem(itemId))
         alert("Item Deleted!")

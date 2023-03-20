@@ -25,7 +25,7 @@ export default function AdjustLifetimeTotalPage() {
     if (currentFamilyMember !== activeFamilyMember) {
       navigate("/main/allowance")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [activeFamilyMember])
 
   function handleSubmit(e) {

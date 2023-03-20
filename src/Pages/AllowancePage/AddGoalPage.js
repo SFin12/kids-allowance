@@ -19,27 +19,23 @@ export default function AddGoalPage() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        
-        // if active member is switched, go back to main allowance page
-        if (currentFamilyMember !== activeFamilyMember) {
-            navigate("/main/allowance");
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeFamilyMember]);
+      // if active member is switched, go back to main allowance page
+      if (currentFamilyMember !== activeFamilyMember) {
+        navigate("/main/allowance")
+      }
+    }, [activeFamilyMember])
 
     function handleSubmit(e) {
-        e.preventDefault();
-        const goal = e.target.elements["Goal Name / Item"].value;
-        const cost = e.target.elements.Cost.value;
-        dispatch(
-            setGoal({ [activeFamilyMember]: { goal: goal, value: cost } })
-        );
-        // saves new goal to db
-        console.log('goal saved')
-        updateGoal(activeFamilyMember, goal, cost, userId).then(() => {
-            navigate("/main/allowance");
-        });
-        // updates redux store
+      e.preventDefault()
+      const goal = e.target.elements["Goal Name / Item"].value
+      const cost = e.target.elements.Cost.value
+      dispatch(setGoal({ [activeFamilyMember]: { goal: goal, value: cost } }))
+      // saves new goal to db
+
+      updateGoal(activeFamilyMember, goal, cost, userId).then(() => {
+        navigate("/main/allowance")
+      })
+      // updates redux store
     }
 
     return (
