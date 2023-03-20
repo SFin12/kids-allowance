@@ -20,16 +20,21 @@ export default function AddStoreItemPage() {
     e.preventDefault()
     const formData = new FormData(e.target)
     const { itemName, itemPrice, itemDescription, itemLink, itemImgLink } = Object.fromEntries(formData.entries())
-    const newItem = { itemName, itemPrice: Number(itemPrice), itemDescription, itemLink, itemImgLink }
-    console.log(newItem)
-    dispatch(setStoreItems({ [itemName]: newItem }))
-    updateStoreItems(newItem)
+    const itemId = Date.now()
+    const newItem = { itemName, itemPrice: Number(itemPrice), itemDescription, itemLink, itemImgLink, itemId }
+    updateStoreItems(newItem).then((results) => {
+      if (results === "success") {
+        dispatch(setStoreItems({ [itemId]: newItem }))
+        navigate("/main/shop")
+      } else {
+        alert(results.message)
+      }
+    })
     setItemName(itemName)
     setItemPrice(itemPrice)
     setItemDescription(itemDescription)
     setItemLink(itemLink)
     setItemImgLink(itemImgLink)
-    navigate("/main/shop")
   }
 
   return (

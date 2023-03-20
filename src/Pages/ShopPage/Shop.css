@@ -10,3 +10,10 @@
   border-radius: 50%;
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
 }
+
+.delete-icon-container {
+  position: relative;
+  width: fit-content;
+  left: 95%;
+  top: -36px;
+}

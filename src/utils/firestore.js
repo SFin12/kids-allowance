@@ -144,7 +144,6 @@ export const updateChoreStats = async (member, title, value, dateCompleted) => {
       },
       { merge: true }
     )
-    console.log("created choresStats")
   }
 }
 
@@ -444,48 +443,54 @@ export const getStoreItems = async () => {
   let storeItems = snapshot.data().storeItems
   if (store.getState().user.pointsType?.type !== "money") {
     Object.keys(storeItems).forEach((key) => {
-      storeItems[key].price = convertDollarsToPoints(storeItems[key].price, getConversionRate())
+      storeItems[key].itemPrice = convertDollarsToPoints(storeItems[key].itemPrice, getConversionRate())
     })
   }
-
   return storeItems
 }
 
 export const updateStoreItems = async (storeItem) => {
-  const { itemName, itemPrice: price, itemDescription: description = "", itemLink: link = "", itemImgLink: imageUrl = "", purchasedBy = "", purchasedOn = "" } = storeItem
-  console.log(storeItem)
+  const { itemId, itemName, itemPrice: itemPrice, itemDescription: description = "", itemLink: link = "", itemImageUrl: itemImageUrl = "", lastPurchasedBy: lastPurchasedBy = "", purchasedOn: purchasedOn = "" } = storeItem
+
   const date = new Date()
   const dateString = date.toISOString()
   const userId = getCurrentUserInfo().uid
   const conversionRate = await getConversionRate()
-  const dollarValue = convertPointsToDollars(Number(price), conversionRate)
+  const dollarValue = convertPointsToDollars(Number(itemPrice), conversionRate)
   const userDataRef = db.collection("users").doc(`${userId}`)
   try {
     userDataRef.update({
-      [`storeItems.${itemName}`]: {
+      [`storeItems.${itemId}`]: {
         createdAt: dateString,
         itemName: itemName,
-        id: Date.now(),
-        price: dollarValue,
-        link: link,
-        description: description,
-        imageUrl: imageUrl,
-        lastPurchesedBy: purchasedBy,
+        itemPrice: dollarValue,
+        itemLink: link,
+        itemId: itemId,
+        itemDescription: description,
+        itemImageUrl: itemImageUrl,
+        lastPurchasedBy: lastPurchasedBy,
         purchasedOn: purchasedOn,
       },
     })
+    return "success"
   } catch (error) {
     console.error(error)
     alert(error.message)
+    return error
   }
 }
 
-export const deleteStoreItem = async (itemName) => {
+export const deleteStoreItem = async (itemId) => {
   const userId = getCurrentUserInfo().uid
   const userDataRef = db.collection("users").doc(`${userId}`)
-  userDataRef.update({
-    [`storeItems.${itemName}`]: firebase.firestore.FieldValue.delete(),
-  })
+  try {
+    userDataRef.update({
+      [`storeItems.${itemId}`]: firebase.firestore.FieldValue.delete(),
+    })
+    return "success"
+  } catch (error) {
+    return error
+  }
 }
 
 // not currently used

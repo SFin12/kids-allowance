@@ -32,11 +32,13 @@ export default function ShopPage() {
                 </Col>
               )
             })}
-          <Link to={"/main/addStoreItem"} className="mb-4 p-4">
-            <FaPlus size="2rem" color="darkgrey" className="add-item-button" />
-          </Link>
         </Row>
       </Container>
+      <div className="p-4">
+        <Link to={"/main/addStoreItem"} className="mb-5 p-5">
+          <FaPlus size="2rem" color="darkgrey" className="add-item-button" />
+        </Link>
+      </div>
     </div>
   )
 }

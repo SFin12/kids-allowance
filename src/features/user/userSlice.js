@@ -52,10 +52,14 @@ export const userSlice = createSlice({
     setStoreItems: (state, action) => {
       state.storeItems = { ...state.storeItems, ...action.payload } // array of objects
     },
+    deleteReduxStoreItem: (state, action) => {
+      delete state.storeItems[action.payload]
+      state.storeItems = { ...state.storeItems }
+    },
   },
 })
 
-export const { setActiveUser, setUserLogout, setFamilyMembers, setActiveFamilyMember, tutorial, setLogins, setPointsType, setTutorialOn, setStoreItems } = userSlice.actions
+export const { setActiveUser, setUserLogout, setFamilyMembers, setActiveFamilyMember, tutorial, setLogins, setPointsType, setTutorialOn, setStoreItems, deleteReduxStoreItem } = userSlice.actions
 
 export const selectUserName = (state) => state.user.name
 export const selectUserEmail = (state) => state.user.email

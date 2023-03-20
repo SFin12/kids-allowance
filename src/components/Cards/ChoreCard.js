@@ -1,4 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
+
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { updateChore } from "../../features/chores/choresSlice"
@@ -30,7 +31,7 @@ export default function ChoreCard({ chore, value, dateCompleted, completedBy }) 
     }
   }, [])
 
-  function handleClick(e) {
+  function handleClick() {
     if (!flip) {
       // update Redux to show completed w/out waiting for db
       dispatch(
@@ -84,7 +85,7 @@ export default function ChoreCard({ chore, value, dateCompleted, completedBy }) 
     setShowModal(false)
   }
 
-  function handleClose(e) {
+  function handleClose() {
     setShowModal(false)
   }
 
