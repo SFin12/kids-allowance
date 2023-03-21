@@ -45,7 +45,7 @@ export default function SettingsPage() {
     <div className="d-block w-100">
       <Accordion>
         <Accordion.Item eventKey="0" className="settings-item">
-          <Accordion.Header>Edit Family</Accordion.Header>
+          <Accordion.Header className="settings-item">Edit Family</Accordion.Header>
           <Accordion.Body>
             <EditFamily />
           </Accordion.Body>
