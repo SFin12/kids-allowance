@@ -283,7 +283,7 @@ export const updateAllowance = async (member, value = 0, userId = getCurrentUser
   // if an allowance exists and family member exists w/ value greater than zero, add to total.
   if (allowanceExists) {
     if (allowanceExists[member]?.currentTotal) {
-      let currentTotal = convertPointsToDollars(allowanceExists[member].currentTotal, conversionRate)
+      let currentTotal = convertPointsToDollars(Number(allowanceExists[member].currentTotal), conversionRate)
       lifetimeTotal = newTotal <= 0 ? convertPointsToDollars(Number(allowanceExists[member].lifetimeTotal), conversionRate) : convertPointsToDollars(Number(allowanceExists[member].lifetimeTotal), conversionRate) + newTotal
       newTotal += currentTotal // old allowance
     }

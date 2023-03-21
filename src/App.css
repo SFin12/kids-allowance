@@ -7,17 +7,17 @@
 
 :root {
     --chore-font: "Gochi Hand", cursive;
-    --title-font: "Shrikhand", cursive;
+    --title-font: "Gill Sans MT", "Trebuchet MS", sans-serif;
     --main-color: #7fffd4;
-    /* --title-font: 'Sansita Swashed', cursive; */
+    /* --title-font: 'Sansita Swashed'; */
 }
 
 h1,
 h2 {
-    font-family: "Shrikhand", cursive;
+    font-family: var(--title-font);
     /* font-family: var(--chore-font); */
     /* font-size: larger !important; */
-
+    font-weight: bold;
     font-size: 1.5rem !important;
 }
 

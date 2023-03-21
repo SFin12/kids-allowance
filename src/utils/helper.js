@@ -35,6 +35,7 @@ export function capitalizeFirstLetter(string) {
 }
 
 export function convertPointsToDollars(value, conversionRate) {
+  if (value === isNaN) throw new Error("Value is not a number")
   return Number((value * conversionRate).toFixed(2))
 }
 

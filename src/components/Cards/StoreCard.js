@@ -41,7 +41,7 @@ export default function StoreCard({ storeItem }) {
 
   function handleConfirmBuy() {
     setShowModal(false)
-    const spent = itemPrice * -1
+    const spent = Number(itemPrice * -1)
     navigate("/main/allowance")
     updateAllowance(activeFamilyMember, spent, userId)
     const updatedStoreItem = { ...storeItem, lastPurchasedBy: activeFamilyMember, purchasedOn: new Date().toDateString().slice(0, -5) }
@@ -56,9 +56,9 @@ export default function StoreCard({ storeItem }) {
 
   return (
     <div className="store-card">
-      <div>
+      <div className="w-100">
         <a href={itemLink} className="item-image-container" target="_blank" rel="noreferrer">
-          <img className="item-image mt-2" src={itemImageUrl ? itemImageUrl : defaultStoreImage} alt="sky" />
+          <img className="item-image" src={itemImageUrl ? itemImageUrl : defaultStoreImage} alt="sky" />
         </a>
       </div>
 
