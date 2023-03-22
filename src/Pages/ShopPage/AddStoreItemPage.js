@@ -2,43 +2,47 @@ import { useState } from "react"
 import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import LoadingSpinner from "../../components/Loading/LoadingSpinner"
 import { selectPointsType, setStoreItems } from "../../features/user/userSlice"
-// import { uploadImageToBucket } from "../../utils/firebaseStorage"
+import { uploadImageToBucket } from "../../utils/firebaseStorage"
 import { updateStoreItems } from "../../utils/firestore"
 import "./Shop.css"
 
 export default function AddStoreItemPage() {
-  // const [itemName, setItemName] = useState("")
-  // const [itemPrice, setItemPrice] = useState()
-  // const [itemDescription, setItemDescription] = useState("")
-  // const [itemLink, setItemLink] = useState("")
-  // const [itemImgLink, setItemImgLink] = useState("")
-  const [uploadedImage, setUploadedImage] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   const pointsType = useSelector(selectPointsType)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const screenWidth = window.innerWidth
 
   function addStoreItem(e) {
     e.preventDefault()
     const formData = new FormData(e.target)
-    console.log(Object.fromEntries(formData.entries()))
-    const { itemName, itemPrice, itemDescription, itemLink, itemImgLink } = Object.fromEntries(formData.entries())
+    let { itemName, itemPrice, itemDescription, itemLink, itemImageUrl, itemImage } = Object.fromEntries(formData.entries())
     const itemId = Date.now()
-    const newItem = { itemName, itemPrice: Number(itemPrice), itemDescription, itemLink, itemImgLink, itemId }
-    updateStoreItems(newItem).then((results) => {
-      if (results === "success") {
-        dispatch(setStoreItems({ [itemId]: newItem }))
-        navigate("/main/shop")
+    const waitForImageUpload = async () => {
+      let imageUrl
+      if (itemImage.name) {
+        imageUrl = await uploadImageToBucket(itemImage.name, itemImage)
       } else {
-        alert(results.message)
+        imageUrl = itemImageUrl
       }
-    })
-    // setItemName(itemName)
-    // setItemPrice(itemPrice)
-    // setItemDescription(itemDescription)
-    // setItemLink(itemLink)
-    // setItemImgLink(itemImgLink)
+      const newItem = { itemName, itemPrice: Number(itemPrice), itemDescription, itemLink, itemImageUrl: imageUrl, itemId }
+      updateStoreItems(newItem).then((results) => {
+        if (results === "success") {
+          dispatch(setStoreItems({ [itemId]: newItem }))
+          navigate("/main/shop")
+        } else {
+          alert(results.message)
+        }
+      })
+      setIsLoading(false)
+    }
+    setIsLoading(true)
+    waitForImageUpload()
   }
+
+  if (isLoading) return <LoadingSpinner />
 
   return (
     <>
@@ -65,13 +69,13 @@ export default function AddStoreItemPage() {
             <FormLabel>Link</FormLabel>
             <FormControl defaultValue={""} name="itemLink" type="url" />
           </FormGroup>
-          <FormGroup className="mb-3">
+          <FormGroup className="mb-3" hidden={screenWidth < 1180}>
             <FormLabel>Image Url</FormLabel>
             <FormControl defaultValue={""} name="itemImgLink" type="url" />
           </FormGroup>
           <FormGroup className="mb-3">
             <FormLabel>Upload Image</FormLabel>
-            <FormControl defaultValue={uploadedImage} name="itemImage" type="file" onChange={(e) => setUploadedImage(e.target.files[0])} />
+            <FormControl defaultValue={""} name="itemImage" type="file" />
           </FormGroup>
           <Button className="m-3" type="submit">
             Save

@@ -8,7 +8,7 @@ import { deleteStoreItem, updateStoreItems } from "../../utils/firestore"
 // import delete icon from react-icons
 import { AiOutlineDelete } from "react-icons/ai"
 import "./Shop.css"
-import { uploadImageToBucket } from "../../utils/firebaseStorage"
+import { deleteImageFromBucket, uploadImageToBucket } from "../../utils/firebaseStorage"
 import LoadingSpinner from "../../components/Loading/LoadingSpinner"
 
 export default function EditStoreItemPage() {
@@ -23,15 +23,14 @@ export default function EditStoreItemPage() {
 
   function addStoreItem(e) {
     e.preventDefault()
-
     const formData = new FormData(e.target)
-    console.log(Object.fromEntries(formData.entries()))
     let { itemName, itemPrice, itemDescription, itemLink, itemImageUrl, itemImage } = Object.fromEntries(formData.entries())
-
     const waitForImageUpload = async () => {
       let imageUrl
       if (itemImage.name) {
-        console.log(itemImage)
+        if (itemImageUrl) {
+          deleteImageFromBucket(itemImageUrl)
+        }
         imageUrl = await uploadImageToBucket(itemImage.name, itemImage)
       } else {
         imageUrl = itemImageUrl

@@ -119,9 +119,7 @@ export default function AllowancePage() {
     <>
       {/* Show spinner while waiting on data from firebase */}
       {isLoading ? (
-        <div className="d-flex flex-column justify-content-center align-items-center">
-          <LoadingSpinner />
-        </div>
+        <LoadingSpinner />
       ) : (
         <>
           {/* Main page once data has been loaded */}
