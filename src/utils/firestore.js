@@ -508,3 +508,4 @@ export const queryChores = async (member) => {
   })
   return choresCompletedMember
 }
+

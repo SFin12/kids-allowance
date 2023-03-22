@@ -8,30 +8,47 @@ import { deleteStoreItem, updateStoreItems } from "../../utils/firestore"
 // import delete icon from react-icons
 import { AiOutlineDelete } from "react-icons/ai"
 import "./Shop.css"
+import { uploadImageToBucket } from "../../utils/firebaseStorage"
+import LoadingSpinner from "../../components/Loading/LoadingSpinner"
 
 export default function EditStoreItemPage() {
+  const [isLoading, setIsLoading] = useState(false)
+  // const [uploadedFile, setUploadedFile] = useState("")
   const location = useLocation()
-
+  const screenWidth = window.innerWidth
   let { itemName, itemPrice, itemDescription, itemLink, itemImageUrl, itemId } = location.state.storeItem
-
   const pointsType = useSelector(selectPointsType)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   function addStoreItem(e) {
     e.preventDefault()
-    const formData = new FormData(e.target)
 
-    const { itemName, itemPrice, itemDescription, itemLink, itemImageUrl } = Object.fromEntries(formData.entries())
-    const newItem = { itemName, itemPrice: Number(itemPrice), itemDescription, itemLink, itemImageUrl, itemId }
-    updateStoreItems(newItem).then((results) => {
-      if (results === "success") {
-        dispatch(setStoreItems({ [itemId]: newItem }))
-        navigate("/main/shop")
+    const formData = new FormData(e.target)
+    console.log(Object.fromEntries(formData.entries()))
+    let { itemName, itemPrice, itemDescription, itemLink, itemImageUrl, itemImage } = Object.fromEntries(formData.entries())
+
+    const waitForImageUpload = async () => {
+      let imageUrl
+      if (itemImage.name) {
+        console.log(itemImage)
+        imageUrl = await uploadImageToBucket(itemImage.name, itemImage)
       } else {
-        alert(results.message)
+        imageUrl = itemImageUrl
       }
-    })
+      const newItem = { itemName, itemPrice: Number(itemPrice), itemDescription, itemLink, itemImageUrl: imageUrl, itemId }
+      updateStoreItems(newItem).then((results) => {
+        if (results === "success") {
+          dispatch(setStoreItems({ [itemId]: newItem }))
+          navigate("/main/shop")
+        } else {
+          alert(results.message)
+        }
+      })
+      setIsLoading(false)
+    }
+    setIsLoading(true)
+    waitForImageUpload()
   }
 
   function handleDelete() {
@@ -45,6 +62,8 @@ export default function EditStoreItemPage() {
       }
     })
   }
+
+  if (isLoading) return <LoadingSpinner />
 
   return (
     <>
@@ -74,9 +93,15 @@ export default function EditStoreItemPage() {
             <FormLabel>Link</FormLabel>
             <FormControl defaultValue={itemLink} name="itemLink" type="url" />
           </FormGroup>
-          <FormGroup className="mb-3">
+
+          <FormGroup className="mb-3" hidden={screenWidth < 1180}>
             <FormLabel>Image Url</FormLabel>
             <FormControl defaultValue={itemImageUrl} name="itemImageUrl" type="url" />
+          </FormGroup>
+
+          <FormGroup className="mb-3">
+            <FormLabel>Upload Image</FormLabel>
+            <FormControl defaultValue={""} name="itemImage" type="file" accept="image/*" />
           </FormGroup>
           <Button className="m-3" type="submit">
             Save
